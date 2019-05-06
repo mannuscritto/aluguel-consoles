@@ -23,7 +23,7 @@ public class ConnectionFactory {
     private static final String USER = "root";
     private static final String PASS = "root";
     
-    public static Connection getConnection(Connection con) { 
+    public static Connection getConnection() { 
         try {
             Class.forName(DRIVER);
             return DriverManager.getConnection(URL, USER, PASS);

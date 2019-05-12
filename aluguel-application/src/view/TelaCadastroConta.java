@@ -5,19 +5,16 @@
  */
 package view;
 
-import model.bean.TipoConsole;
-import model.dao.TipoConsoleDAO;
-
 /**
  *
  * @author romer
  */
-public class TelaCadastroTipoConsole extends javax.swing.JFrame {
+public class TelaCadastroConta extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaCadastroTipoConsole
+     * Creates new form TelaCadastroConta
      */
-    public TelaCadastroTipoConsole() {
+    public TelaCadastroConta() {
         initComponents();
     }
 
@@ -30,47 +27,50 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jtfMarca = new javax.swing.JTextField();
-        jtfModelo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jtfPrecoAluguel = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jtfNomeUsuario = new javax.swing.JTextField();
         jbtnCadastrar = new javax.swing.JButton();
-        jbtnExcluir = new javax.swing.JButton();
         jbtnAtualizar = new javax.swing.JButton();
+        jbtnExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbTipoConsole = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jtfSenha = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jcbTipoConta = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cadastro de Tipo de Consoles");
-        setResizable(false);
 
-        jLabel2.setText("Marca");
+        jLabel2.setText("Preço de aluguel");
 
-        jLabel3.setText("Modelo");
+        jLabel3.setText("Nome de Usuário");
 
         jbtnCadastrar.setLabel("Cadastrar");
-        jbtnCadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnCadastrarActionPerformed(evt);
-            }
-        });
-
-        jbtnExcluir.setLabel("Excluir");
 
         jbtnAtualizar.setLabel("Atualizar");
 
+        jbtnExcluir.setLabel("Excluir");
+
         jtbTipoConsole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Marca", "Modelo"
+                "ID", "Preço de aluguel", "Nome de usuário", "Senha", "Tipo de conta"
             }
         ));
         jScrollPane1.setViewportView(jtbTipoConsole);
+
+        jLabel1.setText("Senha");
+
+        jLabel4.setText("Tipo de conta");
+
+        jcbTipoConta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,14 +88,20 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
                                 .addComponent(jbtnAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jcbTipoConta, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jtfPrecoAluguel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jtfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jtfNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jtfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -107,12 +113,20 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtfPrecoAluguel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtfNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jcbTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnCadastrar)
                     .addComponent(jbtnAtualizar)
@@ -122,18 +136,8 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setBounds(0, 0, 656, 519);
+        pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCadastrarActionPerformed
-        // TODO add your handling code here:
-        
-        TipoConsole tp = new TipoConsole();
-        TipoConsoleDAO dao = new TipoConsoleDAO();
-        tp.setMarca(jtfMarca.getText());
-        tp.setModelo(jtfModelo.getText());
-        dao.create(tp);
-    }//GEN-LAST:event_jbtnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,33 +156,37 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroTipoConsole.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroTipoConsole.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroTipoConsole.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroTipoConsole.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastroTipoConsole().setVisible(true);
+                new TelaCadastroConta().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbtnAtualizar;
     private javax.swing.JButton jbtnCadastrar;
     private javax.swing.JButton jbtnExcluir;
+    private javax.swing.JComboBox<String> jcbTipoConta;
     private javax.swing.JTable jtbTipoConsole;
-    private javax.swing.JTextField jtfMarca;
-    private javax.swing.JTextField jtfModelo;
+    private javax.swing.JTextField jtfNomeUsuario;
+    private javax.swing.JTextField jtfPrecoAluguel;
+    private javax.swing.JTextField jtfSenha;
     // End of variables declaration//GEN-END:variables
 }

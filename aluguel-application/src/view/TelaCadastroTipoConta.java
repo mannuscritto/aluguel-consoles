@@ -5,19 +5,16 @@
  */
 package view;
 
-import model.bean.TipoConsole;
-import model.dao.TipoConsoleDAO;
-
 /**
  *
  * @author romer
  */
-public class TelaCadastroTipoConsole extends javax.swing.JFrame {
+public class TelaCadastroTipoConta extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaCadastroTipoConsole
+     * Creates new form TelaCadastroTipoConta
      */
-    public TelaCadastroTipoConsole() {
+    public TelaCadastroTipoConta() {
         initComponents();
     }
 
@@ -30,34 +27,27 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jtfMarca = new javax.swing.JTextField();
-        jtfModelo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jtfTitulo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jtfPrecoCompra = new javax.swing.JTextField();
         jbtnCadastrar = new javax.swing.JButton();
-        jbtnExcluir = new javax.swing.JButton();
         jbtnAtualizar = new javax.swing.JButton();
+        jbtnExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbTipoConsole = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cadastro de Tipo de Consoles");
-        setResizable(false);
 
-        jLabel2.setText("Marca");
+        jLabel2.setText("Título");
 
-        jLabel3.setText("Modelo");
+        jLabel3.setText("Preço de Compra");
 
         jbtnCadastrar.setLabel("Cadastrar");
-        jbtnCadastrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnCadastrarActionPerformed(evt);
-            }
-        });
-
-        jbtnExcluir.setLabel("Excluir");
 
         jbtnAtualizar.setLabel("Atualizar");
+
+        jbtnExcluir.setLabel("Excluir");
 
         jtbTipoConsole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -67,7 +57,7 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
                 {null, null, null}
             },
             new String [] {
-                "ID", "Marca", "Modelo"
+                "ID", "Titulo", "Preço de Compra"
             }
         ));
         jScrollPane1.setViewportView(jtbTipoConsole);
@@ -90,12 +80,12 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
                                 .addComponent(jbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
-                                    .addComponent(jtfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jtfPrecoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -107,11 +97,11 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jtfTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jtfPrecoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnCadastrar)
@@ -124,16 +114,6 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
 
         setBounds(0, 0, 656, 519);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jbtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCadastrarActionPerformed
-        // TODO add your handling code here:
-        
-        TipoConsole tp = new TipoConsole();
-        TipoConsoleDAO dao = new TipoConsoleDAO();
-        tp.setMarca(jtfMarca.getText());
-        tp.setModelo(jtfModelo.getText());
-        dao.create(tp);
-    }//GEN-LAST:event_jbtnCadastrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,20 +132,20 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroTipoConsole.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroTipoConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroTipoConsole.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroTipoConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroTipoConsole.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroTipoConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaCadastroTipoConsole.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaCadastroTipoConta.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaCadastroTipoConsole().setVisible(true);
+                new TelaCadastroTipoConta().setVisible(true);
             }
         });
     }
@@ -178,7 +158,7 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
     private javax.swing.JButton jbtnCadastrar;
     private javax.swing.JButton jbtnExcluir;
     private javax.swing.JTable jtbTipoConsole;
-    private javax.swing.JTextField jtfMarca;
-    private javax.swing.JTextField jtfModelo;
+    private javax.swing.JTextField jtfPrecoCompra;
+    private javax.swing.JTextField jtfTitulo;
     // End of variables declaration//GEN-END:variables
 }

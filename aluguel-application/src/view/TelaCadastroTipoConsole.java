@@ -5,6 +5,7 @@
  */
 package view;
 
+import javax.swing.table.DefaultTableModel;
 import model.bean.TipoConsole;
 import model.dao.TipoConsoleDAO;
 
@@ -19,6 +20,22 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
      */
     public TelaCadastroTipoConsole() {
         initComponents();
+        readJTable();
+    }
+    
+    public void readJTable() {
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jtbTipoConsole.getModel();
+        modelo.setNumRows(0);
+        TipoConsoleDAO tpdao = new TipoConsoleDAO();
+        
+        for (TipoConsole tp: tpdao.read()) {
+            modelo.addRow(new Object[] {
+               tp.getId(),
+               tp.getMarca(),
+               tp.getModelo()
+            });
+        }
     }
 
     /**
@@ -69,7 +86,15 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
             new String [] {
                 "ID", "Marca", "Modelo"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jtbTipoConsole);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -133,6 +158,10 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
         tp.setMarca(jtfMarca.getText());
         tp.setModelo(jtfModelo.getText());
         dao.create(tp);
+        readJTable();
+        
+        jtfMarca.setText("");
+        jtfModelo.setText("");
     }//GEN-LAST:event_jbtnCadastrarActionPerformed
 
     /**

@@ -5,6 +5,12 @@
  */
 package view;
 
+import javax.swing.table.DefaultTableModel;
+import model.bean.TipoConsole;
+import model.bean.TipoConta;
+import model.dao.TipoConsoleDAO;
+import model.dao.TipoContaDAO;
+
 /**
  *
  * @author romer
@@ -16,6 +22,21 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
      */
     public TelaCadastroTipoConta() {
         initComponents();
+    }
+    
+    public void readJTable() {
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jtbTipoConta.getModel();
+        modelo.setNumRows(0);
+        TipoContaDAO tcdao = new TipoContaDAO();
+        
+        for (TipoConta tc: tcdao.read()) {
+            modelo.addRow(new Object[] {
+               tc.getId(),
+               tc.getTitulo(),
+               tc.getPrecoCompra()
+            });
+        }
     }
 
     /**
@@ -35,7 +56,7 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
         jbtnAtualizar = new javax.swing.JButton();
         jbtnExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtbTipoConsole = new javax.swing.JTable();
+        jtbTipoConta = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,12 +65,17 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
         jLabel3.setText("Preço de Compra");
 
         jbtnCadastrar.setLabel("Cadastrar");
+        jbtnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCadastrarActionPerformed(evt);
+            }
+        });
 
         jbtnAtualizar.setLabel("Atualizar");
 
         jbtnExcluir.setLabel("Excluir");
 
-        jtbTipoConsole.setModel(new javax.swing.table.DefaultTableModel(
+        jtbTipoConta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -60,7 +86,7 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
                 "ID", "Titulo", "Preço de Compra"
             }
         ));
-        jScrollPane1.setViewportView(jtbTipoConsole);
+        jScrollPane1.setViewportView(jtbTipoConta);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,6 +141,19 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
         setBounds(0, 0, 656, 519);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jbtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCadastrarActionPerformed
+        // TODO add your handling code here:
+        TipoConta tc = new TipoConta();
+        TipoContaDAO dao = new TipoContaDAO();
+        tc.setPrecoCompra(Double.parseDouble(jtfPrecoCompra.getText()));
+        tc.setTitulo(jtfTitulo.getText());
+        dao.create(tc);
+        
+        
+        jtfTitulo.setText("");
+        jtfPrecoCompra.setText("");
+    }//GEN-LAST:event_jbtnCadastrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -157,7 +196,7 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
     private javax.swing.JButton jbtnAtualizar;
     private javax.swing.JButton jbtnCadastrar;
     private javax.swing.JButton jbtnExcluir;
-    private javax.swing.JTable jtbTipoConsole;
+    private javax.swing.JTable jtbTipoConta;
     private javax.swing.JTextField jtfPrecoCompra;
     private javax.swing.JTextField jtfTitulo;
     // End of variables declaration//GEN-END:variables

@@ -104,7 +104,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jLabel5.setText("Jogo");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Item 2", "Item 3", "Item 4" }));
 
         jButton4.setText("Adicionar");
 

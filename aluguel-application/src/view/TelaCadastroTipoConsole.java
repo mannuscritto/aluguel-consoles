@@ -57,7 +57,7 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbTipoConsole = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Tipo de Consoles");
         setResizable(false);
 

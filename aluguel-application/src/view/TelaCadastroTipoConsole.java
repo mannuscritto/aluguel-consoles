@@ -5,6 +5,7 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.TipoConsole;
 import model.dao.TipoConsoleDAO;
@@ -73,8 +74,18 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
         });
 
         jbtnExcluir.setLabel("Excluir");
+        jbtnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnExcluirActionPerformed(evt);
+            }
+        });
 
         jbtnAtualizar.setLabel("Atualizar");
+        jbtnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAtualizarActionPerformed(evt);
+            }
+        });
 
         jtbTipoConsole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -93,6 +104,11 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jtbTipoConsole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbTipoConsoleMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jtbTipoConsole);
@@ -163,6 +179,53 @@ public class TelaCadastroTipoConsole extends javax.swing.JFrame {
         jtfMarca.setText("");
         jtfModelo.setText("");
     }//GEN-LAST:event_jbtnCadastrarActionPerformed
+
+    private void jtbTipoConsoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbTipoConsoleMouseClicked
+        // TODO add your handling code here:
+        
+        if (jtbTipoConsole.getSelectedRow() != -1) {
+            jtfMarca.setText(jtbTipoConsole.getValueAt(jtbTipoConsole.getSelectedRow(), 1).toString());
+            jtfModelo.setText(jtbTipoConsole.getValueAt(jtbTipoConsole.getSelectedRow(), 2).toString());
+        }
+        
+    }//GEN-LAST:event_jtbTipoConsoleMouseClicked
+
+    private void jbtnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAtualizarActionPerformed
+        // TODO add your handling code here:
+        
+        if (jtbTipoConsole.getSelectedRow() != -1) {
+            TipoConsole tp = new TipoConsole();
+            TipoConsoleDAO dao = new TipoConsoleDAO();
+            tp.setMarca(jtfMarca.getText());
+            tp.setModelo(jtfModelo.getText());
+            tp.setId((int)jtbTipoConsole.getValueAt(jtbTipoConsole.getSelectedRow(), 0));
+            dao.update(tp);
+            readJTable();
+
+            jtfMarca.setText("");
+            jtfModelo.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para atualizar!");
+        }
+    }//GEN-LAST:event_jbtnAtualizarActionPerformed
+
+    private void jbtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExcluirActionPerformed
+        // TODO add your handling code here:
+        
+        if (jtbTipoConsole.getSelectedRow() != -1) {
+            TipoConsole tp = new TipoConsole();
+            TipoConsoleDAO dao = new TipoConsoleDAO();
+            tp.setId((int)jtbTipoConsole.getValueAt(jtbTipoConsole.getSelectedRow(), 0));
+            dao.delete(tp);
+            readJTable();
+
+            jtfMarca.setText("");
+            jtfModelo.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para excluir!");
+        }
+        
+    }//GEN-LAST:event_jbtnExcluirActionPerformed
 
     /**
      * @param args the command line arguments

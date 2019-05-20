@@ -5,6 +5,9 @@
  */
 package view;
 
+import model.bean.Aluguel;
+import model.dao.AluguelDAO;
+
 /**
  *
  * @author Lucas Santos
@@ -192,6 +195,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jLabel2.setText("Valor total");
 
         jButton6.setText("Adicionar");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton8.setText("Editar");
 
@@ -323,6 +331,12 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        Aluguel a = new Aluguel();
+        AluguelDAO dao = new AluguelDAO();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

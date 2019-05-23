@@ -16,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.bean.Conta;
-import model.bean.TipoConta;
 
 /**
  *
@@ -71,5 +70,47 @@ public class ContaDAO {
         }
         
         return contas;
+    }
+    
+    public void update(Conta c) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE conta SET PrecoAluguel = ?, NomeUsuario = ?, Senha = ?, TipoConta = ? WHERE Conta_PK = ?");
+            stmt.setDouble(1, c.getPrecoAluguel());
+            stmt.setString(2, c.getNomeUsuario());
+            stmt.setString(3, c.getSenha());
+            stmt.setInt(4, c.getTipoConta());
+            stmt.setInt(5, c.getId());
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex);
+            Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+    
+    public void delete(Conta c) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("DELETE from conta WHERE Conta_PK = ?");
+            stmt.setInt(1, c.getId());
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
+            Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
     }
 }

@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package view;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.bean.Conta;
+import model.dao.ContaDAO;
 
 /**
  *
@@ -16,8 +20,26 @@ public class TelaCadastroConta extends javax.swing.JFrame {
      */
     public TelaCadastroConta() {
         initComponents();
+        readJTable();
     }
 
+    public void readJTable() {
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jtbConta.getModel();
+        modelo.setNumRows(0);
+        ContaDAO contadao = new ContaDAO();
+        
+        for (Conta c: contadao.read()) {
+            modelo.addRow(new Object[] {
+               c.getId(),
+               c.getPrecoAluguel(),
+               c.getNomeUsuario(),
+               c.getSenha(),
+               c.getTipoConta()
+            });
+        }
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,11 +57,12 @@ public class TelaCadastroConta extends javax.swing.JFrame {
         jbtnAtualizar = new javax.swing.JButton();
         jbtnExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtbTipoConsole = new javax.swing.JTable();
+        jtbConta = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jtfSenha = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jcbTipoConta = new javax.swing.JComboBox<>();
+        jtfTipoConta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,12 +71,27 @@ public class TelaCadastroConta extends javax.swing.JFrame {
         jLabel3.setText("Nome de Usuário");
 
         jbtnCadastrar.setLabel("Cadastrar");
+        jbtnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCadastrarActionPerformed(evt);
+            }
+        });
 
         jbtnAtualizar.setLabel("Atualizar");
+        jbtnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAtualizarActionPerformed(evt);
+            }
+        });
 
         jbtnExcluir.setLabel("Excluir");
+        jbtnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnExcluirActionPerformed(evt);
+            }
+        });
 
-        jtbTipoConsole.setModel(new javax.swing.table.DefaultTableModel(
+        jtbConta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -64,7 +102,12 @@ public class TelaCadastroConta extends javax.swing.JFrame {
                 "ID", "Preço de aluguel", "Nome de usuário", "Senha", "Tipo de conta"
             }
         ));
-        jScrollPane1.setViewportView(jtbTipoConsole);
+        jtbConta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbContaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jtbConta);
 
         jLabel1.setText("Senha");
 
@@ -95,9 +138,10 @@ public class TelaCadastroConta extends javax.swing.JFrame {
                                     .addComponent(jtfPrecoAluguel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jtfNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtfNomeUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jtfTipoConta))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
@@ -125,7 +169,9 @@ public class TelaCadastroConta extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jcbTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jcbTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnCadastrar)
@@ -138,6 +184,72 @@ public class TelaCadastroConta extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbtnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCadastrarActionPerformed
+        // TODO add your handling code here:
+        Conta c = new Conta();
+        ContaDAO dao = new ContaDAO();
+        c.setPrecoAluguel(Double.parseDouble(jtfPrecoAluguel.getText()));
+        c.setNomeUsuario(jtfNomeUsuario.getText());
+        c.setSenha(jtfSenha.getText());
+        c.setTipoConta(Integer.parseInt(jtfTipoConta.getText()));
+        dao.create(c);
+        readJTable();
+        
+        jtfPrecoAluguel.setText("");
+        jtfNomeUsuario.setText("");
+        jtfSenha.setText("");
+        jtfTipoConta.setText("");
+    }//GEN-LAST:event_jbtnCadastrarActionPerformed
+
+    private void jbtnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAtualizarActionPerformed
+        // TODO add your handling code here:
+            if (jtbConta.getSelectedRow() != -1) {
+            Conta c = new Conta();
+            ContaDAO dao = new ContaDAO();
+            c.setPrecoAluguel(Double.parseDouble(jtfPrecoAluguel.getText()));
+            c.setNomeUsuario(jtfNomeUsuario.getText());
+            c.setSenha(jtfSenha.getText());
+            c.setTipoConta(Integer.parseInt(jtfTipoConta.getText()));
+            dao.update(c);
+            readJTable();
+
+            jtfPrecoAluguel.setText("");
+            jtfNomeUsuario.setText("");
+            jtfSenha.setText("");
+            jtfTipoConta.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para atualizar!");
+        }
+    }//GEN-LAST:event_jbtnAtualizarActionPerformed
+
+    private void jbtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExcluirActionPerformed
+        // TODO add your handling code here:
+        if (jtbConta.getSelectedRow() != -1) {
+            Conta c = new Conta();
+            ContaDAO dao = new ContaDAO();
+            c.setId((int)jtbConta.getValueAt(jtbConta.getSelectedRow(), 0));
+            dao.delete(c);
+            readJTable();
+
+            jtfPrecoAluguel.setText("");
+            jtfNomeUsuario.setText("");
+            jtfSenha.setText("");
+            jtfTipoConta.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para excluir!");
+        }
+    }//GEN-LAST:event_jbtnExcluirActionPerformed
+
+    private void jtbContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbContaMouseClicked
+        // TODO add your handling code here:
+        if (jtbConta.getSelectedRow() != -1) {
+            jtfPrecoAluguel.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 1).toString());
+            jtfNomeUsuario.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 1).toString());
+            jtfSenha.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 1).toString());
+            jtfTipoConta.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 1).toString());
+        }
+    }//GEN-LAST:event_jtbContaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -184,9 +296,10 @@ public class TelaCadastroConta extends javax.swing.JFrame {
     private javax.swing.JButton jbtnCadastrar;
     private javax.swing.JButton jbtnExcluir;
     private javax.swing.JComboBox<String> jcbTipoConta;
-    private javax.swing.JTable jtbTipoConsole;
+    private javax.swing.JTable jtbConta;
     private javax.swing.JTextField jtfNomeUsuario;
     private javax.swing.JTextField jtfPrecoAluguel;
     private javax.swing.JTextField jtfSenha;
+    private javax.swing.JTextField jtfTipoConta;
     // End of variables declaration//GEN-END:variables
 }

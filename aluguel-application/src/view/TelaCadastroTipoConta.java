@@ -5,6 +5,7 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.TipoConsole;
 import model.bean.TipoConta;
@@ -22,6 +23,7 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
      */
     public TelaCadastroTipoConta() {
         initComponents();
+        readJTable();
     }
     
     public void readJTable() {
@@ -72,8 +74,18 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
         });
 
         jbtnAtualizar.setLabel("Atualizar");
+        jbtnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnAtualizarActionPerformed(evt);
+            }
+        });
 
         jbtnExcluir.setLabel("Excluir");
+        jbtnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnExcluirActionPerformed(evt);
+            }
+        });
 
         jtbTipoConta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -86,6 +98,11 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
                 "ID", "Titulo", "Preço de Compra"
             }
         ));
+        jtbTipoConta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbTipoContaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtbTipoConta);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -148,11 +165,53 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
         tc.setPrecoCompra(Double.parseDouble(jtfPrecoCompra.getText()));
         tc.setTitulo(jtfTitulo.getText());
         dao.create(tc);
-        
+        readJTable();
         
         jtfTitulo.setText("");
         jtfPrecoCompra.setText("");
     }//GEN-LAST:event_jbtnCadastrarActionPerformed
+
+    private void jbtnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAtualizarActionPerformed
+        // TODO add your handling code here:
+        if (jtbTipoConta.getSelectedRow() != -1) {
+            TipoConta tc = new TipoConta();
+            TipoContaDAO dao = new TipoContaDAO();
+            tc.setTitulo(jtfTitulo.getText());
+            tc.setPrecoCompra(Double.parseDouble(jtfPrecoCompra.getText()));
+            tc.setId((int)jtbTipoConta.getValueAt(jtbTipoConta.getSelectedRow(), 0));
+            dao.update(tc);
+            readJTable();
+
+            jtfTitulo.setText("");
+            jtfPrecoCompra.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para atualizar!");
+        }
+    }//GEN-LAST:event_jbtnAtualizarActionPerformed
+
+    private void jbtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnExcluirActionPerformed
+        // TODO add your handling code here:
+        if (jtbTipoConta.getSelectedRow() != -1) {
+            TipoConta tc = new TipoConta();
+            TipoContaDAO dao = new TipoContaDAO();
+            tc.setId((int)jtbTipoConta.getValueAt(jtbTipoConta.getSelectedRow(), 0));
+            dao.delete(tc);
+            readJTable();
+
+            jtfTitulo.setText("");
+            jtfPrecoCompra.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para excluir!");
+        }
+    }//GEN-LAST:event_jbtnExcluirActionPerformed
+
+    private void jtbTipoContaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbTipoContaMouseClicked
+        // TODO add your handling code here:
+        if (jtbTipoConta.getSelectedRow() != -1) {
+            jtfTitulo.setText(jtbTipoConta.getValueAt(jtbTipoConta.getSelectedRow(), 1).toString());
+            jtfPrecoCompra.setText(jtbTipoConta.getValueAt(jtbTipoConta.getSelectedRow(), 2).toString());
+        }
+    }//GEN-LAST:event_jtbTipoContaMouseClicked
 
     /**
      * @param args the command line arguments

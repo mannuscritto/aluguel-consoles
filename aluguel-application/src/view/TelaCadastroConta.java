@@ -245,9 +245,9 @@ public class TelaCadastroConta extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jtbConta.getSelectedRow() != -1) {
             jtfPrecoAluguel.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 1).toString());
-            jtfNomeUsuario.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 1).toString());
-            jtfSenha.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 1).toString());
-            jtfTipoConta.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 1).toString());
+            jtfNomeUsuario.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 2).toString());
+            jtfSenha.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 3).toString());
+            jtfTipoConta.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 4).toString());
         }
     }//GEN-LAST:event_jtbContaMouseClicked
 

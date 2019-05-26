@@ -57,9 +57,10 @@ public class ConsoleDAO {
             
             while (rs.next()) {
                 Console c = new Console();
+                c.setId(rs.getInt("Console_PK"));
                 c.setNumeroSerie(rs.getString("NumeroSerie"));
+                c.setCapacArmaz(rs.getString("CapacArmaz"));
                 c.setPrecoAluguel(rs.getDouble("PrecoAluguel"));
-                c.setCapacArmaz(rs.getString("CapazArmaz"));
                 c.setTipoConsole(rs.getInt("CodTipoConsole"));
                 c.setConta(rs.getInt("CodConta"));
                 consoles.add(c);

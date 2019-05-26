@@ -33,6 +33,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
         for (Console c: consoledao.read()) {
             modelo.addRow(new Object[] {
                c.getId(),
+               c.getNumeroSerie(),
                c.getCapacArmaz(),
                c.getPrecoAluguel(),
                c.getTipoConsole(),
@@ -254,11 +255,11 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
     private void jtbConsoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbConsoleMouseClicked
         // TODO add your handling code here:
         if (jtbConsole.getSelectedRow() != -1) {
-            jtfNumeroSerie.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 2).toString());
-            jtfCapacArmaz.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 3).toString());
-            jtfPrecoAluguel.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 4).toString());
-            jtfTipoConsole.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 5).toString());
-            jtfConta.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 6).toString());
+            jtfNumeroSerie.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 1).toString());
+            jtfCapacArmaz.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 2).toString());
+            jtfPrecoAluguel.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 3).toString());
+            jtfTipoConsole.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 4).toString());
+            jtfConta.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 5).toString());
         }
     }//GEN-LAST:event_jtbConsoleMouseClicked
 

@@ -115,11 +115,17 @@
       <Properties>
         <Property name="label" type="java.lang.String" value="Atualizar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtnAtualizarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jbtnExcluir">
       <Properties>
         <Property name="label" type="java.lang.String" value="Excluir"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbtnExcluirActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -160,6 +166,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtbTipoContaMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

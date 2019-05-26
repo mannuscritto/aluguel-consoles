@@ -5,6 +5,13 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import model.bean.Jogo;
+import model.dao.JogoDAO;
+
 /**
  *
  * @author Bruno
@@ -16,6 +23,34 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
      */
     public TelaCadastroJogos() {
         initComponents();
+        DefaultTableModel modelo = (DefaultTableModel) jtabelJogos.getModel();
+        
+        jtabelJogos.setRowSorter(new TableRowSorter(modelo));
+        
+        readJTable();
+        
+    }
+    
+    public void readJTable()
+    {
+        DefaultTableModel modelo = (DefaultTableModel) jtabelJogos.getModel();
+        modelo = (DefaultTableModel) jtabelJogos.getModel();
+        modelo.setNumRows(0);
+        JogoDAO jdao = new JogoDAO();
+        
+        for(Jogo j: jdao.read())
+        {
+            modelo.addRow(new Object[]{
+                
+                j.getId(),
+                j.getTitulo(),
+                j.getGenero(),
+                j.getFaixaEtaria(),
+                j.getPrecoCompra(),
+                j.getPrecoVenda(),
+                j.getPrecoAluguel()
+            });
+        }
     }
 
     /**
@@ -46,7 +81,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
         jbCadastrar = new javax.swing.JButton();
         jcbFaixaEtaria = new javax.swing.JComboBox<>();
         jbAlterar = new javax.swing.JButton();
-        jbAlterar1 = new javax.swing.JButton();
+        jbExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtabelJogos = new javax.swing.JTable();
         jcbPlataforma = new javax.swing.JComboBox<>();
@@ -80,14 +115,29 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
 
         jbCadastrar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jbCadastrar.setText("Cadastrar");
+        jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCadastrarActionPerformed(evt);
+            }
+        });
 
         jcbFaixaEtaria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione uma Faixa Etária", "Em análise", "Maiores de 3 anos", "Livre para todos", "Maiores de 10 anos", "Maiores de 13 anos", "Maiores de 17 anos", "Conteúdo Adulto 18+", "Crianças e Adultos" }));
 
         jbAlterar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jbAlterar.setText("Alterar");
+        jbAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAlterarActionPerformed(evt);
+            }
+        });
 
-        jbAlterar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jbAlterar1.setText("Excluir");
+        jbExcluir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         jtabelJogos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,16 +167,21 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        jtabelJogos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtabelJogosKeyReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtabelJogos);
 
-        jcbPlataforma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Item 2", "Item 3", "Item 4" }));
+        jcbPlataforma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Pc", "Xbox", "Playstation" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,7 +196,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jbAlterar1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -216,7 +271,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
                     .addComponent(jbAlterar)
-                    .addComponent(jbAlterar1))
+                    .addComponent(jbExcluir))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9))
@@ -225,6 +280,116 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(656, 519));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
+        // TODO add your handling code here:
+       Jogo j = new Jogo();
+       JogoDAO dao = new JogoDAO();
+       
+       j.setTitulo(jtTitulo.getText());
+       j.setGenero(String.valueOf(jcbGenero.getSelectedItem()));
+       j.setQuantidade(Integer.parseInt(jtQuantidade.getText()));
+       j.setFaixaEtaria(String.valueOf(jcbFaixaEtaria.getSelectedItem()));
+       j.setPlataforma((int) jcbPlataforma.getSelectedItem());
+       j.setTipoMidia(String.valueOf(jcbTipoMidia.getSelectedItem()));
+       j.setPrecoCompra(Double.parseDouble(jtPrecoCompra.getText()));
+       j.setPrecoVenda(Double.parseDouble(jtCompraVenda.getText()));
+       j.setPrecoAluguel(Double.parseDouble(jtPrecoAluguel.getText()));
+       dao.create(j);
+       
+       
+       jtTitulo.setText("");
+       jcbGenero.setSelectedItem("");
+       jcbFaixaEtaria.setSelectedItem("");
+       jcbPlataforma.setSelectedItem("");
+       jcbTipoMidia.setSelectedItem("");
+       jtQuantidade.setText("");
+       jtPrecoCompra.setText("");
+       jtCompraVenda.setText("");
+       jtPrecoAluguel.setText("");
+       
+       readJTable();
+       
+    }//GEN-LAST:event_jbCadastrarActionPerformed
+    private void jtabelJogosMouseClicked(java.awt.event.MouseEvent evt) {                                            
+        // TODO add your handling code here:
+        
+        if (jtabelJogos.getSelectedRow() != -1) {
+            jtTitulo.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 1).toString());
+            jcbGenero.setSelectedItem(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 2).toString());
+            jcbFaixaEtaria.setSelectedItem(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 3).toString());
+            jtPrecoCompra.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 4).toString());
+            jtCompraVenda.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 5).toString());
+            jtPrecoAluguel.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 6).toString());
+        }
+        
+    }   
+    private void jtabelJogosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtabelJogosKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtabelJogosKeyReleased
+
+    private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
+        // TODO add your handling code here:
+        if (jtabelJogos.getSelectedRow() != -1)
+        {
+             Jogo j = new Jogo();
+             JogoDAO dao = new JogoDAO();
+       
+             j.setTitulo(jtTitulo.getText());
+             j.setGenero(String.valueOf(jcbGenero.getSelectedItem()));
+             j.setQuantidade(Integer.parseInt(jtQuantidade.getText()));
+             j.setFaixaEtaria(String.valueOf(jcbFaixaEtaria.getSelectedItem()));
+             j.setPlataforma((int) jcbPlataforma.getSelectedItem());
+             j.setTipoMidia(String.valueOf(jcbTipoMidia.getSelectedItem()));
+             j.setPrecoCompra(Double.parseDouble(jtPrecoCompra.getText()));
+             j.setPrecoVenda(Double.parseDouble(jtCompraVenda.getText()));
+             j.setPrecoAluguel(Double.parseDouble(jtPrecoAluguel.getText()));
+             j.setId((int)jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 0));
+             dao.update(j);
+       
+       
+             jtTitulo.setText("");
+             jcbGenero.setSelectedItem("");
+             jcbFaixaEtaria.setSelectedItem("");
+             jcbPlataforma.setSelectedItem("");
+             jcbTipoMidia.setSelectedItem("");
+             jtQuantidade.setText("");
+             jtPrecoCompra.setText("");
+             jtCompraVenda.setText("");
+             jtPrecoAluguel.setText("");
+       
+             readJTable();            
+        }
+    }//GEN-LAST:event_jbAlterarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        // TODO add your handling code here:
+        if (jtabelJogos.getSelectedRow() != -1)
+        {
+             Jogo j = new Jogo();
+             JogoDAO dao = new JogoDAO();          
+             j.setId((int)jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 0));
+             dao.delete(j);
+       
+       
+             jtTitulo.setText("");
+             jcbGenero.setSelectedItem("");
+             jcbFaixaEtaria.setSelectedItem("");
+             jcbPlataforma.setSelectedItem("");
+             jcbTipoMidia.setSelectedItem("");
+             jtQuantidade.setText("");
+             jtPrecoCompra.setText("");
+             jtCompraVenda.setText("");
+             jtPrecoAluguel.setText("");
+       
+             readJTable();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Selecione um jogo para excluir.");
+        }
+        
+    }//GEN-LAST:event_jbExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,8 +430,8 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbAlterar;
-    private javax.swing.JButton jbAlterar1;
     private javax.swing.JButton jbCadastrar;
+    private javax.swing.JButton jbExcluir;
     private javax.swing.JComboBox<String> jcbFaixaEtaria;
     private javax.swing.JComboBox<String> jcbGenero;
     private javax.swing.JComboBox<String> jcbPlataforma;

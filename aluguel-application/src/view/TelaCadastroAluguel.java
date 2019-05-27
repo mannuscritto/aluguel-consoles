@@ -5,6 +5,10 @@
  */
 package view;
 
+import java.sql.Date;
+import java.text.DateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.bean.Aluguel;
 import model.dao.AluguelDAO;
 
@@ -19,6 +23,25 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
      */
     public TelaCadastroAluguel() {
         initComponents();
+        readJTable();
+    }
+    
+    public void readJTable() {
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jtbAluguel.getModel();
+        modelo.setNumRows(0);
+        AluguelDAO dao = new AluguelDAO();
+        
+        for (Aluguel a: dao.read()) {
+            modelo.addRow(new Object[] {
+               a.getId(),
+               a.getDataInicio(),
+               a.getDataFinal(),
+               a.getValorTotal(),
+               a.getNumeroControles(),
+               a.getCliente()
+            });
+        }
     }
 
     /**
@@ -45,15 +68,12 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jSpinner3 = new javax.swing.JSpinner();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jftDataInicio = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jftDataFinal = new javax.swing.JFormattedTextField();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtbAluguel = new javax.swing.JTable();
         jtfCliente = new javax.swing.JTextField();
         jbtnPesquisar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -62,9 +82,10 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jTable5 = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jtfValorTotal = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
+        jbCadastrar = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        jbExcluir = new javax.swing.JButton();
+        jtfNumeroControles = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -115,38 +136,39 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jLabel7.setText("Controles");
 
-        jFormattedTextField1.setText("01/01/2019");
+        jftDataInicio.setText("01/01/2019");
 
         jLabel8.setText("Início");
 
-        jFormattedTextField2.setText("01/01/2019");
+        jftDataFinal.setText("01/01/2019");
 
         jLabel9.setText("Entrega");
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        jtbAluguel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Data de Início", "Data de Entrega", "Valor Total"
+                "ID", "Data de Início", "Data de Entrega", "Valor Total", "Controles", "Cliente"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable4);
-
-        jLabel15.setText("Multa por dia");
-
-        jTextField1.setText("R$ 0,00");
+        jtbAluguel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbAluguelMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(jtbAluguel);
 
         jbtnPesquisar.setText("Pesquisar");
 
@@ -194,16 +216,26 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jLabel2.setText("Valor total");
 
-        jButton6.setText("Adicionar");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jbCadastrar.setText("Cadastrar");
+        jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jbCadastrarActionPerformed(evt);
             }
         });
 
-        jButton8.setText("Editar");
+        jButton8.setText("Atualizar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
-        jButton9.setText("Remover");
+        jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,18 +261,13 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtfNumeroControles, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtfValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel15)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -256,11 +283,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jftDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jftDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -270,11 +297,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                                 .addGap(104, 104, 104)
                                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton6)
+                                .addComponent(jbCadastrar)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton8)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton9)))
+                                .addComponent(jbExcluir)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -284,9 +311,9 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel8)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jftDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jftDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtnPesquisar))
                 .addGap(18, 18, 18)
@@ -314,29 +341,93 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jtfValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfNumeroControles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton8)
-                    .addComponent(jButton9)
-                    .addComponent(jButton6))
+                    .addComponent(jbExcluir)
+                    .addComponent(jbCadastrar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         // TODO add your handling code here:
         Aluguel a = new Aluguel();
         AluguelDAO dao = new AluguelDAO();
-    }//GEN-LAST:event_jButton6ActionPerformed
+        a.setCliente(Integer.parseInt(jtfCliente.getText()));
+        a.setDataInicio(jftDataInicio.getText());
+        a.setDataFinal(jftDataFinal.getText());
+        a.setValorTotal(Double.parseDouble(jtfValorTotal.getText()));
+        a.setNumeroControles(Integer.parseInt(jtfNumeroControles.getText()));
+        dao.create(a);
+        readJTable();
+        
+        jtfCliente.setText("");
+        jftDataInicio.setText("");
+        jftDataFinal.setText("");
+        jtfValorTotal.setText("");
+        jtfNumeroControles.setText("");
+    }//GEN-LAST:event_jbCadastrarActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        if (jtbAluguel.getSelectedRow() != -1) {
+            Aluguel a = new Aluguel();
+            AluguelDAO dao = new AluguelDAO();
+            a.setCliente(Integer.parseInt(jtfCliente.getText()));
+            a.setDataInicio(jftDataInicio.getText());
+            a.setDataFinal(jftDataFinal.getText());
+            a.setValorTotal(Double.parseDouble(jtfValorTotal.getText()));
+            a.setNumeroControles(Integer.parseInt(jtfNumeroControles.getText()));
+            dao.update(a);
+            readJTable();
+
+            jtfCliente.setText("");
+            jftDataInicio.setText("");
+            jftDataFinal.setText("");
+            jtfValorTotal.setText("");
+            jtfNumeroControles.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para atualizar!");
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        // TODO add your handling code here:
+        if (jtbAluguel.getSelectedRow() != -1) {
+            Aluguel a = new Aluguel();
+            AluguelDAO dao = new AluguelDAO();
+            a.setId((int)jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0));
+            dao.delete(a);
+            readJTable();
+
+            jtfCliente.setText("");
+            jftDataInicio.setText("");
+            jftDataFinal.setText("");
+            jtfValorTotal.setText("");
+            jtfNumeroControles.setText("");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um registro para excluir!");
+        }
+    }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jtbAluguelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbAluguelMouseClicked
+        // TODO add your handling code here:
+        if (jtbAluguel.getSelectedRow() != -1) {
+            jftDataInicio.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 1).toString());
+            jftDataFinal.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 2).toString());
+            jtfValorTotal.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 3).toString());
+            jtfNumeroControles.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 4).toString());
+            jtfCliente.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 5).toString());
+        }
+    }//GEN-LAST:event_jtbAluguelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -380,15 +471,10 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -400,15 +486,18 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JSpinner jSpinner3;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton jbCadastrar;
+    private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbtnPesquisar;
+    private javax.swing.JFormattedTextField jftDataFinal;
+    private javax.swing.JFormattedTextField jftDataInicio;
+    private javax.swing.JTable jtbAluguel;
     private javax.swing.JTextField jtfCliente;
+    private javax.swing.JTextField jtfNumeroControles;
     private javax.swing.JTextField jtfValorTotal;
     // End of variables declaration//GEN-END:variables
 }

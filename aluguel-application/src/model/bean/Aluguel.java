@@ -24,32 +24,32 @@ public class Aluguel {
         return dataAbertura;
     }
 
-    public void setDataAbertura(Date dataAbertura) {
-        this.dataAbertura = dataAbertura;
+    public void setDataAbertura(String dataAbertura) {
+        this.dataAbertura = Date.valueOf(dataAbertura);
     }
 
     public Date getDataInicio() {
         return dataInicio;
     }
 
-    public void setDataInicio(Date dataInicio) {
-        this.dataInicio = dataInicio;
+    public void setDataInicio(String dataInicio) {
+        this.dataInicio = Date.valueOf(dataInicio);
     }
 
     public Date getDataFinal() {
         return dataFinal;
     }
 
-    public void setDataFinal(Date dataFinal) {
-        this.dataFinal = dataFinal;
+    public void setDataFinal(String dataFinal) {
+        this.dataFinal = Date.valueOf(dataFinal);
     }
 
     public Date getDataFechamento() {
         return dataFechamento;
     }
 
-    public void setDataFechamento(Date dataFechamento) {
-        this.dataFechamento = dataFechamento;
+    public void setDataFechamento(String dataFechamento) {
+        this.dataFechamento = Date.valueOf(dataFechamento);
     }
 
     public double getValorTotal() {

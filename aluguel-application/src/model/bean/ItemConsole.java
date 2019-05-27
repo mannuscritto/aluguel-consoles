@@ -2,7 +2,7 @@ package model.bean;
 
 public class ItemConsole {
     private int id;
-    private int aluguel;
+    private Aluguel aluguel;
     private int console;
 
     public int getId() {
@@ -13,11 +13,11 @@ public class ItemConsole {
         this.id = id;
     }
 
-    public int getAluguel() {
+    public Aluguel getAluguel() {
         return aluguel;
     }
 
-    public void setAluguel(int aluguel) {
+    public void setAluguel(Aluguel aluguel) {
         this.aluguel = aluguel;
     }
 

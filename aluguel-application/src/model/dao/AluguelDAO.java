@@ -27,14 +27,12 @@ public class AluguelDAO {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("INSERT INTO aluguel (DataAbertura, DataInicio, DataFinal, DataFechamento, ValorTotal, NumeroControles, CodCliente) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            stmt.setDate(1, a.getDataAbertura());
-            stmt.setDate(2, a.getDataInicio());
-            stmt.setDate(3, a.getDataFinal());
-            stmt.setDate(4, a.getDataFechamento());
-            stmt.setDouble(5, a.getValorTotal());
-            stmt.setInt(6, a.getNumeroControles());
-            stmt.setInt(7, a.getCliente());
+            stmt = con.prepareStatement("INSERT INTO aluguel (DataInicio, DataFinal, ValorTotal, NumeroControles, CodCliente) VALUES (?, ?, ?, ?, ?)");
+            stmt.setDate(1, a.getDataInicio());
+            stmt.setDate(2, a.getDataFinal());
+            stmt.setDouble(3, a.getValorTotal());
+            stmt.setInt(4, a.getNumeroControles());
+            stmt.setInt(5, a.getCliente());
             
             stmt.executeUpdate();
             
@@ -60,9 +58,9 @@ public class AluguelDAO {
             while (rs.next()) {
                 Aluguel a = new Aluguel();
                 a.setId(rs.getInt("Aluguel_PK"));
-                a.setDataAbertura(rs.getDate("DataAbertura"));
-                a.setDataFinal(rs.getDate("DataFinal"));
-                a.setDataFechamento(rs.getDate("DataFechamento"));
+                a.setDataAbertura(rs.getString("DataAbertura"));
+                a.setDataFinal(rs.getString("DataFinal"));
+                a.setDataFechamento(rs.getString("DataFechamento"));
                 a.setValorTotal(rs.getDouble("ValorTotal"));
                 a.setNumeroControles(rs.getInt("NumeroControles"));
                 a.setCliente(rs.getInt("CodCliente"));
@@ -75,5 +73,48 @@ public class AluguelDAO {
         }
         
         return alugueis;
+    }
+    
+    public void update(Aluguel a) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE aluguel SET DataInicio = ?, DataFinal = ?, ValorTotal = ?, NumeroControles = ?, CodCliente = ? WHERE Aluguel_PK = ?");
+            stmt.setDate(1, a.getDataInicio());
+            stmt.setDate(2, a.getDataFinal());
+            stmt.setDouble(3, a.getValorTotal());
+            stmt.setInt(4, a.getNumeroControles());
+            stmt.setInt(5, a.getCliente());
+            stmt.setInt(6, a.getId());
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex);
+            Logger.getLogger(AluguelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+    
+    public void delete(Aluguel a) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("DELETE from aluguel WHERE Aluguel_PK = ?");
+            stmt.setInt(1, a.getId());
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
+            Logger.getLogger(AluguelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
     }
 }

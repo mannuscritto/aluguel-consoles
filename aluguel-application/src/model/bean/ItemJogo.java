@@ -2,7 +2,7 @@ package model.bean;
 
 public class ItemJogo {
     private int id;
-    private int aluguel;
+    private Aluguel aluguel;
     private int jogo;
     private int quantidade;
 
@@ -14,11 +14,11 @@ public class ItemJogo {
         this.id = id;
     }
 
-    public int getAluguel() {
+    public Aluguel getAluguel() {
         return aluguel;
     }
 
-    public void setAluguel(int aluguel) {
+    public void setAluguel(Aluguel aluguel) {
         this.aluguel = aluguel;
     }
 

@@ -27,9 +27,9 @@ public class TelefoneDAO {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("INSERT INTO telefone (codArea, numero, cliente) VALUES (?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO telefone (CodArea, Numero, Cliente) VALUES (?, ?, ?)");
             stmt.setInt(1, tl.getCodArea());
-            stmt.setInt(2, (int) tl.getNumero());
+            stmt.setLong(2, tl.getNumero());
             stmt.setInt(3, tl.getCliente());
         
             
@@ -38,7 +38,7 @@ public class TelefoneDAO {
             
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao salvar telefone: " + ex);
             Logger.getLogger(ConsoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
@@ -60,9 +60,9 @@ public class TelefoneDAO {
             while (rs.next())
             {
                 Telefone telefone = new Telefone();
-                
-                telefone.setCodArea(rs.getInt("codAera"));
-                telefone.setNumero(rs.getInt("Numero"));
+                telefone.setId(rs.getInt("Telefone_PK"));
+                telefone.setCodArea(rs.getInt("CodAera"));
+                telefone.setNumero(rs.getLong("Numero"));
                 telefone.setCliente(rs.getInt("Cliente"));
                 telefone.add(telefone);
                 

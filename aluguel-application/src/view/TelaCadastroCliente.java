@@ -6,6 +6,7 @@
 package view;
 
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.bean.Cliente;
 import model.bean.Endereco;
 import model.bean.Telefone;
@@ -24,6 +25,25 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
      */
     public TelaCadastroCliente() {
         initComponents();
+        readJTable();
+    }
+    
+    public void readJTable() {
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jtbCliente.getModel();
+        modelo.setNumRows(0);
+        ClienteDAO dao = new ClienteDAO();
+        
+        for (Cliente c: dao.read()) {
+            modelo.addRow(new Object[] {
+               c.getId(),
+               c.getPrimeiroNome(),
+               c.getUltimoNome(),
+               c.getEmail(),
+               c.getDocumento(),
+               c.getTipocliente()
+            });
+        }
     }
     
     private void resetCampos() {
@@ -163,6 +183,11 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jtbCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbClienteMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jtbCliente);
@@ -318,8 +343,10 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
             cl.setTipocliente(jcbTipoCliente.getSelectedIndex());
         }
 
-        dao.create();
+        dao.create(cl);
 
+        JOptionPane.showMessageDialog(this, "Código do cliente: " + cl.getId());
+        
         Endereco e = new Endereco()       ;
         EnderecoDAO edao = new EnderecoDAO();
         e.setRua(jtRua.getText());
@@ -327,7 +354,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         e.setComplemento(jtComplemento.getText());
         e.setBairro(jtBairro.getText());
         e.setCidade(jtCidade.getText());
-        e.setUf(jtUltimoNome.getText());
+        e.setUf(jcbUF.getSelectedItem().toString());
         e.setCep(jtCEP.getText());
         e.setCliente(cl.getId());
         edao.create(e);
@@ -345,13 +372,17 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
         // TODO add your handling code here:
-        if (jtabelClientes.getSelectedRow() != -1) {       
+        if (jtbCliente.getSelectedRow() != -1) {       
             Cliente cl = new Cliente();
             ClienteDAO dao = new ClienteDAO();
             cl.setPrimeiroNome(jtPrimeiroNome.getText());
             cl.setUltimoNome(jtUltimoNome.getText());
             cl.setEmail(jtEmail.getText());
             cl.setDocumento(jtCNPJ.getText());
+            if (jcbTipoCliente.getSelectedIndex() > 0) {
+                cl.setTipocliente(jcbTipoCliente.getSelectedIndex());
+            }
+            cl.setId((int)jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 0));
             dao.update(cl);
 
             resetCampos();
@@ -373,6 +404,17 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente para excluir.");
         }
     }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jtbClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbClienteMouseClicked
+        // TODO add your handling code here:
+        if (jtbCliente.getSelectedRow() != -1) {
+            jtPrimeiroNome.setText(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 1).toString());
+            jtUltimoNome.setText(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 2).toString());
+            jtEmail.setText(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 3).toString());
+            jtCNPJ.setText(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 4).toString());
+            jcbTipoCliente.setSelectedIndex(Integer.parseInt(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 5).toString()));
+        }
+    }//GEN-LAST:event_jtbClienteMouseClicked
 
     /**
      * @param args the command line arguments
@@ -448,7 +490,4 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     private javax.swing.JTable jtbCliente;
     // End of variables declaration//GEN-END:variables
 
-    private void readJTable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

@@ -38,14 +38,16 @@ public class ClienteDAO {
             
             stmt = con.prepareStatement("SELECT max(Cliente_PK) as codigo FROM Cliente");
             rs = stmt.executeQuery();
-            cl.setId(rs.getInt("codigo"));
+            while (rs.next()) {
+                cl.setId(rs.getInt("codigo"));
+            }
             
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex);
+            JOptionPane.showMessageDialog(null, "Erro ao salvar cliente: " + ex);
             Logger.getLogger(ConsoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            ConnectionFactory.closeConnection(con, stmt);
+            ConnectionFactory.closeConnection(con, stmt, rs);
         }
     }
     
@@ -64,13 +66,13 @@ public class ClienteDAO {
             while (rs.next())
             {
                 Cliente cliente = new Cliente();
-                
-                cliente.setPrimeiroNome(rs.getString("primeiroNome"));
-                cliente.setUltimoNome(rs.getString("ultimoNome"));
-                cliente.setEmail(rs.getString("email"));
-                cliente.setDocumento(rs.getString("documento"));
-                cliente.setTipocliente(rs.getInt("id"));
-                cliente.add(cliente);
+                cliente.setId(rs.getInt("Cliente_PK"));
+                cliente.setPrimeiroNome(rs.getString("PrimeiroNome"));
+                cliente.setUltimoNome(rs.getString("UltimoNome"));
+                cliente.setEmail(rs.getString("Email"));
+                cliente.setDocumento(rs.getString("Documento"));
+                cliente.setTipocliente(rs.getInt("TipoCliente"));
+                clientes.add(cliente);
                 
             }
                     
@@ -85,53 +87,48 @@ public class ClienteDAO {
         
         return clientes;
     }
-     public void update(Cliente cl) {
+     public void update(Cliente c) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE cliente SET PrimeiroNome = ?,UltimoNome = ?,Email = ?"
-                    + ",Documento = ?,TipoCliente = ? WHERE Cliente_PK = ?");
-            stmt.setString(1, cl.getPrimeiroNome());
-            stmt.setString(2, cl.getUltimoNome());
-            stmt.setString(3, cl.getEmail());
-            stmt.setString(4, cl.getDocumento());
-            stmt.setInt(5, cl.getTipocliente());
+            stmt = con.prepareStatement("UPDATE cliente SET PrimeiroNome = ?, UltimoNome = ?, Email = ?, Documento = ?, TipoCliente = ? WHERE Cliente_PK = ?");
+            stmt.setString(1, c.getPrimeiroNome());
+            stmt.setString(2, c.getUltimoNome());
+            stmt.setString(3, c.getEmail());
+            stmt.setString(4, c.getDocumento());
+            stmt.setInt(5, c.getTipocliente());
+            stmt.setInt(6, c.getId());
             
             stmt.executeUpdate();
             
             JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao Atualizar: " + ex);
-            
-           
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex);
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
-    
     }
-      public void delete(Cliente cl) {
+    public void delete(Cliente cl) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
-        
+
         try {
-            stmt = con.prepareStatement("DELETE from jogo WHERE Cliente_PK = ?");
+            stmt = con.prepareStatement("DELETE from cliente WHERE Cliente_PK = ?");
             stmt.setInt(1, cl.getId());
-            
+
             stmt.executeUpdate();
-            
+
             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
-          
+
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
 
-    public void create() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
     
 

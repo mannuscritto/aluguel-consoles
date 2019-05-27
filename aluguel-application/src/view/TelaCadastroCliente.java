@@ -5,6 +5,10 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+import model.bean.Cliente;
+import model.dao.ClienteDAO;
+
 /**
  *
  * @author Bruno
@@ -55,9 +59,9 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         jlDDD = new javax.swing.JLabel();
         jtDDD = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jcbTipoCliente = new javax.swing.JComboBox<>();
+        jbAlterar = new javax.swing.JButton();
+        jbExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -101,6 +105,11 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
         jbCadastrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jbCadastrar.setText("Cadastrar");
+        jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCadastrarActionPerformed(evt);
+            }
+        });
 
         jlTelefone.setText("Telefone");
 
@@ -120,13 +129,23 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
         jLabel8.setText("Tipo de Cliente");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione o tipo", "Pessoa Física", "Pessoa Jurídica" }));
+        jcbTipoCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione o tipo", "Pessoa Física", "Pessoa Jurídica" }));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Alterar");
+        jbAlterar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jbAlterar.setText("Alterar");
+        jbAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAlterarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Excluir");
+        jbExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jbExcluir.setText("Excluir");
+        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExcluirActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -154,7 +173,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jcbTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jlPrimeiroNome)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -205,9 +224,9 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jButton1)
+                                    .addComponent(jbAlterar)
                                     .addGap(18, 18, 18)
-                                    .addComponent(jButton2))
+                                    .addComponent(jbExcluir))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jlEmail)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -229,7 +248,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jcbTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlCNPJ)
                     .addComponent(jtCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -269,8 +288,8 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jbAlterar)
+                    .addComponent(jbExcluir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                 .addContainerGap())
@@ -295,6 +314,95 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     private void jtDDDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtDDDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtDDDActionPerformed
+
+    private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
+        // TODO add your handling code here:
+       Cliente cl = new Cliente();
+       ClienteDAO dao = new ClienteDAO();
+       cl.setPrimeiroNome(jtPrimeiroNome.getText());
+       cl.setUltimoNome(jtUltimoNome.getText());
+       cl.setEmail(jtEmail.getText());
+       cl.setDocumento(jtCNPJ.getText());
+       dao.create();
+       
+       
+       jcbTipoCliente.setSelectedItem("");
+       jtPrimeiroNome.setText("");
+       jtUltimoNome.setText("");
+       jtEmail.setText("");
+       jtRua.setText("");
+       jtBairro.setText("");
+       jtCidade.setText("");
+       jtNumero.setText("");
+       jtCEP.setText("");
+       jtComplemento.setText("");
+       jtCNPJ.setText("");
+       readJTable();
+       
+    }//GEN-LAST:event_jbCadastrarActionPerformed
+
+    private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
+        // TODO add your handling code here:
+         if (jtabelClientes.getSelectedRow() != -1)
+        {
+             Cliente j = new Cliente();
+             ClienteDAO dao = new ClienteDAO();
+       
+             Cliente cl = new Cliente();
+             ClienteDAO dao = new ClienteDAO();
+             cl.setPrimeiroNome(jtPrimeiroNome.getText());
+             cl.setUltimoNome(jtUltimoNome.getText());
+             cl.setEmail(jtEmail.getText());
+             cl.setDocumento(jtCNPJ.getText());
+             dao.update(cl);
+
+
+             jcbTipoCliente.setSelectedItem("");
+             jtPrimeiroNome.setText("");
+             jtUltimoNome.setText("");
+             jtEmail.setText("");
+             jtRua.setText("");
+             jtBairro.setText("");
+             jtCidade.setText("");
+             jtNumero.setText("");
+             jtCEP.setText("");
+             jtComplemento.setText("");
+             jtCNPJ.setText("");
+             readJTable();  
+        }
+         
+        
+    }//GEN-LAST:event_jbAlterarActionPerformed
+
+    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
+        // TODO add your handling code here:
+         if (jtabelClientes.getSelectedRow() != -1)
+        {
+             Cliente cl = new Cliente();
+             ClienteDAO dao = new ClienteDAO();          
+             cl.setId((int)jtabelClientes.getValueAt(jtabelClientes.getSelectedRow(), 0));
+             dao.delete(cl);
+       
+       
+             jcbTipoCliente.setSelectedItem("");
+             jtPrimeiroNome.setText("");
+             jtUltimoNome.setText("");
+             jtEmail.setText("");
+             jtRua.setText("");
+             jtBairro.setText("");
+             jtCidade.setText("");
+             jtNumero.setText("");
+             jtCEP.setText("");
+             jtComplemento.setText("");
+             jtCNPJ.setText("");
+             readJTable();
+       
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Selecione um Cliente para excluir.");
+        }
+    }//GEN-LAST:event_jbExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -335,13 +443,13 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbAlterar;
     private javax.swing.JButton jbCadastrar;
+    private javax.swing.JButton jbExcluir;
+    private javax.swing.JComboBox<String> jcbTipoCliente;
     private javax.swing.JComboBox<String> jcbUF;
     private javax.swing.JLabel jlBairro;
     private javax.swing.JLabel jlCEP;
@@ -369,4 +477,8 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jtTelefone;
     private javax.swing.JTextField jtUltimoNome;
     // End of variables declaration//GEN-END:variables
+
+    private void readJTable() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

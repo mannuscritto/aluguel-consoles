@@ -37,6 +37,10 @@ public class Telefone {
     public void setCliente(int cliente) {
         this.cliente = cliente;
     }
+
+    public void add(Telefone telefone) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
 }

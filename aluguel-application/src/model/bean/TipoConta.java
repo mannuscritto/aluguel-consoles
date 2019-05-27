@@ -37,4 +37,9 @@ public class TipoConta {
     public void setPrecoCompra(double precoCompra) {
         this.precoCompra = precoCompra;
     }
+
+    @Override
+    public String toString() {
+        return getTitulo();
+    }
 }

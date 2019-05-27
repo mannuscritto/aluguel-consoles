@@ -28,7 +28,7 @@ public class ItemJogoDAO {
         try {
             stmt = con.prepareStatement("INSERT INTO itemjogo (Aluguel, Jogo, Quantidade) VALUES (?, ?, ?)");
             stmt.setInt(1, ij.getAluguel().getId());
-            stmt.setInt(2, ij.getJogo());
+            stmt.setInt(2, ij.getJogo().getId());
             stmt.setInt(3, ij.getQuantidade());
             
             stmt.executeUpdate();
@@ -55,7 +55,7 @@ public class ItemJogoDAO {
             while (rs.next()) {
                 ItemJogo ij = new ItemJogo();
                 ij.setId(rs.getInt("ItemJogo_PK"));
-                ij.setJogo(rs.getInt("Jogo"));
+                ij.setJogoId(rs.getInt("Jogo"));
                 ij.setQuantidade(rs.getInt("Quantidade"));
                 itensjogo.add(ij);
             }
@@ -75,7 +75,7 @@ public class ItemJogoDAO {
         try {
             stmt = con.prepareStatement("UPDATE itemjogo SET Aluguel = ?, Jogo = ?, Quantidade = ? WHERE ItemJogo_PK = ?");
            stmt.setInt(1, ij.getAluguel().getId());
-            stmt.setInt(2, ij.getJogo());
+            stmt.setInt(2, ij.getJogoId());
             stmt.setInt(3, ij.getQuantidade());
             stmt.setInt(4, ij.getId());
             

@@ -25,6 +25,7 @@ public class AluguelDAO {
     public void create(Aluguel a) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
+        ResultSet rs = null;
         
         try {
             stmt = con.prepareStatement("INSERT INTO aluguel (DataInicio, DataFinal, ValorTotal, NumeroControles, CodCliente) VALUES (?, ?, ?, ?, ?)");
@@ -36,12 +37,18 @@ public class AluguelDAO {
             
             stmt.executeUpdate();
             
+            stmt = con.prepareStatement("SELECT max(Aluguel_PK) AS codigo FROM aluguel");
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                a.setId(rs.getInt("codigo"));
+            }
+            
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex);
             Logger.getLogger(AluguelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            ConnectionFactory.closeConnection(con, stmt);
+            ConnectionFactory.closeConnection(con, stmt, rs);
         }
     }
     

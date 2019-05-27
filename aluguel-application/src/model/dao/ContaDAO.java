@@ -31,7 +31,7 @@ public class ContaDAO {
             stmt.setDouble(1, c.getPrecoAluguel());
             stmt.setString(2, c.getNomeUsuario());
             stmt.setString(3, c.getSenha());
-            stmt.setInt(4, c.getTipoConta());
+            stmt.setInt(4, c.getTipoConta().getId());
             
             stmt.executeUpdate();
             
@@ -56,11 +56,12 @@ public class ContaDAO {
             
             while (rs.next()) {
                 Conta c = new Conta();
+                TipoContaDAO dao = new TipoContaDAO();
                 c.setId(rs.getInt("Conta_PK"));
                 c.setPrecoAluguel(rs.getDouble("PrecoAluguel"));
                 c.setNomeUsuario(rs.getString("NomeUsuario"));
                 c.setSenha(rs.getString("Senha"));
-                c.setTipoConta(rs.getInt("TipoConta"));
+                c.setTipoConta(dao.search(rs.getInt("TipoConta")));
                 contas.add(c);
             }
         } catch (SQLException ex) {
@@ -81,7 +82,7 @@ public class ContaDAO {
             stmt.setDouble(1, c.getPrecoAluguel());
             stmt.setString(2, c.getNomeUsuario());
             stmt.setString(3, c.getSenha());
-            stmt.setInt(4, c.getTipoConta());
+            stmt.setInt(4, c.getTipoConta().getId());
             stmt.setInt(5, c.getId());
             
             stmt.executeUpdate();
@@ -112,5 +113,33 @@ public class ContaDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
+    }
+    
+     public Conta search(int pk) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Conta c = new Conta();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM conta WHERE Conta_PK = ?");
+            stmt.setInt(1, pk);
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                TipoContaDAO dao = new TipoContaDAO();
+                c.setId(rs.getInt("Conta_PK"));
+                c.setPrecoAluguel(rs.getDouble("PrecoAluguel"));
+                c.setNomeUsuario(rs.getString("NomeUsuario"));
+                c.setSenha(rs.getString("Senha"));
+                c.setTipoConta(dao.search(rs.getInt("TipoConta")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return c;
     }
 }

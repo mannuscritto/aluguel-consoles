@@ -6,7 +6,7 @@ public class Console {
     private double precoAluguel;
     private String capacArmaz;
     private TipoConsole tipoConsole;
-    private int conta;
+    private Conta conta;
 
     public int getId() {
         return id;
@@ -47,18 +47,26 @@ public class Console {
     public void setTipoConsole(TipoConsole tipoConsole) {
         this.tipoConsole = tipoConsole;
     }
+    
+    public int getTipoConsoleId() {
+        return getTipoConsole().getId();
+    }
+    
+    public void setTipoConsoleId(int TipoConsoleId) {
+        this.tipoConsole.setId(TipoConsoleId);
+    }
 
-    public int getConta() {
+    public Conta getConta() {
         return conta;
     }
 
-    public void setConta(int conta) {
+    public void setConta(Conta conta) {
         this.conta = conta;
     }
 
     @Override
     public String toString() {
-        return getNumeroSerie();
+        return getTipoConsole().getModelo();
     }
     
 }

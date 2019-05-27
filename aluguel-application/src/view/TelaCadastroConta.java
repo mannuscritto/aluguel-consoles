@@ -7,7 +7,9 @@ package view;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Conta;
+import model.bean.TipoConta;
 import model.dao.ContaDAO;
+import model.dao.TipoContaDAO;
 
 /**
  *
@@ -21,6 +23,15 @@ public class TelaCadastroConta extends javax.swing.JFrame {
     public TelaCadastroConta() {
         initComponents();
         readJTable();
+        readJComboBox();
+    }
+    
+    public void readJComboBox() {
+        TipoContaDAO dao = new TipoContaDAO();
+        
+        for (TipoConta c: dao.read()) {
+            jcbTipoConta.addItem(c);
+        }
     }
 
     public void readJTable() {
@@ -113,8 +124,6 @@ public class TelaCadastroConta extends javax.swing.JFrame {
 
         jLabel4.setText("Tipo de conta");
 
-        jcbTipoConta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,7 +201,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
         c.setPrecoAluguel(Double.parseDouble(jtfPrecoAluguel.getText()));
         c.setNomeUsuario(jtfNomeUsuario.getText());
         c.setSenha(jtfSenha.getText());
-        c.setTipoConta(Integer.parseInt(jtfTipoConta.getText()));
+        c.setTipoConta((TipoConta)jcbTipoConta.getSelectedItem());
         dao.create(c);
         readJTable();
         
@@ -210,7 +219,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
             c.setPrecoAluguel(Double.parseDouble(jtfPrecoAluguel.getText()));
             c.setNomeUsuario(jtfNomeUsuario.getText());
             c.setSenha(jtfSenha.getText());
-            c.setTipoConta(Integer.parseInt(jtfTipoConta.getText()));
+            c.setTipoConta((TipoConta)jcbTipoConta.getSelectedItem());
             dao.update(c);
             readJTable();
 
@@ -295,7 +304,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
     private javax.swing.JButton jbtnAtualizar;
     private javax.swing.JButton jbtnCadastrar;
     private javax.swing.JButton jbtnExcluir;
-    private javax.swing.JComboBox<String> jcbTipoConta;
+    private javax.swing.JComboBox<Object> jcbTipoConta;
     private javax.swing.JTable jtbConta;
     private javax.swing.JTextField jtfNomeUsuario;
     private javax.swing.JTextField jtfPrecoAluguel;

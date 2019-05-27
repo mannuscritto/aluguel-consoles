@@ -8,8 +8,10 @@ package view;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Console;
+import model.bean.Conta;
 import model.bean.TipoConsole;
 import model.dao.ConsoleDAO;
+import model.dao.ContaDAO;
 import model.dao.TipoConsoleDAO;
 
 /**
@@ -25,6 +27,15 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
         initComponents();
         readJTable();
         readJComboBoxTipoConsole();
+        readJComboBoxConta();
+    }
+    
+    public void readJComboBoxConta() {
+        ContaDAO dao = new ContaDAO();
+        
+        for (Conta c: dao.read()) {
+            jcbConta.addItem(c);
+        }
     }
 
     public void readJComboBoxTipoConsole() {
@@ -75,8 +86,8 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jtfCapacArmaz = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jtfConta = new javax.swing.JTextField();
         jcbTipoConsole = new javax.swing.JComboBox<>();
+        jcbConta = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Consoles");
@@ -139,7 +150,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -159,7 +170,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jtfPrecoAluguel, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                    .addComponent(jtfConta))
+                                    .addComponent(jcbConta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -187,14 +198,14 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jtfConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbAlterar)
                     .addComponent(jbExcluir)
                     .addComponent(jbCadastrar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -209,7 +220,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
         c.setPrecoAluguel(Double.parseDouble(jtfPrecoAluguel.getText()));
         c.setCapacArmaz(jtfCapacArmaz.getText());
         c.setTipoConsole((TipoConsole)jcbTipoConsole.getSelectedItem());
-        c.setConta(Integer.parseInt(jtfConta.getText()));
+        c.setConta((Conta)jcbConta.getSelectedItem());
         dao.create(c);
         readJTable();
         
@@ -217,7 +228,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
         jtfPrecoAluguel.setText("");
         jtfCapacArmaz.setText("");
         jcbTipoConsole.setSelectedIndex(0);
-        jtfConta.setText("");
+        jcbConta.setSelectedIndex(0);
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
@@ -229,7 +240,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
             c.setPrecoAluguel(Double.parseDouble(jtfPrecoAluguel.getText()));
             c.setCapacArmaz(jtfCapacArmaz.getText());
             c.setTipoConsole((TipoConsole)jcbTipoConsole.getSelectedItem());
-            c.setConta(Integer.parseInt(jtfConta.getText()));
+            c.setConta((Conta)jcbConta.getSelectedItem());
             c.setId((int)jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 0));
             dao.update(c);
             readJTable();
@@ -238,7 +249,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
             jtfPrecoAluguel.setText("");
             jtfCapacArmaz.setText("");
             jcbTipoConsole.setSelectedIndex(0);
-            jtfConta.setText("");
+            jcbConta.setSelectedIndex(0);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro para atualizar!");
         }
@@ -257,7 +268,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
             jtfPrecoAluguel.setText("");
             jtfCapacArmaz.setText("");
             jcbTipoConsole.setSelectedIndex(0);
-            jtfConta.setText("");
+            jcbConta.setSelectedIndex(0);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro para excluir!");
         }
@@ -270,7 +281,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
             jtfCapacArmaz.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 2).toString());
             jtfPrecoAluguel.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 3).toString());
             jcbTipoConsole.setSelectedItem(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 4));
-            jtfConta.setText(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 5).toString());
+            jcbConta.setSelectedItem(jtbConsole.getValueAt(jtbConsole.getSelectedRow(), 5).toString());
         }
     }//GEN-LAST:event_jtbConsoleMouseClicked
 
@@ -319,10 +330,10 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
     private javax.swing.JButton jbAlterar;
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbExcluir;
+    private javax.swing.JComboBox<Object> jcbConta;
     private javax.swing.JComboBox<Object> jcbTipoConsole;
     private javax.swing.JTable jtbConsole;
     private javax.swing.JTextField jtfCapacArmaz;
-    private javax.swing.JTextField jtfConta;
     private javax.swing.JTextField jtfNumeroSerie;
     private javax.swing.JTextField jtfPrecoAluguel;
     // End of variables declaration//GEN-END:variables

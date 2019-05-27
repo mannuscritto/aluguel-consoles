@@ -32,7 +32,7 @@ public class ConsoleDAO {
             stmt.setDouble(2, c.getPrecoAluguel());
             stmt.setString(3, c.getCapacArmaz());
             stmt.setInt(4, c.getTipoConsole().getId());
-            stmt.setInt(5, c.getConta());
+            stmt.setInt(5, c.getConta().getId());
             
             stmt.executeUpdate();
             
@@ -57,11 +57,14 @@ public class ConsoleDAO {
             
             while (rs.next()) {
                 Console c = new Console();
+                TipoConsoleDAO tcdao = new TipoConsoleDAO();
+                ContaDAO cdao = new ContaDAO();
                 c.setId(rs.getInt("Console_PK"));
                 c.setNumeroSerie(rs.getString("NumeroSerie"));
-                c.setCapacArmaz(rs.getString("CapacArmaz"));
                 c.setPrecoAluguel(rs.getDouble("PrecoAluguel"));
-                c.setConta(rs.getInt("CodConta"));
+                c.setCapacArmaz(rs.getString("CapacArmaz"));
+                c.setConta(cdao.search(rs.getInt("CodConta")));
+                c.setTipoConsole(tcdao.search(rs.getInt("CodTipoConsole")));
                 consoles.add(c);
             }
         } catch (SQLException ex) {
@@ -83,7 +86,7 @@ public class ConsoleDAO {
             stmt.setDouble(2, c.getPrecoAluguel());
             stmt.setString(3, c.getCapacArmaz());
             stmt.setInt(4, c.getTipoConsole().getId());
-            stmt.setInt(5, c.getConta());
+            stmt.setInt(5, c.getConta().getId());
             stmt.setInt(6, c.getId());
             
             stmt.executeUpdate();

@@ -108,4 +108,28 @@ public class TipoConsoleDAO {
         }
     }
     
+    public TipoConsole search(int pk) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        TipoConsole tp = new TipoConsole();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM tipoconsole WHERE TipoConsole_PK = ?");
+            stmt.setInt(1, pk);
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                tp.setId(rs.getInt("TipoConsole_PK"));
+                tp.setMarca(rs.getString("Marca"));
+                tp.setModelo(rs.getString("Modelo"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoConsoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return tp;
+    }
 }

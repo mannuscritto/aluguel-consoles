@@ -107,4 +107,29 @@ public class TipoContaDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
+    
+     public TipoConta search(int pk) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        TipoConta tc = new TipoConta();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM tipoconta WHERE TipoConta_PK = ?");
+            stmt.setInt(1, pk);
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                tc.setId(rs.getInt("TipoConta_PK"));
+                tc.setTitulo(rs.getString("Titulo"));
+                tc.setPrecoCompra(rs.getDouble("PrecoCompra"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoContaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return tc;
+    }
 }

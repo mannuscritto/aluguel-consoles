@@ -14,7 +14,7 @@ public class Conta {
     private double precoAluguel;
     private String nomeUsuario;
     private String senha;
-    private int tipoConta;
+    private TipoConta tipoConta;
     
     public int getId() {
         return id;
@@ -48,12 +48,18 @@ public class Conta {
         this.senha = senha;
     }
     
-        public int getTipoConta() {
+    public TipoConta getTipoConta() {
         return tipoConta;
     }
 
-    public void setTipoConta(int tipoConta) {
+    public void setTipoConta(TipoConta tipoConta) {
         this.tipoConta = tipoConta;
     }
+
+    @Override
+    public String toString() {
+        return getNomeUsuario();
+    }
+    
     
 }

@@ -174,9 +174,9 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtabelJogos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtabelJogosKeyReleased(evt);
+        jtabelJogos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtabelJogosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jtabelJogos);
@@ -311,23 +311,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
        readJTable();
        
     }//GEN-LAST:event_jbCadastrarActionPerformed
-    private void jtabelJogosMouseClicked(java.awt.event.MouseEvent evt) {                                            
-        // TODO add your handling code here:
-        
-        if (jtabelJogos.getSelectedRow() != -1) {
-            jtTitulo.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 1).toString());
-            jcbGenero.setSelectedItem(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 2).toString());
-            jcbFaixaEtaria.setSelectedItem(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 3).toString());
-            jtPrecoCompra.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 4).toString());
-            jtCompraVenda.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 5).toString());
-            jtPrecoAluguel.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 6).toString());
-        }
-        
-    }   
-    private void jtabelJogosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtabelJogosKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtabelJogosKeyReleased
-
+   
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
         // TODO add your handling code here:
         if (jtabelJogos.getSelectedRow() != -1)
@@ -390,6 +374,18 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jbExcluirActionPerformed
+
+    private void jtabelJogosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtabelJogosMouseClicked
+        // TODO add your handling code here:
+        if (jtabelJogos.getSelectedRow() != -1) {
+            jtTitulo.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 1).toString());
+            jcbGenero.setSelectedItem(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 2).toString());
+            jcbFaixaEtaria.setSelectedItem(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 3).toString());
+            jtPrecoCompra.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 4).toString());
+            jtCompraVenda.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 5).toString());
+            jtPrecoAluguel.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 6).toString());
+        }
+    }//GEN-LAST:event_jtabelJogosMouseClicked
 
     /**
      * @param args the command line arguments

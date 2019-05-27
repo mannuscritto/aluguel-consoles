@@ -10,7 +10,11 @@ import java.text.DateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Aluguel;
+import model.bean.Console;
+import model.bean.Jogo;
 import model.dao.AluguelDAO;
+import model.dao.ConsoleDAO;
+import model.dao.JogoDAO;
 
 /**
  *
@@ -24,6 +28,24 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     public TelaCadastroAluguel() {
         initComponents();
         readJTable();
+        readJComboBoxConsole();
+        readJComboBoxJogo();
+    }
+    
+    public void readJComboBoxConsole() {
+        ConsoleDAO dao = new ConsoleDAO();
+        
+        for (Console c: dao.read()) {
+            jcbConsole.addItem(c);
+        }
+    }
+    
+    public void readJComboBoxJogo() {
+        JogoDAO dao = new JogoDAO();
+        
+        for (Jogo j: dao.read()) {
+            jcbJogo.addItem(j);
+        }
     }
     
     public void readJTable() {
@@ -60,13 +82,13 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jTable2 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jcbConsole = new javax.swing.JComboBox<>();
+        jbAdConsole = new javax.swing.JButton();
+        jbRmConsole = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jcbJogo = new javax.swing.JComboBox<>();
+        jbAdJogo = new javax.swing.JButton();
+        jbRmJogo = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jftDataInicio = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -120,19 +142,20 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jLabel3.setText("Console");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Item 2", "Item 3", "Item 4" }));
+        jbAdConsole.setText("Adicionar");
+        jbAdConsole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAdConsoleActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Adicionar");
-
-        jButton3.setText("Remover");
+        jbRmConsole.setText("Remover");
 
         jLabel5.setText("Jogo");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Item 2", "Item 3", "Item 4" }));
+        jbAdJogo.setText("Adicionar");
 
-        jButton4.setText("Adicionar");
-
-        jButton5.setText("Remover");
+        jbRmJogo.setText("Remover");
 
         jLabel7.setText("Controles");
 
@@ -197,7 +220,6 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             new Object [][] {
                 {null, null},
                 {null, null},
-                {null, null},
                 {null, null}
             },
             new String [] {
@@ -252,11 +274,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jcbJogo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton4)
+                                        .addComponent(jbAdJogo)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton5)))
+                                        .addComponent(jbRmJogo)))
                                 .addGap(18, 18, 18))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
@@ -277,32 +299,33 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(jbtnPesquisar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jftDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jftDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jcbConsole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3)
-                                .addGap(104, 104, 104)
-                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jbAdConsole)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbRmConsole))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jbCadastrar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton8)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbExcluir)))
+                                .addGap(26, 26, 26)))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbCadastrar)
+                                .addComponent(jbtnPesquisar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton8)
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jftDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jbExcluir)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jftDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -320,23 +343,23 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jcbConsole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2)))
+                            .addComponent(jbRmConsole)
+                            .addComponent(jbAdConsole)))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jcbJogo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton4)
-                            .addComponent(jButton5)))
+                            .addComponent(jbAdJogo)
+                            .addComponent(jbRmJogo)))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -429,6 +452,10 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtbAluguelMouseClicked
 
+    private void jbAdConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdConsoleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbAdConsoleActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -467,13 +494,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Agendar;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton8;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -490,9 +511,15 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable5;
+    private javax.swing.JButton jbAdConsole;
+    private javax.swing.JButton jbAdJogo;
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbExcluir;
+    private javax.swing.JButton jbRmConsole;
+    private javax.swing.JButton jbRmJogo;
     private javax.swing.JButton jbtnPesquisar;
+    private javax.swing.JComboBox<Object> jcbConsole;
+    private javax.swing.JComboBox<Object> jcbJogo;
     private javax.swing.JFormattedTextField jftDataFinal;
     private javax.swing.JFormattedTextField jftDataInicio;
     private javax.swing.JTable jtbAluguel;

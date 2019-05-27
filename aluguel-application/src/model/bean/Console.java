@@ -5,7 +5,7 @@ public class Console {
     private String numeroSerie;
     private double precoAluguel;
     private String capacArmaz;
-    private int tipoConsole;
+    private TipoConsole tipoConsole;
     private int conta;
 
     public int getId() {
@@ -40,11 +40,11 @@ public class Console {
         this.capacArmaz = capacArmaz;
     }
 
-    public int getTipoConsole() {
+    public TipoConsole getTipoConsole() {
         return tipoConsole;
     }
 
-    public void setTipoConsole(int tipoConsole) {
+    public void setTipoConsole(TipoConsole tipoConsole) {
         this.tipoConsole = tipoConsole;
     }
 
@@ -55,6 +55,10 @@ public class Console {
     public void setConta(int conta) {
         this.conta = conta;
     }
-    
+
+    @Override
+    public String toString() {
+        return getNumeroSerie();
+    }
     
 }

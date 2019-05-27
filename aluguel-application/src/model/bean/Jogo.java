@@ -91,6 +91,10 @@ public class Jogo {
     public void setPrecoVenda(double precoVenda) {
         this.precoVenda = precoVenda;
     }
-    
+
+    @Override
+    public String toString() {
+        return getTitulo();
+    }
     
 }

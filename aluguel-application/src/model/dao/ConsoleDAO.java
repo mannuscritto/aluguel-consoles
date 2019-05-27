@@ -31,7 +31,7 @@ public class ConsoleDAO {
             stmt.setString(1, c.getNumeroSerie());
             stmt.setDouble(2, c.getPrecoAluguel());
             stmt.setString(3, c.getCapacArmaz());
-            stmt.setInt(4, c.getTipoConsole());
+            stmt.setInt(4, c.getTipoConsole().getId());
             stmt.setInt(5, c.getConta());
             
             stmt.executeUpdate();
@@ -61,7 +61,6 @@ public class ConsoleDAO {
                 c.setNumeroSerie(rs.getString("NumeroSerie"));
                 c.setCapacArmaz(rs.getString("CapacArmaz"));
                 c.setPrecoAluguel(rs.getDouble("PrecoAluguel"));
-                c.setTipoConsole(rs.getInt("CodTipoConsole"));
                 c.setConta(rs.getInt("CodConta"));
                 consoles.add(c);
             }
@@ -83,7 +82,7 @@ public class ConsoleDAO {
             stmt.setString(1, c.getNumeroSerie());
             stmt.setDouble(2, c.getPrecoAluguel());
             stmt.setString(3, c.getCapacArmaz());
-            stmt.setInt(4, c.getTipoConsole());
+            stmt.setInt(4, c.getTipoConsole().getId());
             stmt.setInt(5, c.getConta());
             stmt.setInt(6, c.getId());
             

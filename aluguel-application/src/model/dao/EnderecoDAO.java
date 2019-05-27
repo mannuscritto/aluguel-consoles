@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,9 +27,9 @@ public class EnderecoDAO {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("INSERT INTO endereco (id, rua, numero, complemento, bairro, cidade, uf, cep, cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            stmt.setString(1, end.getId());
-            stmt.setString(2, end.getRua());
+            stmt = con.prepareStatement("INSERT INTO endereco (Rua, Numero, Complemento, Bairro, Cidade, UF, CEP, Cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            stmt.setString(1, end.getRua());
+            stmt.setInt(2, end.getNumero());
             stmt.setString(3, end.getComplemento());
             stmt.setString(4, end.getBairro());
             stmt.setString(5, end.getCidade());
@@ -53,7 +54,7 @@ public class EnderecoDAO {
         PreparedStatement stmt = null;
         ResultSet rs = null;
         
-        List<Endereco> Enderecos = new ArrayList<>();
+        List<Endereco> enderecos = new ArrayList<>();
         
         try {
             stmt = con.prepareStatement("SELECT * FROM Endereco");
@@ -73,7 +74,7 @@ public class EnderecoDAO {
                 endereco.setCliente(rs.getInt("cliente"));
                 
               
-                endereco.add(endereco);
+                enderecos.add(endereco);
                 
             }
                     
@@ -88,18 +89,21 @@ public class EnderecoDAO {
         
         return enderecos;
     }
-     public void update(Enderecos end) {
+     public void update(Endereco end) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE cliente SET PrimeiroNome = ?,UltimoNome = ?,Email = ?"
-                    + ",Documento = ?,TipoCliente = ? WHERE Cliente_PK = ?");
-            stmt.setString(1, cl.getPrimeiroNome());
-            stmt.setString(2, cl.getUltimoNome());
-            stmt.setString(3, cl.getEmail());
-            stmt.setString(4, cl.getDocumento());
-            stmt.setInt(5, cl.getTipocliente());
+            stmt = con.prepareStatement("UPDATE endereco SET Rua = ?, Numero = ?, Complemento = ?, Bairro = ?, Cidade = ?, UF = ?, CEP = ?, Cliente = ? WHERE Endereco_PK = ?");
+            stmt.setString(1, end.getRua());
+            stmt.setInt(2, end.getNumero());
+            stmt.setString(3, end.getComplemento());
+            stmt.setString(4, end.getBairro());
+            stmt.setString(5, end.getCidade());
+            stmt.setString(6, end.getUf());
+            stmt.setString(7, end.getCep());
+            stmt.setInt(8, end.getCliente());
+            stmt.setInt(9, end.getId());
             
             stmt.executeUpdate();
             
@@ -118,7 +122,7 @@ public class EnderecoDAO {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("DELETE from jogo WHERE Endereco_PK = ?");
+            stmt = con.prepareStatement("DELETE from endereco WHERE Endereco_PK = ?");
             stmt.setInt(1, end.getId());
             
             stmt.executeUpdate();
@@ -131,9 +135,4 @@ public class EnderecoDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-
-    public void create() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

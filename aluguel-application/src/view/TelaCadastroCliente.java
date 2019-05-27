@@ -7,7 +7,11 @@ package view;
 
 import javax.swing.JOptionPane;
 import model.bean.Cliente;
+import model.bean.Endereco;
+import model.bean.Telefone;
 import model.dao.ClienteDAO;
+import model.dao.EnderecoDAO;
+import model.dao.TelefoneDAO;
 
 /**
  *
@@ -20,6 +24,24 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
      */
     public TelaCadastroCliente() {
         initComponents();
+    }
+    
+    private void resetCampos() {
+       jcbTipoCliente.setSelectedIndex(0);
+       jtPrimeiroNome.setText("");
+       jtCNPJ.setText("");
+       jtUltimoNome.setText("");
+       jtEmail.setText("");
+       jtDDD.setText("");
+       jtTelefone.setText("");
+       jtRua.setText("");
+       jtBairro.setText("");
+       jtCidade.setText("");
+       jtNumero.setText("");
+       jtCEP.setText("");
+       jtComplemento.setText("");
+       jtCNPJ.setText("");
+       jcbUF.setSelectedIndex(0);
     }
 
     /**
@@ -63,7 +85,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         jbAlterar = new javax.swing.JButton();
         jbExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtbCliente = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Clientes");
@@ -81,19 +103,8 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         jlUF.setText("UF");
 
         jcbUF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione um UF", "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
-        jcbUF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbUFActionPerformed(evt);
-            }
-        });
 
         jlCidade.setText("Cidade");
-
-        jtCidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtCidadeActionPerformed(evt);
-            }
-        });
 
         jlBairro.setText("Bairro");
 
@@ -113,19 +124,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
         jlTelefone.setText("Telefone");
 
-        jtTelefone.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtTelefoneActionPerformed(evt);
-            }
-        });
-
         jlDDD.setText("DDD");
-
-        jtDDD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtDDDActionPerformed(evt);
-            }
-        });
 
         jLabel8.setText("Tipo de Cliente");
 
@@ -147,18 +146,26 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtbCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "PrimeiroNome", "UltimoNome", "Email", "Documento", "Tipo"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(jtbCliente);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -299,107 +306,70 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcbUFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbUFActionPerformed
-        
-    }//GEN-LAST:event_jcbUFActionPerformed
-
-    private void jtCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtCidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtCidadeActionPerformed
-
-    private void jtTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtTelefoneActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtTelefoneActionPerformed
-
-    private void jtDDDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtDDDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtDDDActionPerformed
-
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed
         // TODO add your handling code here:
-       Cliente cl = new Cliente();
-       ClienteDAO dao = new ClienteDAO();
-       cl.setPrimeiroNome(jtPrimeiroNome.getText());
-       cl.setUltimoNome(jtUltimoNome.getText());
-       cl.setEmail(jtEmail.getText());
-       cl.setDocumento(jtCNPJ.getText());
-       dao.create();
-       
-       
-       jcbTipoCliente.setSelectedItem("");
-       jtPrimeiroNome.setText("");
-       jtUltimoNome.setText("");
-       jtEmail.setText("");
-       jtRua.setText("");
-       jtBairro.setText("");
-       jtCidade.setText("");
-       jtNumero.setText("");
-       jtCEP.setText("");
-       jtComplemento.setText("");
-       jtCNPJ.setText("");
-       readJTable();
-       
+        Cliente cl = new Cliente();
+        ClienteDAO dao = new ClienteDAO();
+        cl.setPrimeiroNome(jtPrimeiroNome.getText());
+        cl.setUltimoNome(jtUltimoNome.getText());
+        cl.setEmail(jtEmail.getText());
+        cl.setDocumento(jtCNPJ.getText());
+        if (jcbTipoCliente.getSelectedIndex() > 0) {
+            cl.setTipocliente(jcbTipoCliente.getSelectedIndex());
+        }
+
+        dao.create();
+
+        Endereco e = new Endereco()       ;
+        EnderecoDAO edao = new EnderecoDAO();
+        e.setRua(jtRua.getText());
+        e.setNumero(Integer.parseInt(jtNumero.getText()));
+        e.setComplemento(jtComplemento.getText());
+        e.setBairro(jtBairro.getText());
+        e.setCidade(jtCidade.getText());
+        e.setUf(jtUltimoNome.getText());
+        e.setCep(jtCEP.getText());
+        e.setCliente(cl.getId());
+        edao.create(e);
+
+        Telefone t = new Telefone();
+        TelefoneDAO tdao = new TelefoneDAO();
+        t.setCodArea(Integer.parseInt(jtDDD.getText()));
+        t.setNumero(Long.parseLong(jtTelefone.getText()));
+        t.setCliente(cl.getId());
+        tdao.create(t);
+
+        readJTable();
+        resetCampos();
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void jbAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAlterarActionPerformed
         // TODO add your handling code here:
-         if (jtabelClientes.getSelectedRow() != -1)
-        {
-             Cliente j = new Cliente();
-             ClienteDAO dao = new ClienteDAO();
-       
-             Cliente cl = new Cliente();
-             ClienteDAO dao = new ClienteDAO();
-             cl.setPrimeiroNome(jtPrimeiroNome.getText());
-             cl.setUltimoNome(jtUltimoNome.getText());
-             cl.setEmail(jtEmail.getText());
-             cl.setDocumento(jtCNPJ.getText());
-             dao.update(cl);
+        if (jtabelClientes.getSelectedRow() != -1) {       
+            Cliente cl = new Cliente();
+            ClienteDAO dao = new ClienteDAO();
+            cl.setPrimeiroNome(jtPrimeiroNome.getText());
+            cl.setUltimoNome(jtUltimoNome.getText());
+            cl.setEmail(jtEmail.getText());
+            cl.setDocumento(jtCNPJ.getText());
+            dao.update(cl);
 
-
-             jcbTipoCliente.setSelectedItem("");
-             jtPrimeiroNome.setText("");
-             jtUltimoNome.setText("");
-             jtEmail.setText("");
-             jtRua.setText("");
-             jtBairro.setText("");
-             jtCidade.setText("");
-             jtNumero.setText("");
-             jtCEP.setText("");
-             jtComplemento.setText("");
-             jtCNPJ.setText("");
-             readJTable();  
+            resetCampos();
+            readJTable(); 
         }
-         
-        
     }//GEN-LAST:event_jbAlterarActionPerformed
 
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
         // TODO add your handling code here:
-         if (jtabelClientes.getSelectedRow() != -1)
-        {
+         if (jtbCliente.getSelectedRow() != -1) {
              Cliente cl = new Cliente();
              ClienteDAO dao = new ClienteDAO();          
-             cl.setId((int)jtabelClientes.getValueAt(jtabelClientes.getSelectedRow(), 0));
+             cl.setId((int)jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 0));
              dao.delete(cl);
        
-       
-             jcbTipoCliente.setSelectedItem("");
-             jtPrimeiroNome.setText("");
-             jtUltimoNome.setText("");
-             jtEmail.setText("");
-             jtRua.setText("");
-             jtBairro.setText("");
-             jtCidade.setText("");
-             jtNumero.setText("");
-             jtCEP.setText("");
-             jtComplemento.setText("");
-             jtCNPJ.setText("");
+             resetCampos();
              readJTable();
-       
-        }
-        else
-        {
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um Cliente para excluir.");
         }
     }//GEN-LAST:event_jbExcluirActionPerformed
@@ -445,7 +415,6 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbAlterar;
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbExcluir;
@@ -476,6 +445,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jtRua;
     private javax.swing.JTextField jtTelefone;
     private javax.swing.JTextField jtUltimoNome;
+    private javax.swing.JTable jtbCliente;
     // End of variables declaration//GEN-END:variables
 
     private void readJTable() {

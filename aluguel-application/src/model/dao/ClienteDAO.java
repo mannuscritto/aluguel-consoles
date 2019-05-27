@@ -25,17 +25,20 @@ public class ClienteDAO {
     public void create(Cliente cl){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
+        ResultSet rs = null;
         
         try {
-            stmt = con.prepareStatement("INSERT INTO cliente (primeiroNome, ultimoNome, email, documento, tipocliente) VALUES (?, ?, ?, ?, ?, ?)");
+            stmt = con.prepareStatement("INSERT INTO cliente (PrimeiroNome, UltimoNome, Email, Documento, TipoCliente) VALUES (?, ?, ?, ?, ?)");
             stmt.setString(1, cl.getPrimeiroNome());
             stmt.setString(2, cl.getUltimoNome());
             stmt.setString(3, cl.getEmail());
             stmt.setString(4, cl.getDocumento());
             stmt.setInt(5, cl.getTipocliente());
-            
-            
             stmt.executeUpdate();
+            
+            stmt = con.prepareStatement("SELECT max(Cliente_PK) as codigo FROM Cliente");
+            rs = stmt.executeQuery();
+            cl.setId(rs.getInt("codigo"));
             
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {

@@ -3,7 +3,7 @@ package model.bean;
 public class ItemConsole {
     private int id;
     private Aluguel aluguel;
-    private int console;
+    private Console console;
 
     public int getId() {
         return id;
@@ -21,11 +21,11 @@ public class ItemConsole {
         this.aluguel = aluguel;
     }
 
-    public int getConsole() {
+    public Console getConsole() {
         return console;
     }
 
-    public void setConsole(int console) {
+    public void setConsole(Console console) {
         this.console = console;
     }
 

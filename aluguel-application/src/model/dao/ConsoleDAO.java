@@ -55,10 +55,10 @@ public class ConsoleDAO {
             stmt = con.prepareStatement("SELECT * FROM console");
             rs = stmt.executeQuery();
             
+            TipoConsoleDAO tcdao = new TipoConsoleDAO();
+            ContaDAO cdao = new ContaDAO();
             while (rs.next()) {
                 Console c = new Console();
-                TipoConsoleDAO tcdao = new TipoConsoleDAO();
-                ContaDAO cdao = new ContaDAO();
                 c.setId(rs.getInt("Console_PK"));
                 c.setNumeroSerie(rs.getString("NumeroSerie"));
                 c.setPrecoAluguel(rs.getDouble("PrecoAluguel"));
@@ -117,5 +117,35 @@ public class ConsoleDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
+    }
+    
+     public Console search(int pk) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Console c = new Console();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM console WHERE Console_PK = ?");
+            stmt.setInt(1, pk);
+            rs = stmt.executeQuery();
+            
+            TipoConsoleDAO tcdao = new TipoConsoleDAO();
+            ContaDAO cdao = new ContaDAO();
+            while (rs.next()) {
+                c.setId(rs.getInt("Console_PK"));
+                c.setNumeroSerie(rs.getString("NumeroSerie"));
+                c.setPrecoAluguel(rs.getDouble("PrecoAluguel"));
+                c.setCapacArmaz(rs.getString("CapacArmaz"));
+                c.setConta(cdao.search(rs.getInt("CodConta")));
+                c.setTipoConsole(tcdao.search(rs.getInt("CodTipoConsole")));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return c;
     }
 }

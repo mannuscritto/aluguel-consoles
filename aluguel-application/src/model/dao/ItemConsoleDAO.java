@@ -29,7 +29,7 @@ public class ItemConsoleDAO {
         try {
             stmt = con.prepareStatement("INSERT INTO itemconsole (Aluguel, Console) VALUES (?, ?)");
             stmt.setInt(1, ic.getAluguel().getId());
-            stmt.setInt(2, ic.getConsole());
+            stmt.setInt(2, ic.getConsole().getId());
             
             stmt.executeUpdate();
             
@@ -52,10 +52,11 @@ public class ItemConsoleDAO {
             stmt = con.prepareStatement("SELECT * FROM itemconsole");
             rs = stmt.executeQuery();
             
+            ConsoleDAO cdao = new ConsoleDAO();
             while (rs.next()) {
                 ItemConsole ic = new ItemConsole();
                 ic.setId(rs.getInt("ItemConsole_PK"));
-                ic.setConsole(rs.getInt("Console"));
+                ic.setConsole(cdao.search(rs.getInt("Console")));
                 itensconsole.add(ic);
             }
         } catch (SQLException ex) {
@@ -74,7 +75,7 @@ public class ItemConsoleDAO {
         try {
             stmt = con.prepareStatement("UPDATE itemconsole SET Aluguel = ?, Console = ? WHERE ItemConsole_PK = ?");
             stmt.setInt(1, ic.getAluguel().getId());
-            stmt.setInt(2, ic.getConsole());
+            stmt.setInt(2, ic.getConsole().getId());
             stmt.setInt(3, ic.getId());
             
             stmt.executeUpdate();

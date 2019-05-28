@@ -66,7 +66,7 @@ public class Console {
 
     @Override
     public String toString() {
-        return getTipoConsole().getModelo();
+        return getTipoConsole().toString();
     }
     
 }

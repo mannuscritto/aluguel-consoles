@@ -186,7 +186,7 @@
         <Component class="javax.swing.JTable" name="jtbAluguel">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="6" rowCount="4">
+              <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="Data de In&#xed;cio" type="java.lang.Object"/>
                 <Column editable="false" title="Data de Entrega" type="java.lang.Object"/>
@@ -344,7 +344,7 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="0">
                         <Column editable="false" title="ID" type="java.lang.Object"/>
-                        <Column editable="false" title="Modelo" type="java.lang.Object"/>
+                        <Column editable="false" title="Console" type="java.lang.Object"/>
                         <Column editable="false" title="Pre&#xe7;o" type="java.lang.Object"/>
                         <Column editable="false" title="Conta" type="java.lang.Object"/>
                       </Table>

@@ -157,10 +157,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jtbAluguel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Data de Início", "Data de Entrega", "Valor Total", "Controles", "Cliente"
@@ -209,7 +206,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Modelo", "Preço", "Conta"
+                "ID", "Console", "Preço", "Conta"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -439,20 +436,22 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         a.setNumeroControles(Integer.parseInt(jtfNumeroControles.getText()));
         dao.create(a);
         
-        for(int row = 0;row < jtbItemConsole.getRowCount();row++) {
+        ItemConsoleDAO icdao = new ItemConsoleDAO();
+        ConsoleDAO cdao = new ConsoleDAO();
+        for(int row = 0; row < jtbItemConsole.getRowCount(); row++) {
             ItemConsole ic = new ItemConsole();
-            ItemConsoleDAO icdao = new ItemConsoleDAO();
             ic.setAluguel(a);
-            ic.setConsole(Integer.parseInt(jtbItemConsole.getValueAt(row, 3).toString()));
+            ic.setConsole(cdao.search(Integer.parseInt(jtbItemConsole.getValueAt(row, 1).toString())));
             icdao.create(ic);
         }
         
-        for(int row = 0;row < jtbItemConsole.getRowCount();row++) {
+        ItemJogoDAO ijdao = new ItemJogoDAO();
+        JogoDAO jdao = new JogoDAO();
+        for(int row = 0; row < jtbItemConsole.getRowCount(); row++) {
             ItemJogo ij = new ItemJogo();
-            ItemJogoDAO ijdao = new ItemJogoDAO();
             ij.setAluguel(a);
-            ij.setJogoId(Integer.parseInt(jtbItemJogo.getValueAt(row, 4).toString()));
-            ij.setQuantidade(Integer.parseInt(jtfQuantidade.getText()));
+            ij.setJogo(jdao.search(Integer.parseInt(jtbItemJogo.getValueAt(row, 4).toString())));
+            ij.setQuantidade(Integer.parseInt(jtbItemConsole.getValueAt(row, 3).toString()));
             ijdao.create(ij);
         }
         
@@ -527,9 +526,9 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) : 0;
         modelo.addRow(new Object[] {
             id + 1,
-            c.getTipoConsole().getModelo(),
+            c,
             c.getPrecoAluguel(),
-            c.getConta().getTipoConta().getTitulo()
+            c.getConta().getTipoConta()
         });
     }//GEN-LAST:event_jbAdConsoleActionPerformed
 

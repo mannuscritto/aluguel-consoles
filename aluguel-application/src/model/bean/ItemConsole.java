@@ -28,6 +28,11 @@ public class ItemConsole {
     public void setConsole(int console) {
         this.console = console;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.getId());
+    }
     
     
 }

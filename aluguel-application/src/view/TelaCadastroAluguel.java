@@ -206,16 +206,14 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jtbItemConsole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Modelo", "Preço", "Console", "Conta"
+                "ID", "Modelo", "Preço", "Conta"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -234,6 +232,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         });
 
         jbRmConsole.setText("Remover");
+        jbRmConsole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRmConsoleActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -271,13 +274,10 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jtbItemJogo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "ID", "Título", "Preço", "Quantidade", "Jogo"
+                "ID", "Jogo", "Preço", "Quantidade", "Plataforma"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -293,8 +293,18 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jLabel5.setText("Jogo");
 
         jbAdJogo.setText("Adicionar");
+        jbAdJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAdJogoActionPerformed(evt);
+            }
+        });
 
         jbRmJogo.setText("Remover");
+        jbRmJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRmJogoActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("QTD");
 
@@ -513,14 +523,55 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         DefaultTableModel modelo;
         modelo = (DefaultTableModel) jtbItemConsole.getModel();
         Console c = (Console)jcbConsole.getSelectedItem();
+        int maxRow = modelo.getRowCount() - 1;
+        int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) : 0;
         modelo.addRow(new Object[] {
-            "Não salvo",
+            id + 1,
             c.getTipoConsole().getModelo(),
             c.getPrecoAluguel(),
-            c.getId(),
             c.getConta().getTipoConta().getTitulo()
         });
     }//GEN-LAST:event_jbAdConsoleActionPerformed
+
+    private void jbAdJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdJogoActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jtbItemJogo.getModel();
+        Jogo j = (Jogo)jcbJogo.getSelectedItem();
+        int maxRow = modelo.getRowCount() - 1;
+        int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) : 0;
+        modelo.addRow(new Object[] {
+            id + 1,
+            j.getTitulo(),
+            j.getPrecoAluguel(),
+            jtfQuantidade.getText(),
+            j.getPlataforma()
+        });
+    }//GEN-LAST:event_jbAdJogoActionPerformed
+
+    private void jbRmConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRmConsoleActionPerformed
+        // TODO add your handling code here:
+        int row = jtbItemConsole.getSelectedRow();
+        if (row != -1) {
+            DefaultTableModel modelo;
+            modelo = (DefaultTableModel) jtbItemConsole.getModel();
+            modelo.removeRow(row);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um item para remover!");
+        }
+    }//GEN-LAST:event_jbRmConsoleActionPerformed
+
+    private void jbRmJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRmJogoActionPerformed
+        // TODO add your handling code here:
+        int row = jtbItemJogo.getSelectedRow();
+        if (row != -1) {
+            DefaultTableModel modelo;
+            modelo = (DefaultTableModel) jtbItemJogo.getModel();
+            modelo.removeRow(row);
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um item para remover!");
+        }
+    }//GEN-LAST:event_jbRmJogoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -39,9 +39,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                c.getId(),
                c.getPrimeiroNome(),
                c.getUltimoNome(),
-               c.getEmail(),
                c.getDocumento(),
-               c.getTipocliente()
             });
         }
     }
@@ -168,17 +166,17 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
         jtbCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "ID", "PrimeiroNome", "UltimoNome", "Email", "Documento", "Tipo"
+                "ID", "PrimeiroNome", "UltimoNome", "Documento"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -407,12 +405,16 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
     private void jtbClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbClienteMouseClicked
         // TODO add your handling code here:
-        if (jtbCliente.getSelectedRow() != -1) {
-            jtPrimeiroNome.setText(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 1).toString());
-            jtUltimoNome.setText(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 2).toString());
-            jtEmail.setText(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 3).toString());
-            jtCNPJ.setText(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 4).toString());
-            jcbTipoCliente.setSelectedIndex(Integer.parseInt(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 5).toString()));
+        int row = jtbCliente.getSelectedRow();
+        if (row != -1) {
+            ClienteDAO dao = new ClienteDAO();
+            int codigo = Integer.parseInt(jtbCliente.getValueAt(row, 0).toString());
+            Cliente c = dao.search(codigo);
+            jtPrimeiroNome.setText(jtbCliente.getValueAt(row, 1).toString());
+            jtUltimoNome.setText(jtbCliente.getValueAt(row, 2).toString());
+            jtEmail.setText(c.getEmail());
+            jtCNPJ.setText(jtbCliente.getValueAt(row, 3).toString());
+            jcbTipoCliente.setSelectedIndex(c.getTipocliente());
         }
     }//GEN-LAST:event_jtbClienteMouseClicked
 

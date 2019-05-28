@@ -129,6 +129,33 @@ public class ClienteDAO {
         }
     }
 
+     public Cliente search(int pk) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Cliente c = new Cliente();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM cliente WHERE Cliente_PK = ?");
+            stmt.setInt(1, pk);
+            rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                c.setId(rs.getInt("Cliente_PK"));
+                c.setPrimeiroNome(rs.getString("PrimeiroNome"));
+                c.setUltimoNome(rs.getString("UltimoNome"));
+                c.setEmail(rs.getString("Email"));
+                c.setDocumento(rs.getString("Documento"));
+                c.setTipocliente(rs.getInt("TipoCliente"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return c;
+    }
 }
     
 

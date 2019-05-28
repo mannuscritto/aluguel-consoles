@@ -31,7 +31,7 @@ public class JogoDAO {
             stmt.setString(1, j.getTitulo());
             stmt.setString(2, j.getGenero());
             stmt.setString(3, j.getFaixaEtaria());
-            stmt.setInt(4,j.getPlataforma());
+            stmt.setInt(4, j.getPlataforma().getId());
             stmt.setDouble(5, j.getPrecoCompra());
             stmt.setString(6, j.getTipoMidia());
             stmt.setInt(7, j.getQuantidade());
@@ -65,11 +65,12 @@ public class JogoDAO {
             while (rs.next())
             {
                 Jogo jogo = new Jogo();
-                
+                TipoConsoleDAO tpdao = new TipoConsoleDAO();
+                jogo.setId(rs.getInt("Jogo_PK"));
                 jogo.setTitulo(rs.getString("Titulo"));
                 jogo.setGenero(rs.getString("Genero"));
                 jogo.setFaixaEtaria(rs.getString("FaixaEtaria"));
-                jogo.setPlataforma(rs.getInt("Plataforma"));
+                jogo.setPlataforma(tpdao.search(rs.getInt("Plataforma")));
                 jogo.setPrecoCompra(rs.getDouble("PrecoCompra"));
                 jogo.setTipoMidia(rs.getString("TipoMidia"));
                 jogo.setQuantidade(rs.getInt("Quantidade"));
@@ -101,12 +102,13 @@ public class JogoDAO {
             stmt.setString(1, j.getTitulo());
             stmt.setString(2, j.getGenero());
             stmt.setString(3, j.getFaixaEtaria());
-            stmt.setInt(4,j.getPlataforma());
+            stmt.setInt(4, j.getPlataforma().getId());
             stmt.setDouble(5, j.getPrecoCompra());
             stmt.setString(6, j.getTipoMidia());
             stmt.setInt(7, j.getQuantidade());
             stmt.setDouble(8, j.getPrecoAluguel());
             stmt.setDouble(9, j.getPrecoVenda());
+            stmt.setInt(10, j.getId());
             
             stmt.executeUpdate();
             
@@ -137,5 +139,38 @@ public class JogoDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
+    }
+      
+     public Jogo search(int pk) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Jogo j = new Jogo();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM jogo WHERE Jogo_PK = ?");
+            stmt.setInt(1, pk);
+            rs = stmt.executeQuery();
+            
+            if (rs.last()) {
+                TipoConsoleDAO tpdao = new TipoConsoleDAO();
+                j.setId(rs.getInt("Jogo_PK"));
+                j.setTitulo(rs.getString("Titulo"));
+                j.setGenero(rs.getString("Genero"));
+                j.setFaixaEtaria(rs.getString("FaixaEtaria"));
+                j.setPlataforma(tpdao.search(rs.getInt("Plataforma")));
+                j.setPrecoCompra(rs.getDouble("PrecoCompra"));
+                j.setTipoMidia(rs.getString("TipoMidia"));
+                j.setQuantidade(rs.getInt("Quantidade"));
+                j.setPrecoAluguel(rs.getDouble("PrecoAluguel"));
+                j.setPrecoVenda(rs.getDouble("PrecoVenda"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(JogoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return j;
     }
 }

@@ -5,7 +5,7 @@ public class Jogo {
     private String titulo;
     private String genero;
     private String faixaEtaria;
-    private int plataforma;
+    private TipoConsole plataforma;
     private double precoCompra;
     private String tipoMidia;
     private int quantidade;
@@ -44,11 +44,11 @@ public class Jogo {
         this.faixaEtaria = faixaEtaria;
     }
 
-    public int getPlataforma() {
+    public TipoConsole getPlataforma() {
         return plataforma;
     }
 
-    public void setPlataforma(int plataforma) {
+    public void setPlataforma(TipoConsole plataforma) {
         this.plataforma = plataforma;
     }
 

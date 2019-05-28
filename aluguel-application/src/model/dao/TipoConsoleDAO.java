@@ -22,14 +22,14 @@ import model.bean.TipoConsole;
  * @author romer
  */
 public class TipoConsoleDAO {
-    public void create(TipoConsole tp) {
+    public void create(TipoConsole tc) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         
         try {
             stmt = con.prepareStatement("INSERT INTO tipoconsole (Modelo, Marca) VALUES (?, ?)");
-            stmt.setString(1, tp.getModelo());
-            stmt.setString(2, tp.getMarca());
+            stmt.setString(1, tc.getModelo());
+            stmt.setString(2, tc.getMarca());
             
             stmt.executeUpdate();
             
@@ -53,11 +53,11 @@ public class TipoConsoleDAO {
             rs = stmt.executeQuery();
             
             while (rs.next()) {
-                TipoConsole tp = new TipoConsole();
-                tp.setId(rs.getInt("TipoConsole_PK"));
-                tp.setMarca(rs.getString("Marca"));
-                tp.setModelo(rs.getString("Modelo"));
-                tiposconsoles.add(tp);
+                TipoConsole tc = new TipoConsole();
+                tc.setId(rs.getInt("TipoConsole_PK"));
+                tc.setMarca(rs.getString("Marca"));
+                tc.setModelo(rs.getString("Modelo"));
+                tiposconsoles.add(tc);
             }
         } catch (SQLException ex) {
             Logger.getLogger(TipoConsoleDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -68,15 +68,15 @@ public class TipoConsoleDAO {
         return tiposconsoles;
     }
     
-    public void update(TipoConsole tp) {
+    public void update(TipoConsole tc) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         
         try {
             stmt = con.prepareStatement("UPDATE tipoconsole SET Modelo = ?, Marca = ? WHERE TipoConsole_PK = ?");
-            stmt.setString(1, tp.getModelo());
-            stmt.setString(2, tp.getMarca());
-            stmt.setInt(3, tp.getId());
+            stmt.setString(1, tc.getModelo());
+            stmt.setString(2, tc.getMarca());
+            stmt.setInt(3, tc.getId());
             
             stmt.executeUpdate();
             
@@ -89,13 +89,13 @@ public class TipoConsoleDAO {
         }
     }
     
-    public void delete(TipoConsole tp) {
+    public void delete(TipoConsole tc) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         
         try {
             stmt = con.prepareStatement("DELETE from tipoconsole WHERE TipoConsole_PK = ?");
-            stmt.setInt(1, tp.getId());
+            stmt.setInt(1, tc.getId());
             
             stmt.executeUpdate();
             
@@ -112,7 +112,7 @@ public class TipoConsoleDAO {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        TipoConsole tp = new TipoConsole();
+        TipoConsole tc = new TipoConsole();
         
         try {
             stmt = con.prepareStatement("SELECT * FROM tipoconsole WHERE TipoConsole_PK = ?");
@@ -120,9 +120,9 @@ public class TipoConsoleDAO {
             rs = stmt.executeQuery();
             
             while (rs.next()) {
-                tp.setId(rs.getInt("TipoConsole_PK"));
-                tp.setMarca(rs.getString("Marca"));
-                tp.setModelo(rs.getString("Modelo"));
+                tc.setId(rs.getInt("TipoConsole_PK"));
+                tc.setMarca(rs.getString("Marca"));
+                tc.setModelo(rs.getString("Modelo"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(TipoConsoleDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,6 +130,6 @@ public class TipoConsoleDAO {
             ConnectionFactory.closeConnection(con, stmt, rs);
         }
         
-        return tp;
+        return tc;
     }
 }

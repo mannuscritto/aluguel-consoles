@@ -291,28 +291,16 @@
         <Component class="javax.swing.JTable" name="jtabelJogos">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="20">
+              <Table columnCount="5" rowCount="20">
                 <Column editable="false" title="ID" type="java.lang.Object"/>
                 <Column editable="false" title="T&#xed;tulo" type="java.lang.Object"/>
-                <Column editable="false" title="G&#xea;nero" type="java.lang.Object"/>
-                <Column editable="false" title="Faixa Et&#xe1;ria" type="java.lang.Object"/>
-                <Column editable="false" title="Pre&#xe7;o da M&#xed;dia" type="java.lang.Object"/>
+                <Column editable="false" title="Plataforma" type="java.lang.Object"/>
                 <Column editable="false" title="Pre&#xe7;o Venda" type="java.lang.Object"/>
                 <Column editable="false" title="Pre&#xe7;o Aluguel" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -353,16 +341,11 @@
     <Component class="javax.swing.JComboBox" name="jcbPlataforma">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Selecione"/>
-            <StringItem index="1" value="Pc"/>
-            <StringItem index="2" value="Xbox"/>
-            <StringItem index="3" value="Playstation"/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Object&gt;"/>
       </AuxValues>
     </Component>
   </SubComponents>

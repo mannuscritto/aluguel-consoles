@@ -10,7 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import model.bean.Jogo;
+import model.bean.TipoConsole;
 import model.dao.JogoDAO;
+import model.dao.TipoConsoleDAO;
 
 /**
  *
@@ -23,10 +25,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
      */
     public TelaCadastroJogos() {
         initComponents();
-        DefaultTableModel modelo = (DefaultTableModel) jtabelJogos.getModel();
-        
-        jtabelJogos.setRowSorter(new TableRowSorter(modelo));
-        
+        readJComboBoxPlataforma();
         readJTable();
         
     }
@@ -41,15 +40,19 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
         for(Jogo j: jdao.read())
         {
             modelo.addRow(new Object[]{
-                
                 j.getId(),
                 j.getTitulo(),
-                j.getGenero(),
-                j.getFaixaEtaria(),
-                j.getPrecoCompra(),
+                j.getPlataforma(),
                 j.getPrecoVenda(),
                 j.getPrecoAluguel()
             });
+        }
+    }
+    
+    public void readJComboBoxPlataforma() {
+        TipoConsoleDAO dao = new TipoConsoleDAO();
+        for (TipoConsole tc: dao.read()) {
+            jcbPlataforma.addItem(tc);
         }
     }
 
@@ -141,33 +144,33 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
 
         jtabelJogos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "Título", "Gênero", "Faixa Etária", "Preço da Mídia", "Preço Venda", "Preço Aluguel"
+                "ID", "Título", "Plataforma", "Preço Venda", "Preço Aluguel"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -180,8 +183,6 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jtabelJogos);
-
-        jcbPlataforma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Pc", "Xbox", "Playstation" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -290,7 +291,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
        j.setGenero(String.valueOf(jcbGenero.getSelectedItem()));
        j.setQuantidade(Integer.parseInt(jtQuantidade.getText()));
        j.setFaixaEtaria(String.valueOf(jcbFaixaEtaria.getSelectedItem()));
-       j.setPlataforma((int) jcbPlataforma.getSelectedItem());
+       j.setPlataforma((TipoConsole)jcbPlataforma.getSelectedItem());
        j.setTipoMidia(String.valueOf(jcbTipoMidia.getSelectedItem()));
        j.setPrecoCompra(Double.parseDouble(jtPrecoCompra.getText()));
        j.setPrecoVenda(Double.parseDouble(jtCompraVenda.getText()));
@@ -301,7 +302,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
        jtTitulo.setText("");
        jcbGenero.setSelectedItem("");
        jcbFaixaEtaria.setSelectedItem("");
-       jcbPlataforma.setSelectedItem("");
+       jcbPlataforma.setSelectedIndex(0);
        jcbTipoMidia.setSelectedItem("");
        jtQuantidade.setText("");
        jtPrecoCompra.setText("");
@@ -323,7 +324,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
              j.setGenero(String.valueOf(jcbGenero.getSelectedItem()));
              j.setQuantidade(Integer.parseInt(jtQuantidade.getText()));
              j.setFaixaEtaria(String.valueOf(jcbFaixaEtaria.getSelectedItem()));
-             j.setPlataforma((int) jcbPlataforma.getSelectedItem());
+             j.setPlataforma((TipoConsole)jcbPlataforma.getSelectedItem());
              j.setTipoMidia(String.valueOf(jcbTipoMidia.getSelectedItem()));
              j.setPrecoCompra(Double.parseDouble(jtPrecoCompra.getText()));
              j.setPrecoVenda(Double.parseDouble(jtCompraVenda.getText()));
@@ -335,7 +336,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
              jtTitulo.setText("");
              jcbGenero.setSelectedItem("");
              jcbFaixaEtaria.setSelectedItem("");
-             jcbPlataforma.setSelectedItem("");
+             jcbPlataforma.setSelectedIndex(0);
              jcbTipoMidia.setSelectedItem("");
              jtQuantidade.setText("");
              jtPrecoCompra.setText("");
@@ -359,7 +360,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
              jtTitulo.setText("");
              jcbGenero.setSelectedItem("");
              jcbFaixaEtaria.setSelectedItem("");
-             jcbPlataforma.setSelectedItem("");
+             jcbPlataforma.setSelectedIndex(0);
              jcbTipoMidia.setSelectedItem("");
              jtQuantidade.setText("");
              jtPrecoCompra.setText("");
@@ -377,13 +378,19 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
 
     private void jtabelJogosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtabelJogosMouseClicked
         // TODO add your handling code here:
-        if (jtabelJogos.getSelectedRow() != -1) {
-            jtTitulo.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 1).toString());
-            jcbGenero.setSelectedItem(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 2).toString());
-            jcbFaixaEtaria.setSelectedItem(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 3).toString());
-            jtPrecoCompra.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 4).toString());
-            jtCompraVenda.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 5).toString());
-            jtPrecoAluguel.setText(jtabelJogos.getValueAt(jtabelJogos.getSelectedRow(), 6).toString());
+        int row = jtabelJogos.getSelectedRow();
+        if (row != -1) {
+            JogoDAO dao = new JogoDAO();
+            Jogo j = dao.search(Integer.parseInt(jtabelJogos.getValueAt(row, 0).toString()));
+            jtTitulo.setText(jtabelJogos.getValueAt(row, 1).toString());
+            jcbGenero.setSelectedItem(j.getGenero());
+            jtQuantidade.setText(String.valueOf(j.getQuantidade()));
+            jcbFaixaEtaria.setSelectedItem(j.getFaixaEtaria());
+            jcbPlataforma.getModel().setSelectedItem(jtabelJogos.getValueAt(row, 2));
+            jcbTipoMidia.setSelectedItem(j.getTipoMidia());
+            jtPrecoCompra.setText(String.valueOf(j.getPrecoCompra()));
+            jtCompraVenda.setText(jtabelJogos.getValueAt(row, 3).toString());
+            jtPrecoAluguel.setText(jtabelJogos.getValueAt(row, 4).toString());
         }
     }//GEN-LAST:event_jtabelJogosMouseClicked
 
@@ -430,7 +437,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
     private javax.swing.JButton jbExcluir;
     private javax.swing.JComboBox<String> jcbFaixaEtaria;
     private javax.swing.JComboBox<String> jcbGenero;
-    private javax.swing.JComboBox<String> jcbPlataforma;
+    private javax.swing.JComboBox<Object> jcbPlataforma;
     private javax.swing.JComboBox<String> jcbTipoMidia;
     private javax.swing.JLabel jlFaixaEtaria;
     private javax.swing.JLabel jlGenero;

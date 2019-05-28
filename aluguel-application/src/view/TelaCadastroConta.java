@@ -73,7 +73,6 @@ public class TelaCadastroConta extends javax.swing.JFrame {
         jtfSenha = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jcbTipoConta = new javax.swing.JComboBox<>();
-        jtfTipoConta = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -147,10 +146,9 @@ public class TelaCadastroConta extends javax.swing.JFrame {
                                     .addComponent(jtfPrecoAluguel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtfNomeUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jtfTipoConta))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jtfNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
@@ -178,9 +176,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jcbTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jcbTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnCadastrar)
@@ -208,7 +204,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
         jtfPrecoAluguel.setText("");
         jtfNomeUsuario.setText("");
         jtfSenha.setText("");
-        jtfTipoConta.setText("");
+        jcbTipoConta.setSelectedIndex(0);
     }//GEN-LAST:event_jbtnCadastrarActionPerformed
 
     private void jbtnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAtualizarActionPerformed
@@ -226,7 +222,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
             jtfPrecoAluguel.setText("");
             jtfNomeUsuario.setText("");
             jtfSenha.setText("");
-            jtfTipoConta.setText("");
+            jcbTipoConta.setSelectedIndex(0);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro para atualizar!");
         }
@@ -244,7 +240,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
             jtfPrecoAluguel.setText("");
             jtfNomeUsuario.setText("");
             jtfSenha.setText("");
-            jtfTipoConta.setText("");
+            jcbTipoConta.setSelectedIndex(0);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro para excluir!");
         }
@@ -256,7 +252,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
             jtfPrecoAluguel.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 1).toString());
             jtfNomeUsuario.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 2).toString());
             jtfSenha.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 3).toString());
-            jtfTipoConta.setText(jtbConta.getValueAt(jtbConta.getSelectedRow(), 4).toString());
+            jcbTipoConta.setSelectedItem(jtbConta.getValueAt(jtbConta.getSelectedRow(), 4));
         }
     }//GEN-LAST:event_jtbContaMouseClicked
 
@@ -309,6 +305,5 @@ public class TelaCadastroConta extends javax.swing.JFrame {
     private javax.swing.JTextField jtfNomeUsuario;
     private javax.swing.JTextField jtfPrecoAluguel;
     private javax.swing.JTextField jtfSenha;
-    private javax.swing.JTextField jtfTipoConta;
     // End of variables declaration//GEN-END:variables
 }

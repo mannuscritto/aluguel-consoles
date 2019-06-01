@@ -55,5 +55,9 @@ public class Cliente {
     public void setTipocliente(int tipocliente) {
         this.tipocliente = tipocliente;
     }
-    
+
+    @Override
+    public String toString() {
+        return getPrimeiroNome();
+    }
 }

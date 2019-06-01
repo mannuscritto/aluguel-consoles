@@ -33,7 +33,7 @@ public class AluguelDAO {
             stmt.setDate(2, a.getDataFinal());
             stmt.setDouble(3, a.getValorTotal());
             stmt.setInt(4, a.getNumeroControles());
-            stmt.setInt(5, a.getCliente());
+            stmt.setInt(5, a.getCliente().getId());
             
             stmt.executeUpdate();
             
@@ -62,15 +62,17 @@ public class AluguelDAO {
             stmt = con.prepareStatement("SELECT * FROM aluguel");
             rs = stmt.executeQuery();
             
+            ClienteDAO cdao = new ClienteDAO();
             while (rs.next()) {
                 Aluguel a = new Aluguel();
                 a.setId(rs.getInt("Aluguel_PK"));
-                a.setDataAbertura(rs.getString("DataAbertura"));
-                a.setDataFinal(rs.getString("DataFinal"));
-                a.setDataFechamento(rs.getString("DataFechamento"));
+                a.setDataAbertura(rs.getDate("DataAbertura"));
+                a.setDataInicio(rs.getDate("DataInicio"));
+                a.setDataFinal(rs.getDate("DataFinal"));
+                a.setDataFechamento(rs.getDate("DataFechamento"));
                 a.setValorTotal(rs.getDouble("ValorTotal"));
                 a.setNumeroControles(rs.getInt("NumeroControles"));
-                a.setCliente(rs.getInt("CodCliente"));
+                a.setCliente(cdao.search(rs.getInt("CodCliente")));
                 alugueis.add(a);
             }
         } catch (SQLException ex) {
@@ -92,7 +94,7 @@ public class AluguelDAO {
             stmt.setDate(2, a.getDataFinal());
             stmt.setDouble(3, a.getValorTotal());
             stmt.setInt(4, a.getNumeroControles());
-            stmt.setInt(5, a.getCliente());
+            stmt.setInt(5, a.getCliente().getId());
             stmt.setInt(6, a.getId());
             
             stmt.executeUpdate();

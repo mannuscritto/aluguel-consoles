@@ -5,6 +5,8 @@
  */
 package view;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Aluguel;
@@ -13,6 +15,7 @@ import model.bean.ItemConsole;
 import model.bean.ItemJogo;
 import model.bean.Jogo;
 import model.dao.AluguelDAO;
+import model.dao.ClienteDAO;
 import model.dao.ConsoleDAO;
 import model.dao.ItemConsoleDAO;
 import model.dao.ItemJogoDAO;
@@ -147,11 +150,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jLabel1.setText("Cliente");
 
-        jftDataInicio.setText("01/01/2019");
-
         jLabel8.setText("Início");
-
-        jftDataFinal.setText("01/01/2019");
 
         jLabel9.setText("Entrega");
 
@@ -359,20 +358,6 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfCliente)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbtnPesquisar)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jftDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jftDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane4)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -390,7 +375,21 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                                 .addComponent(jbAtualizar)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbtnPesquisar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jftDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jftDataFinal)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -429,7 +428,8 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         // TODO add your handling code here:
         Aluguel a = new Aluguel();
         AluguelDAO dao = new AluguelDAO();
-        a.setCliente(Integer.parseInt(jtfCliente.getText()));
+        ClienteDAO clidao = new ClienteDAO();
+        a.setCliente(clidao.search(Integer.parseInt(jtfCliente.getText())));
         a.setDataInicio(jftDataInicio.getText());
         a.setDataFinal(jftDataFinal.getText());
         a.setValorTotal(Double.parseDouble(jtfValorTotal.getText()));
@@ -437,21 +437,19 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         dao.create(a);
         
         ItemConsoleDAO icdao = new ItemConsoleDAO();
-        ConsoleDAO cdao = new ConsoleDAO();
         for(int row = 0; row < jtbItemConsole.getRowCount(); row++) {
             ItemConsole ic = new ItemConsole();
             ic.setAluguel(a);
-            ic.setConsole(cdao.search(Integer.parseInt(jtbItemConsole.getValueAt(row, 1).toString())));
+            ic.setConsole((Console)jtbItemConsole.getValueAt(row, 1));
             icdao.create(ic);
         }
         
         ItemJogoDAO ijdao = new ItemJogoDAO();
-        JogoDAO jdao = new JogoDAO();
-        for(int row = 0; row < jtbItemConsole.getRowCount(); row++) {
+        for(int row = 0; row < jtbItemJogo.getRowCount(); row++) {
             ItemJogo ij = new ItemJogo();
             ij.setAluguel(a);
-            ij.setJogo(jdao.search(Integer.parseInt(jtbItemJogo.getValueAt(row, 4).toString())));
-            ij.setQuantidade(Integer.parseInt(jtbItemConsole.getValueAt(row, 3).toString()));
+            ij.setJogo((Jogo)jtbItemJogo.getValueAt(row, 1));
+            ij.setQuantidade(Integer.parseInt(jtbItemJogo.getValueAt(row, 3).toString()));
             ijdao.create(ij);
         }
         
@@ -469,7 +467,8 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         if (jtbAluguel.getSelectedRow() != -1) {
             Aluguel a = new Aluguel();
             AluguelDAO dao = new AluguelDAO();
-            a.setCliente(Integer.parseInt(jtfCliente.getText()));
+            ClienteDAO clidao = new ClienteDAO();
+            a.setCliente(clidao.search(Integer.parseInt(jtfCliente.getText())));
             a.setDataInicio(jftDataInicio.getText());
             a.setDataFinal(jftDataFinal.getText());
             a.setValorTotal(Double.parseDouble(jtfValorTotal.getText()));
@@ -538,10 +537,10 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         modelo = (DefaultTableModel) jtbItemJogo.getModel();
         Jogo j = (Jogo)jcbJogo.getSelectedItem();
         int maxRow = modelo.getRowCount() - 1;
-        int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) : 0;
+        int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) + 1: 1;
         modelo.addRow(new Object[] {
-            id + 1,
-            j.getTitulo(),
+            id,
+            j,
             j.getPrecoAluguel(),
             jtfQuantidade.getText(),
             j.getPlataforma()

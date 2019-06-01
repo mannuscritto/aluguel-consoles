@@ -1,6 +1,11 @@
 package model.bean;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Aluguel {
     private int id;
@@ -10,7 +15,7 @@ public class Aluguel {
     private Date dataFechamento;
     private double valorTotal;
     private int numeroControles;
-    private int cliente;
+    private Cliente cliente;
 
     public int getId() {
         return id;
@@ -24,32 +29,58 @@ public class Aluguel {
         return dataAbertura;
     }
 
-    public void setDataAbertura(String dataAbertura) {
-        this.dataAbertura = Date.valueOf(dataAbertura);
+    public void setDataAbertura(Date dataAbertura) {
+        this.dataAbertura = dataAbertura;
     }
 
     public Date getDataInicio() {
         return dataInicio;
     }
 
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+    
     public void setDataInicio(String dataInicio) {
-        this.dataInicio = Date.valueOf(dataInicio);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date textFieldAsDate = null;
+        
+        try {
+            textFieldAsDate = sdf.parse(dataInicio);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao converter String para Date: " + ex);
+        }
+        sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.dataInicio = Date.valueOf(sdf.format(textFieldAsDate));
     }
 
     public Date getDataFinal() {
         return dataFinal;
     }
 
+    public void setDataFinal(Date dataFinal) {
+        this.dataFinal = dataFinal;
+    }
+    
     public void setDataFinal(String dataFinal) {
-        this.dataFinal = Date.valueOf(dataFinal);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date textFieldAsDate = null;
+        
+        try {
+            textFieldAsDate = sdf.parse(dataFinal);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao converter String para Date: " + ex);
+        }
+        sdf = new SimpleDateFormat("yyyy-MM-dd");
+        this.dataFinal = Date.valueOf(sdf.format(textFieldAsDate));
     }
 
     public Date getDataFechamento() {
         return dataFechamento;
     }
 
-    public void setDataFechamento(String dataFechamento) {
-        this.dataFechamento = Date.valueOf(dataFechamento);
+    public void setDataFechamento(Date dataFechamento) {
+        this.dataFechamento = dataFechamento;
     }
 
     public double getValorTotal() {
@@ -68,11 +99,11 @@ public class Aluguel {
         this.numeroControles = numeroControles;
     }
 
-    public int getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(int cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
     

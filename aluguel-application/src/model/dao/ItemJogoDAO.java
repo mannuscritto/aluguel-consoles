@@ -42,20 +42,22 @@ public class ItemJogoDAO {
         }
     }
     
-    public List<ItemJogo> read() {
+    public List<ItemJogo> read(int aluguel) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<ItemJogo> itensjogo = new ArrayList<>();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM itemjogo");
+            stmt = con.prepareStatement("SELECT * FROM itemjogo WHERE Aluguel = ?");
+            stmt.setInt(1, aluguel);
             rs = stmt.executeQuery();
             
+            JogoDAO jdao = new JogoDAO();
             while (rs.next()) {
                 ItemJogo ij = new ItemJogo();
                 ij.setId(rs.getInt("ItemJogo_PK"));
-                ij.setJogoId(rs.getInt("Jogo"));
+                ij.setJogo(jdao.search(rs.getInt("Jogo")));
                 ij.setQuantidade(rs.getInt("Quantidade"));
                 itensjogo.add(ij);
             }

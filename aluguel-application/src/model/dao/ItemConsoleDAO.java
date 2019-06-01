@@ -42,14 +42,15 @@ public class ItemConsoleDAO {
         }
     }
     
-    public List<ItemConsole> read() {
+    public List<ItemConsole> read(int aluguel) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
         ResultSet rs = null;
         List<ItemConsole> itensconsole = new ArrayList<>();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM itemconsole");
+            stmt = con.prepareStatement("SELECT * FROM itemconsole WHERE Aluguel = ?");
+            stmt.setInt(1, aluguel);
             rs = stmt.executeQuery();
             
             ConsoleDAO cdao = new ConsoleDAO();

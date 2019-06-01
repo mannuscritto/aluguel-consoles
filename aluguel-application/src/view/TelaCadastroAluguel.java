@@ -61,7 +61,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         
         for (Aluguel a: dao.read()) {
             modelo.addRow(new Object[] {
-               a.getId(),
+               a,
                a.getDataInicio(),
                a.getDataFinal(),
                a.getValorTotal(),
@@ -216,6 +216,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jtbItemConsole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbItemConsoleMouseClicked(evt);
+            }
+        });
         jScrollPane5.setViewportView(jtbItemConsole);
 
         jLabel3.setText("Console");
@@ -282,6 +287,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jtbItemJogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtbItemJogoMouseClicked(evt);
             }
         });
         jScrollPane3.setViewportView(jtbItemJogo);
@@ -474,6 +484,26 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             a.setValorTotal(Double.parseDouble(jtfValorTotal.getText()));
             a.setNumeroControles(Integer.parseInt(jtfNumeroControles.getText()));
             dao.update(a);
+            
+            ItemConsoleDAO icdao = new ItemConsoleDAO();
+            for(int row = 0; row < jtbItemConsole.getRowCount(); row++) {
+                ItemConsole ic = new ItemConsole();
+                ic.setId(Integer.parseInt(jtbItemConsole.getValueAt(row, 0).toString()));
+                ic.setAluguel(a);
+                ic.setConsole((Console)jtbItemConsole.getValueAt(row, 1));
+                icdao.update(ic);
+            }
+
+            ItemJogoDAO ijdao = new ItemJogoDAO();
+            for(int row = 0; row < jtbItemJogo.getRowCount(); row++) {
+                ItemJogo ij = new ItemJogo();
+                ij.setId(Integer.parseInt(jtbItemJogo.getValueAt(row, 0).toString()));
+                ij.setAluguel(a);
+                ij.setJogo((Jogo)jtbItemJogo.getValueAt(row, 1));
+                ij.setQuantidade(Integer.parseInt(jtbItemJogo.getValueAt(row, 3).toString()));
+                ijdao.update(ij);
+            }
+            
             readJTable();
 
             jtfCliente.setText("");
@@ -508,11 +538,41 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private void jtbAluguelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbAluguelMouseClicked
         // TODO add your handling code here:
         if (jtbAluguel.getSelectedRow() != -1) {
+            DefaultTableModel itemconsole;
+            itemconsole = (DefaultTableModel) jtbItemConsole.getModel();
+            itemconsole.setNumRows(0);
+            DefaultTableModel itemjogo;
+            itemjogo = (DefaultTableModel) jtbItemJogo.getModel();
+            itemjogo.setNumRows(0);
             jftDataInicio.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 1).toString());
             jftDataFinal.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 2).toString());
             jtfValorTotal.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 3).toString());
             jtfNumeroControles.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 4).toString());
             jtfCliente.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 5).toString());
+            
+            int aluguel = Integer.parseInt(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0).toString());
+            
+            ItemConsoleDAO icdao = new ItemConsoleDAO();
+            for (ItemConsole ic: icdao.read(aluguel)) {
+                itemconsole.addRow(new Object[] {
+                    ic,
+                    ic.getConsole(),
+                    ic.getConsole().getPrecoAluguel(),
+                    ic.getConsole().getConta().getTipoConta()
+                });
+            }
+            
+            ItemJogoDAO ijdao = new ItemJogoDAO();
+            for (ItemJogo ij: ijdao.read(aluguel)) {
+                itemjogo.addRow(new Object[] {
+                    ij,
+                    ij.getJogo(),
+                    ij.getJogo().getPrecoAluguel(),
+                    ij.getQuantidade(),
+                    ij.getJogo().getPlataforma()
+                });
+            }
+            
         }
     }//GEN-LAST:event_jtbAluguelMouseClicked
 
@@ -570,6 +630,21 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Selecione um item para remover!");
         }
     }//GEN-LAST:event_jbRmJogoActionPerformed
+
+    private void jtbItemConsoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbItemConsoleMouseClicked
+        // TODO add your handling code here:
+        if (jtbItemConsole.getSelectedRow() != -1) {
+            jcbConsole.setSelectedItem(jtbItemConsole.getValueAt(jtbItemConsole.getSelectedRow(), 0));
+        }
+    }//GEN-LAST:event_jtbItemConsoleMouseClicked
+
+    private void jtbItemJogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbItemJogoMouseClicked
+        // TODO add your handling code here:
+         if (jtbItemJogo.getSelectedRow() != -1) {
+            jcbJogo.setSelectedItem(jtbItemJogo.getValueAt(jtbItemJogo.getSelectedRow(), 0));
+            jtfQuantidade.setText(jtbItemJogo.getValueAt(jtbItemJogo.getSelectedRow(), 3).toString());
+        }
+    }//GEN-LAST:event_jtbItemJogoMouseClicked
 
     /**
      * @param args the command line arguments

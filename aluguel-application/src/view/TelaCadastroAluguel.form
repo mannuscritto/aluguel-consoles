@@ -234,6 +234,9 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="jtfCliente">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="jbtnPesquisar">
       <Properties>
@@ -371,6 +374,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtbItemConsoleMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -506,6 +512,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtbItemJogoMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

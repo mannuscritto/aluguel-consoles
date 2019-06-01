@@ -105,8 +105,8 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jftDataInicio" min="-2" pref="73" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="jftDataInicio" min="-2" pref="79" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jftDataFinal" max="32767" attributes="0"/>
@@ -561,6 +561,9 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="jtfValorTotal">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>

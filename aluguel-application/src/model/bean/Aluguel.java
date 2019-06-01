@@ -36,6 +36,18 @@ public class Aluguel {
     public Date getDataInicio() {
         return dataInicio;
     }
+    
+    public String getDataInicioAsString() {
+        String strDataInicio = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        try {
+            strDataInicio = sdf.format(this.dataInicio);
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao converter data para String: " + ex);
+        }
+        return strDataInicio;
+    }
 
     public void setDataInicio(Date dataInicio) {
         this.dataInicio = dataInicio;
@@ -56,6 +68,18 @@ public class Aluguel {
 
     public Date getDataFinal() {
         return dataFinal;
+    }
+    
+    public String getDataFinalAsString() {
+        String strDataFinal = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        try {
+            strDataFinal = sdf.format(this.dataFinal);
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao converter data para String: " + ex);
+        }
+        return strDataFinal;
     }
 
     public void setDataFinal(Date dataFinal) {

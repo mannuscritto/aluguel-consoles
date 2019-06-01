@@ -62,13 +62,29 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         for (Aluguel a: dao.read()) {
             modelo.addRow(new Object[] {
                a,
-               a.getDataInicio(),
-               a.getDataFinal(),
+               a.getDataInicioAsString(),
+               a.getDataFinalAsString(),
                a.getValorTotal(),
                a.getNumeroControles(),
                a.getCliente()
             });
         }
+    }
+    
+    public Double calcularValorTotal() {
+        double valorTotal = 0;
+        
+        for(int row = 0; row < jtbItemConsole.getRowCount(); row++) {
+            valorTotal += Double.parseDouble(jtbItemConsole.getValueAt(row, 2).toString());
+        }
+        
+        for(int row = 0; row < jtbItemJogo.getRowCount(); row++) {
+            double precoAluguel = Double.parseDouble(jtbItemJogo.getValueAt(row, 2).toString());
+            int quantidade = Integer.parseInt(jtbItemJogo.getValueAt(row, 3).toString());
+            valorTotal += precoAluguel * quantidade;
+        }
+        
+        return valorTotal;
     }
 
     /**
@@ -356,6 +372,8 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Jogos", jPanel2);
 
+        jtfValorTotal.setEditable(false);
+
         jLabel2.setText("Valor total");
 
         jLabel7.setText("Controles");
@@ -395,8 +413,8 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jftDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jftDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jftDataFinal)))
@@ -478,6 +496,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             Aluguel a = new Aluguel();
             AluguelDAO dao = new AluguelDAO();
             ClienteDAO clidao = new ClienteDAO();
+            a.setId(Integer.parseInt(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0).toString()));
             a.setCliente(clidao.search(Integer.parseInt(jtfCliente.getText())));
             a.setDataInicio(jftDataInicio.getText());
             a.setDataFinal(jftDataFinal.getText());
@@ -521,7 +540,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         if (jtbAluguel.getSelectedRow() != -1) {
             Aluguel a = new Aluguel();
             AluguelDAO dao = new AluguelDAO();
-            a.setId((int)jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0));
+            a.setId(Integer.parseInt(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0).toString()));
             dao.delete(a);
             readJTable();
 
@@ -589,6 +608,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             c.getPrecoAluguel(),
             c.getConta().getTipoConta()
         });
+        jtfValorTotal.setText(String.format("%.2f", calcularValorTotal()));
     }//GEN-LAST:event_jbAdConsoleActionPerformed
 
     private void jbAdJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdJogoActionPerformed
@@ -605,6 +625,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             jtfQuantidade.getText(),
             j.getPlataforma()
         });
+        jtfValorTotal.setText(String.format("%.2f", calcularValorTotal()));
     }//GEN-LAST:event_jbAdJogoActionPerformed
 
     private void jbRmConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRmConsoleActionPerformed
@@ -614,6 +635,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             DefaultTableModel modelo;
             modelo = (DefaultTableModel) jtbItemConsole.getModel();
             modelo.removeRow(row);
+            jtfValorTotal.setText(String.format("%.2f", calcularValorTotal()));
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um item para remover!");
         }
@@ -626,6 +648,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             DefaultTableModel modelo;
             modelo = (DefaultTableModel) jtbItemJogo.getModel();
             modelo.removeRow(row);
+            jtfValorTotal.setText(String.format("%.2f", calcularValorTotal()));
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um item para remover!");
         }

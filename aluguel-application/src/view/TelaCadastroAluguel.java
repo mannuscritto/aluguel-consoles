@@ -570,13 +570,17 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
         // TODO add your handling code here:
         if (jtbAluguel.getSelectedRow() != -1) {
-            Aluguel a = new Aluguel();
-            AluguelDAO dao = new AluguelDAO();
-            a.setId(Integer.parseInt(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0).toString()));
-            dao.delete(a);
-            readJTable();
+            if (jtbItemConsole.getRowCount() + jtbItemJogo.getRowCount() > 0) {
+                JOptionPane.showMessageDialog(this, "Impossível excluir: aluguel contém consoles ou jogos!");
+            } else {
+                Aluguel a = new Aluguel();
+                AluguelDAO dao = new AluguelDAO();
+                a.setId(Integer.parseInt(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0).toString()));
+                dao.delete(a);
+                readJTable();
 
-            resetCampos();
+                resetCampos();
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro para excluir!");
         }

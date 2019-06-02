@@ -95,7 +95,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         try {
             dataInicio = sdf.parse(jftDataInicio.getText());
             dataFinal = sdf.parse(jftDataFinal.getText());
-            long difference =  (dataInicio.getTime() - dataFinal.getTime()) / 86400000;
+            long difference = (dataInicio.getTime() - dataFinal.getTime()) / 86400000;
             long dias = Math.abs(difference);
             
             JOptionPane.showMessageDialog(this, "Dias de diferença entre as datas: " + dias);
@@ -106,6 +106,23 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         }
 
         return valorTotal;
+    }
+    
+    public void resetCampos() {
+        jtfCliente.setText("");
+        jftDataInicio.setText("");
+        jftDataFinal.setText("");
+        jcbConsole.setSelectedIndex(0);
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jtbItemConsole.getModel();
+        modelo.setNumRows(0);
+        jcbJogo.setSelectedIndex(0);
+        jtfQuantidade.setText("1");
+        modelo = (DefaultTableModel) jtbItemJogo.getModel();
+        modelo.setNumRows(0);
+        jtfNumeroControles.setText("0");
+        jtfValorTotal.setText("0.00");
+        jtfCliente.requestFocus();
     }
 
     /**
@@ -503,12 +520,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         }
         
         readJTable();
-        
-        jtfCliente.setText("");
-        jftDataInicio.setText("");
-        jftDataFinal.setText("");
-        jtfValorTotal.setText("");
-        jtfNumeroControles.setText("");
+        resetCampos();
     }//GEN-LAST:event_jbCadastrarActionPerformed
 
     private void jbAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtualizarActionPerformed
@@ -549,11 +561,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             }
             readJTable();
 
-            jtfCliente.setText("");
-            jftDataInicio.setText("");
-            jftDataFinal.setText("");
-            jtfValorTotal.setText("");
-            jtfNumeroControles.setText("");
+            resetCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro para atualizar!");
         }
@@ -568,11 +576,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             dao.delete(a);
             readJTable();
 
-            jtfCliente.setText("");
-            jftDataInicio.setText("");
-            jftDataFinal.setText("");
-            jtfValorTotal.setText("");
-            jtfNumeroControles.setText("");
+            resetCampos();
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um registro para excluir!");
         }

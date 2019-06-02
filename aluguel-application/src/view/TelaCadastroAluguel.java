@@ -6,7 +6,9 @@
 package view;
 
 import java.sql.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Aluguel;
@@ -600,15 +602,23 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         DefaultTableModel modelo;
         modelo = (DefaultTableModel) jtbItemConsole.getModel();
         Console c = (Console)jcbConsole.getSelectedItem();
-        int maxRow = modelo.getRowCount() - 1;
-        int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) : 0;
-        modelo.addRow(new Object[] {
-            id + 1,
-            c,
-            c.getPrecoAluguel(),
-            c.getConta().getTipoConta()
-        });
-        jtfValorTotal.setText(String.format("%.2f", calcularValorTotal()));
+        int itemconsoleRow = jtbItemConsole.getSelectedRow();
+        if (itemconsoleRow != -1) {
+            modelo.setValueAt(c, itemconsoleRow, 1);
+            modelo.setValueAt(c.getPrecoAluguel(), itemconsoleRow, 2);
+            modelo.setValueAt(c.getConta().getTipoConta(), itemconsoleRow, 3);
+        } else {
+            int maxRow = modelo.getRowCount() - 1;
+            int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) : 0;
+            modelo.addRow(new Object[] {
+                id + 1,
+                c,
+                c.getPrecoAluguel(),
+                c.getConta().getTipoConta()
+            });
+        }
+        DecimalFormat df = (DecimalFormat)DecimalFormat.getNumberInstance(Locale.ENGLISH);
+        jtfValorTotal.setText(df.format(calcularValorTotal()));
     }//GEN-LAST:event_jbAdConsoleActionPerformed
 
     private void jbAdJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAdJogoActionPerformed
@@ -616,16 +626,25 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         DefaultTableModel modelo;
         modelo = (DefaultTableModel) jtbItemJogo.getModel();
         Jogo j = (Jogo)jcbJogo.getSelectedItem();
-        int maxRow = modelo.getRowCount() - 1;
-        int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) + 1: 1;
-        modelo.addRow(new Object[] {
-            id,
-            j,
-            j.getPrecoAluguel(),
-            jtfQuantidade.getText(),
-            j.getPlataforma()
-        });
-        jtfValorTotal.setText(String.format("%.2f", calcularValorTotal()));
+        int itemjogoRow = jtbItemJogo.getSelectedRow();
+        if (itemjogoRow != -1) {
+            modelo.setValueAt(j, itemjogoRow, 1);
+            modelo.setValueAt(j.getPrecoAluguel(), itemjogoRow, 2);
+            modelo.setValueAt(jtfQuantidade.getText(), itemjogoRow, 3);
+            modelo.setValueAt(j.getPlataforma(), itemjogoRow, 4);
+        } else {
+            int maxRow = modelo.getRowCount() - 1;
+            int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) + 1: 1;
+            modelo.addRow(new Object[] {
+                id,
+                j,
+                j.getPrecoAluguel(),
+                jtfQuantidade.getText(),
+                j.getPlataforma()
+            });
+        }
+        DecimalFormat df = (DecimalFormat)DecimalFormat.getNumberInstance(Locale.ENGLISH);
+        jtfValorTotal.setText(df.format(calcularValorTotal()));
     }//GEN-LAST:event_jbAdJogoActionPerformed
 
     private void jbRmConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRmConsoleActionPerformed
@@ -634,8 +653,15 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         if (row != -1) {
             DefaultTableModel modelo;
             modelo = (DefaultTableModel) jtbItemConsole.getModel();
+            if (row != -1) {
+                ItemConsole ic = new ItemConsole();
+                ItemConsoleDAO dao = new ItemConsoleDAO();
+                ic.setId(Integer.parseInt(jtbItemConsole.getValueAt(row, 0).toString()));
+                dao.delete(ic);
+            }
             modelo.removeRow(row);
-            jtfValorTotal.setText(String.format("%.2f", calcularValorTotal()));
+            DecimalFormat df = (DecimalFormat)DecimalFormat.getNumberInstance(Locale.ENGLISH);
+            jtfValorTotal.setText(df.format(calcularValorTotal()));
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um item para remover!");
         }
@@ -647,8 +673,15 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         if (row != -1) {
             DefaultTableModel modelo;
             modelo = (DefaultTableModel) jtbItemJogo.getModel();
+            if (row != -1) {
+                ItemJogo ij = new ItemJogo();
+                ItemJogoDAO dao = new ItemJogoDAO();
+                ij.setId(Integer.parseInt(jtbItemJogo.getValueAt(row, 0).toString()));
+                dao.delete(ij);
+            }
             modelo.removeRow(row);
-            jtfValorTotal.setText(String.format("%.2f", calcularValorTotal()));
+            DecimalFormat df = (DecimalFormat)DecimalFormat.getNumberInstance(Locale.ENGLISH);
+            jtfValorTotal.setText(df.format(calcularValorTotal()));
         } else {
             JOptionPane.showMessageDialog(this, "Selecione um item para remover!");
         }

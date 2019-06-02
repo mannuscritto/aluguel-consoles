@@ -59,7 +59,7 @@ public class AluguelDAO {
         List<Aluguel> alugueis = new ArrayList<>();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM aluguel");
+            stmt = con.prepareStatement("SELECT * FROM aluguel WHERE DataFechamento IS NULL");
             rs = stmt.executeQuery();
             
             ClienteDAO cdao = new ClienteDAO();
@@ -121,6 +121,25 @@ public class AluguelDAO {
             JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
+            Logger.getLogger(AluguelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+    }
+    
+    public void disable(Aluguel a) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE aluguel SET DataFechamento = current_timestamp() WHERE Aluguel_PK = ?");
+            stmt.setInt(1, a.getId());
+            
+            stmt.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Fechado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao fechar: " + ex);
             Logger.getLogger(AluguelDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ConnectionFactory.closeConnection(con, stmt);

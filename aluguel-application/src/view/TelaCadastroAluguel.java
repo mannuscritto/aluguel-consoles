@@ -172,6 +172,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jtfNumeroControles = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jbFechar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -416,6 +417,14 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jLabel7.setText("Controles");
 
+        jbFechar.setText("Fechar");
+        jbFechar.setToolTipText("Define o aluguel como encerrado, liberando os consoles e jogos.");
+        jbFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbFecharActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -436,11 +445,13 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtfValorTotal))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbCadastrar)
+                                .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jbAtualizar)
+                                .addComponent(jbAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jbFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -481,7 +492,8 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
                     .addComponent(jbAtualizar)
-                    .addComponent(jbExcluir))
+                    .addComponent(jbExcluir)
+                    .addComponent(jbFechar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -732,6 +744,16 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtbItemJogoMouseClicked
 
+    private void jbFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbFecharActionPerformed
+        // TODO add your handling code here:
+        if (jtbAluguel.getSelectedRow() != -1) {
+            Aluguel a = (Aluguel)jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0);
+            AluguelDAO dao = new AluguelDAO();
+            dao.disable(a);
+            readJTable();
+        }
+    }//GEN-LAST:event_jbFecharActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -793,6 +815,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JButton jbAtualizar;
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbExcluir;
+    private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbRmConsole;
     private javax.swing.JButton jbRmJogo;
     private javax.swing.JButton jbtnPesquisar;

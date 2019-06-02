@@ -5,10 +5,12 @@
  */
 package view;
 
-import java.sql.Date;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Aluguel;
@@ -85,7 +87,24 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             int quantidade = Integer.parseInt(jtbItemJogo.getValueAt(row, 3).toString());
             valorTotal += precoAluguel * quantidade;
         }
+              
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        java.util.Date dataInicio;
+        java.util.Date dataFinal;
         
+        try {
+            dataInicio = sdf.parse(jftDataInicio.getText());
+            dataFinal = sdf.parse(jftDataFinal.getText());
+            long difference =  (dataInicio.getTime() - dataFinal.getTime()) / 86400000;
+            long dias = Math.abs(difference);
+            
+            JOptionPane.showMessageDialog(this, "Dias de diferença entre as datas: " + dias);
+            
+            valorTotal *= dias;
+        } catch (ParseException ex) {
+            Logger.getLogger(TelaCadastroAluguel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         return valorTotal;
     }
 

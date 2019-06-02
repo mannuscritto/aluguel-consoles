@@ -522,9 +522,12 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 ij.setAluguel(a);
                 ij.setJogo((Jogo)jtbItemJogo.getValueAt(row, 1));
                 ij.setQuantidade(Integer.parseInt(jtbItemJogo.getValueAt(row, 3).toString()));
-                ijdao.update(ij);
+                if (ijdao.exists(ij)) {
+                    ijdao.update(ij);
+                } else {
+                    ijdao.create(ij);
+                }
             }
-            
             readJTable();
 
             jtfCliente.setText("");

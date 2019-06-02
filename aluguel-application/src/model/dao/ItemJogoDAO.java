@@ -76,7 +76,7 @@ public class ItemJogoDAO {
         
         try {
             stmt = con.prepareStatement("UPDATE itemjogo SET Aluguel = ?, Jogo = ?, Quantidade = ? WHERE ItemJogo_PK = ?");
-           stmt.setInt(1, ij.getAluguel().getId());
+            stmt.setInt(1, ij.getAluguel().getId());
             stmt.setInt(2, ij.getJogoId());
             stmt.setInt(3, ij.getQuantidade());
             stmt.setInt(4, ij.getId());
@@ -109,5 +109,36 @@ public class ItemJogoDAO {
         } finally {
             ConnectionFactory.closeConnection(con, stmt);
         }
+    }
+    
+    public boolean exists(ItemJogo ij) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql;
+        
+        try {
+            sql = "SELECT * FROM itemjogo WHERE Aluguel = ? AND Jogo = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, ij.getAluguel().getId());
+            stmt.setInt(2, ij.getJogo().getId());
+            
+            rs = stmt.executeQuery();
+            
+            if (rs.last()) {
+                if (ij.getId() != rs.getInt("ItemJogo_PK")) {
+                    ij.setId(rs.getInt("ItemJogo_PK"));
+                    ij.setQuantidade(ij.getQuantidade() + rs.getInt("Quantidade"));
+                }
+                return true;
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao checar: " + ex);
+            Logger.getLogger(ItemJogoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return false;
     }
 }

@@ -60,7 +60,7 @@ public class ClienteDAO {
         List<Cliente> clientes = new ArrayList<>();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM Cliente");
+            stmt = con.prepareStatement("SELECT * FROM Cliente WHERE ativo = 1");
             rs = stmt.executeQuery();
             
             while (rs.next())
@@ -115,7 +115,7 @@ public class ClienteDAO {
         PreparedStatement stmt = null;
 
         try {
-            stmt = con.prepareStatement("DELETE from cliente WHERE Cliente_PK = ?");
+            stmt = con.prepareStatement("UPDATE cliente SET ativo = 0 WHERE Cliente_PK = ?");
             stmt.setInt(1, cl.getId());
 
             stmt.executeUpdate();

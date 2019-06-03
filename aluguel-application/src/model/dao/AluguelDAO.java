@@ -59,7 +59,7 @@ public class AluguelDAO {
         List<Aluguel> alugueis = new ArrayList<>();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM aluguel WHERE DataFechamento IS NULL");
+            stmt = con.prepareStatement("SELECT * FROM aluguel WHERE DataFechamento IS NULL AND CodCliente IN (SELECT Cliente_PK FROM cliente WHERE ativo = 1)");
             rs = stmt.executeQuery();
             
             ClienteDAO cdao = new ClienteDAO();

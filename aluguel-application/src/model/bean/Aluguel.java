@@ -1,18 +1,17 @@
 package model.bean;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class Aluguel {
     private int id;
-    private Date dataAbertura;
+    private Timestamp dataAbertura;
     private Date dataInicio;
     private Date dataFinal;
-    private Date dataFechamento;
+    private Timestamp dataFechamento;
     private double valorTotal;
     private int numeroControles;
     private Cliente cliente;
@@ -25,11 +24,11 @@ public class Aluguel {
         this.id = id;
     }
 
-    public Date getDataAbertura() {
+    public Timestamp getDataAbertura() {
         return dataAbertura;
     }
 
-    public void setDataAbertura(Date dataAbertura) {
+    public void setDataAbertura(Timestamp dataAbertura) {
         this.dataAbertura = dataAbertura;
     }
 
@@ -99,11 +98,11 @@ public class Aluguel {
         this.dataFinal = Date.valueOf(sdf.format(textFieldAsDate));
     }
 
-    public Date getDataFechamento() {
+    public Timestamp getDataFechamento() {
         return dataFechamento;
     }
 
-    public void setDataFechamento(Date dataFechamento) {
+    public void setDataFechamento(Timestamp dataFechamento) {
         this.dataFechamento = dataFechamento;
     }
 

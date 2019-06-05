@@ -108,4 +108,31 @@ public class ItemConsoleDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
+    
+    public boolean exists(ItemConsole ic) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        String sql;
+        
+        try {
+            sql = "SELECT * FROM itemconsole WHERE Aluguel = ? AND Console = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setInt(1, ic.getAluguel().getId());
+            stmt.setInt(2, ic.getConsole().getId());
+            
+            rs = stmt.executeQuery();
+            
+            if (rs.last()) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao checar: " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return false;
+    }
+    
 }

@@ -66,10 +66,10 @@ public class AluguelDAO {
             while (rs.next()) {
                 Aluguel a = new Aluguel();
                 a.setId(rs.getInt("Aluguel_PK"));
-                a.setDataAbertura(rs.getDate("DataAbertura"));
+                a.setDataAbertura(rs.getTimestamp("DataAbertura"));
                 a.setDataInicio(rs.getDate("DataInicio"));
                 a.setDataFinal(rs.getDate("DataFinal"));
-                a.setDataFechamento(rs.getDate("DataFechamento"));
+                a.setDataFechamento(rs.getTimestamp("DataFechamento"));
                 a.setValorTotal(rs.getDouble("ValorTotal"));
                 a.setNumeroControles(rs.getInt("NumeroControles"));
                 a.setCliente(cdao.search(rs.getInt("CodCliente")));
@@ -145,4 +145,23 @@ public class AluguelDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
+    
+    public void renew(Aluguel a) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        
+        try {
+            stmt = con.prepareStatement("UPDATE aluguel SET DataFinal = ? WHERE Aluguel_PK = ?");
+            stmt.setDate(1, a.getDataFinal());
+            stmt.setInt(2, a.getId());
+            stmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Renovado com sucesso!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao renovar aluguel: " + ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt);
+        }
+        
+    }
+    
 }

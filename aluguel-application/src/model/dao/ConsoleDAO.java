@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.bean.Console;
+import model.bean.ItemConsole;
 
 /**
  *
@@ -148,4 +149,32 @@ public class ConsoleDAO {
         
         return c;
     }
+     
+    public boolean scheduled(ItemConsole ic) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            stmt = con.prepareStatement("SELECT ic.* FROM itemconsole ic, aluguel a WHERE (ic.Aluguel = a.Aluguel_PK) AND (a.DataFechamento IS NULL) AND (ic.Console = ?) AND (a.DataAbertura > ?)");
+            stmt.setInt(1, ic.getConsole().getId());
+            stmt.setTimestamp(2, ic.getAluguel().getDataAbertura());
+            
+            rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "O console " + ic.getConsole() + " está agendado!");
+                return true;
+            }
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao checar agendamento: " + ex);
+            Logger.getLogger(ConsoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+                
+        return false;
+    }
+     
 }

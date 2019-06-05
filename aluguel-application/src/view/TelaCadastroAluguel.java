@@ -173,6 +173,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jtfNumeroControles = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jbFechar = new javax.swing.JButton();
+        jbRenovar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -425,6 +426,13 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             }
         });
 
+        jbRenovar.setText("Renovar");
+        jbRenovar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRenovarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -452,6 +460,8 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                                 .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(jbFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbRenovar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -493,7 +503,8 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                     .addComponent(jbCadastrar)
                     .addComponent(jbAtualizar)
                     .addComponent(jbExcluir)
-                    .addComponent(jbFechar))
+                    .addComponent(jbFechar)
+                    .addComponent(jbRenovar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -555,7 +566,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 ic.setId(Integer.parseInt(jtbItemConsole.getValueAt(row, 0).toString()));
                 ic.setAluguel(a);
                 ic.setConsole((Console)jtbItemConsole.getValueAt(row, 1));
-                icdao.update(ic);
+                if (icdao.exists(ic)) {
+                    icdao.update(ic);
+                } else {
+                    icdao.create(ic);
+                }
             }
 
             ItemJogoDAO ijdao = new ItemJogoDAO();
@@ -754,6 +769,34 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbFecharActionPerformed
 
+    private void jbRenovarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRenovarActionPerformed
+        // TODO add your handling code here:
+        if (jtbAluguel.getSelectedRow() != -1) {
+            boolean renovavel = true;
+            Aluguel a = (Aluguel)jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0);
+            a.setDataFinal(jftDataFinal.getText());
+            AluguelDAO dao = new AluguelDAO();
+            ConsoleDAO cdao = new ConsoleDAO();
+            for(int row = 0; row < jtbItemConsole.getRowCount(); row++) {
+                ItemConsole ic = new ItemConsole();
+                ic.setId(Integer.parseInt(jtbItemConsole.getValueAt(row, 0).toString()));
+                ic.setAluguel(a);
+                ic.setConsole((Console)jtbItemConsole.getValueAt(row, 1));
+                if (cdao.scheduled(ic)) {
+                    System.out.println("Renovavel sera falseado");
+                    renovavel = false;
+                    System.out.println("Renovavel foi falseado, pois renovavel = " + renovavel);
+                    break;
+                }
+            }
+            if (renovavel) {
+                System.out.println("Pode renovar porque renovavel = " + renovavel);
+                dao.renew(a);
+            }
+            readJTable();
+        }
+    }//GEN-LAST:event_jbRenovarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -816,6 +859,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbFechar;
+    private javax.swing.JButton jbRenovar;
     private javax.swing.JButton jbRmConsole;
     private javax.swing.JButton jbRmJogo;
     private javax.swing.JButton jbtnPesquisar;

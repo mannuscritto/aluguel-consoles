@@ -16,7 +16,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
      */
     public TelaPrincipal() {
         initComponents();
-        this.setExtendedState(MAXIMIZED_BOTH);
+        setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -203,98 +203,84 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jbnJogosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnJogosActionPerformed
         // TODO add your handling code here:
         TelaCadastroJogos telajogo = new TelaCadastroJogos();
-        telajogo.setExtendedState(NORMAL);
         telajogo.setVisible(true);
     }//GEN-LAST:event_jbnJogosActionPerformed
 
     private void jbnContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnContaActionPerformed
         // TODO add your handling code here:
         TelaCadastroConta telaconta = new TelaCadastroConta();
-        telaconta.setExtendedState(NORMAL);
         telaconta.setVisible(true);
     }//GEN-LAST:event_jbnContaActionPerformed
 
     private void jbnTipoConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnTipoConsoleActionPerformed
         // TODO add your handling code here:
         TelaCadastroTipoConsole telatpcon = new TelaCadastroTipoConsole();
-        telatpcon.setExtendedState(NORMAL);
         telatpcon.setVisible(true);
     }//GEN-LAST:event_jbnTipoConsoleActionPerformed
 
     private void jbnAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnAluguelActionPerformed
         // TODO add your handling code here:
         TelaCadastroAluguel telacad = new TelaCadastroAluguel();
-        telacad.setExtendedState(NORMAL);
         telacad.setVisible(true);
     }//GEN-LAST:event_jbnAluguelActionPerformed
 
     private void jbnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnClienteActionPerformed
         // TODO add your handling code here:
         TelaCadastroCliente telacli = new TelaCadastroCliente();
-        telacli.setExtendedState(NORMAL);
         telacli.setVisible(true);
     }//GEN-LAST:event_jbnClienteActionPerformed
 
     private void jbnTipoContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnTipoContaActionPerformed
         // TODO add your handling code here:
         TelaCadastroTipoConsole telatpconta = new TelaCadastroTipoConsole();
-        telatpconta.setExtendedState(NORMAL);
         telatpconta.setVisible(true);
     }//GEN-LAST:event_jbnTipoContaActionPerformed
 
     private void jbnConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbnConsoleActionPerformed
         // TODO add your handling code here:
         TelaCadastroConsole telacon = new TelaCadastroConsole();
-        telacon.setExtendedState(NORMAL);
         telacon.setVisible(true);
     }//GEN-LAST:event_jbnConsoleActionPerformed
 
     private void btnAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAluguelActionPerformed
         // TODO add your handling code here:
         TelaCadastroAluguel telacad = new TelaCadastroAluguel();
-        telacad.setExtendedState(NORMAL);
         telacad.setVisible(true);
     }//GEN-LAST:event_btnAluguelActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
         // TODO add your handling code here:
          TelaCadastroCliente telacli = new TelaCadastroCliente();
-         telacli.setExtendedState(NORMAL);
         telacli.setVisible(true);
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJogoActionPerformed
         // TODO add your handling code here:
         TelaCadastroJogos telajogo = new TelaCadastroJogos();
-        telajogo.setExtendedState(NORMAL);
         telajogo.setVisible(true);
     }//GEN-LAST:event_btnJogoActionPerformed
 
     private void btnContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContaActionPerformed
         // TODO add your handling code here:
         TelaCadastroConta telaconta = new TelaCadastroConta();
-        telaconta.setExtendedState(NORMAL);
         telaconta.setVisible(true);
     }//GEN-LAST:event_btnContaActionPerformed
 
     private void btnConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsoleActionPerformed
         // TODO add your handling code here:
         TelaCadastroConsole telacon = new TelaCadastroConsole();
-        telacon.setExtendedState(NORMAL);
         telacon.setVisible(true);
     }//GEN-LAST:event_btnConsoleActionPerformed
 
     private void btnTipoContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoContaActionPerformed
         // TODO add your handling code here:
         TelaCadastroTipoConta telatpconta = new TelaCadastroTipoConta();
-        telatpconta.setExtendedState(NORMAL);
         telatpconta.setVisible(true);
     }//GEN-LAST:event_btnTipoContaActionPerformed
 
     private void btnTipoConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoConsoleActionPerformed
         // TODO add your handling code here:
         TelaCadastroTipoConsole telatpcon = new TelaCadastroTipoConsole();
-        telatpcon.setExtendedState(NORMAL);
         telatpcon.setVisible(true);
     }//GEN-LAST:event_btnTipoConsoleActionPerformed
 

@@ -511,7 +511,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        setBounds(0, 0, 656, 709);
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCadastrarActionPerformed

@@ -6,6 +6,9 @@
 package aluguel.application;
 
 import view.TelaPrincipal;
+import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -18,6 +21,11 @@ public class AluguelApplication {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        try {
+                UIManager.setLookAndFeel(new WindowsLookAndFeel());
+            } catch (UnsupportedLookAndFeelException ex) {
+                ex.printStackTrace();
+                }
         TelaPrincipal telapri = new TelaPrincipal();
         telapri.setVisible(true);
     }

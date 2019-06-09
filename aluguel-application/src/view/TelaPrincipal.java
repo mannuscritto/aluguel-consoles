@@ -28,6 +28,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnAluguel = new javax.swing.JButton();
+        btnCliente = new javax.swing.JButton();
+        btnJogo = new javax.swing.JButton();
+        btnConsole = new javax.swing.JButton();
+        btnConta = new javax.swing.JButton();
+        btnTipoConta = new javax.swing.JButton();
+        btnTipoConsole = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jbnAluguel = new javax.swing.JMenuItem();
@@ -39,6 +46,56 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jbnTipoConta = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tela Principal");
+
+        btnAluguel.setText("Aluguel");
+        btnAluguel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAluguelActionPerformed(evt);
+            }
+        });
+
+        btnCliente.setText("Cliente");
+        btnCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteActionPerformed(evt);
+            }
+        });
+
+        btnJogo.setText("Jogo");
+        btnJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnJogoActionPerformed(evt);
+            }
+        });
+
+        btnConsole.setText("Console");
+        btnConsole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsoleActionPerformed(evt);
+            }
+        });
+
+        btnConta.setText("Conta");
+        btnConta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContaActionPerformed(evt);
+            }
+        });
+
+        btnTipoConta.setText("Tipo Conta");
+        btnTipoConta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTipoContaActionPerformed(evt);
+            }
+        });
+
+        btnTipoConsole.setText("Tipo Console");
+        btnTipoConsole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTipoConsoleActionPerformed(evt);
+            }
+        });
 
         jMenu2.setText("Cadastrar");
 
@@ -106,11 +163,39 @@ public class TelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 603, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnAluguel, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(btnJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnConta, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnTipoConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAluguel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnJogo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConta, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnTipoConta, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnTipoConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 295, Short.MAX_VALUE))
         );
 
         setBounds(0, 0, 619, 530);
@@ -158,6 +243,48 @@ public class TelaPrincipal extends javax.swing.JFrame {
         telacon.setVisible(true);
     }//GEN-LAST:event_jbnConsoleActionPerformed
 
+    private void btnAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAluguelActionPerformed
+        // TODO add your handling code here:
+        TelaCadastroAluguel telacad = new TelaCadastroAluguel();
+        telacad.setVisible(true);
+    }//GEN-LAST:event_btnAluguelActionPerformed
+
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        // TODO add your handling code here:
+         TelaCadastroCliente telacli = new TelaCadastroCliente();
+        telacli.setVisible(true);
+    }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void btnJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJogoActionPerformed
+        // TODO add your handling code here:
+        TelaCadastroJogos telajogo = new TelaCadastroJogos();
+        telajogo.setVisible(true);
+    }//GEN-LAST:event_btnJogoActionPerformed
+
+    private void btnContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContaActionPerformed
+        // TODO add your handling code here:
+        TelaCadastroConta telaconta = new TelaCadastroConta();
+        telaconta.setVisible(true);
+    }//GEN-LAST:event_btnContaActionPerformed
+
+    private void btnConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsoleActionPerformed
+        // TODO add your handling code here:
+        TelaCadastroConsole telacon = new TelaCadastroConsole();
+        telacon.setVisible(true);
+    }//GEN-LAST:event_btnConsoleActionPerformed
+
+    private void btnTipoContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoContaActionPerformed
+        // TODO add your handling code here:
+        TelaCadastroTipoConta telatpconta = new TelaCadastroTipoConta();
+        telatpconta.setVisible(true);
+    }//GEN-LAST:event_btnTipoContaActionPerformed
+
+    private void btnTipoConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTipoConsoleActionPerformed
+        // TODO add your handling code here:
+        TelaCadastroTipoConsole telatpcon = new TelaCadastroTipoConsole();
+        telatpcon.setVisible(true);
+    }//GEN-LAST:event_btnTipoConsoleActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -194,6 +321,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAluguel;
+    private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnConsole;
+    private javax.swing.JButton btnConta;
+    private javax.swing.JButton btnJogo;
+    private javax.swing.JButton btnTipoConsole;
+    private javax.swing.JButton btnTipoConta;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jbnAluguel;

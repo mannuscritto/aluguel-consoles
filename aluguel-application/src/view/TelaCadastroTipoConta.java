@@ -62,6 +62,7 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
         jtbTipoConta = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cadastro Tipo Conta");
 
         jLabel2.setText("Título");
 

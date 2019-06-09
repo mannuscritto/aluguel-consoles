@@ -35,6 +35,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
      * Creates new form CadastroAluguel
      */
     public TelaCadastroAluguel() {
+        setExtendedState(MAXIMIZED_BOTH);
         initComponents();
         readJTable();
         readJComboBoxConsole();

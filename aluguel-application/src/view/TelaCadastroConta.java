@@ -21,6 +21,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
      * Creates new form TelaCadastroConta
      */
     public TelaCadastroConta() {
+        setExtendedState(MAXIMIZED_BOTH);
         initComponents();
         readJTable();
         readJComboBox();
@@ -74,7 +75,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jcbTipoConta = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel2.setText("Preço de aluguel");
 

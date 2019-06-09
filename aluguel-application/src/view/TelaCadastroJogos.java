@@ -24,6 +24,7 @@ public class TelaCadastroJogos extends javax.swing.JFrame {
      * Creates new form CadastroJogos
      */
     public TelaCadastroJogos() {
+        setExtendedState(MAXIMIZED_BOTH);
         initComponents();
         readJComboBoxPlataforma();
         readJTable();

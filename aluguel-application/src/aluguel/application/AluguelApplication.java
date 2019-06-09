@@ -5,6 +5,8 @@
  */
 package aluguel.application;
 
+import view.TelaPrincipal;
+
 /**
  *
  * @author romer
@@ -16,6 +18,8 @@ public class AluguelApplication {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        TelaPrincipal telapri = new TelaPrincipal();
+        telapri.setVisible(true);
     }
     
 }

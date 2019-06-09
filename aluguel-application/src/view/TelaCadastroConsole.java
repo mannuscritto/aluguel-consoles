@@ -24,6 +24,7 @@ public class TelaCadastroConsole extends javax.swing.JFrame {
      * Creates new form TelaCadastroConsole
      */
     public TelaCadastroConsole() {
+        setExtendedState(MAXIMIZED_BOTH);
         initComponents();
         readJTable();
         readJComboBoxTipoConsole();

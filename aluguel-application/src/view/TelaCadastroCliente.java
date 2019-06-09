@@ -24,6 +24,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
      * Creates new form ListaClientes
      */
     public TelaCadastroCliente() {
+        setExtendedState(MAXIMIZED_BOTH);
         initComponents();
         readJTable();
     }
@@ -105,7 +106,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbCliente = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Clientes");
 
         jlPrimeiroNome.setText("Primeiro Nome");

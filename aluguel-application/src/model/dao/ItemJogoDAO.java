@@ -24,6 +24,7 @@ public class ItemJogoDAO {
     public void create(ItemJogo ij) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;
+        JogoDAO jdao = new JogoDAO();
         
         try {
             stmt = con.prepareStatement("INSERT INTO itemjogo (Aluguel, Jogo, Quantidade) VALUES (?, ?, ?)");
@@ -32,6 +33,10 @@ public class ItemJogoDAO {
             stmt.setInt(3, ij.getQuantidade());
             
             stmt.executeUpdate();
+            
+            ij.getJogo().setQuantidade(ij.getJogo().getQuantidade() - ij.getQuantidade());
+            
+            jdao.update(ij.getJogo());
             
             JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {

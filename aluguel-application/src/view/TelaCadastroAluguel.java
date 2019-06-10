@@ -99,8 +99,6 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             long difference = (dataInicio.getTime() - dataFinal.getTime()) / 86400000;
             long dias = Math.abs(difference);
             
-            JOptionPane.showMessageDialog(this, "Dias de diferença entre as datas: " + dias);
-            
             valorTotal *= dias;
         } catch (ParseException ex) {
             Logger.getLogger(TelaCadastroAluguel.class.getName()).log(Level.SEVERE, null, ex);
@@ -685,21 +683,26 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         modelo = (DefaultTableModel) jtbItemJogo.getModel();
         Jogo j = (Jogo)jcbJogo.getSelectedItem();
         int itemjogoRow = jtbItemJogo.getSelectedRow();
-        if (itemjogoRow != -1) {
-            modelo.setValueAt(j, itemjogoRow, 1);
-            modelo.setValueAt(j.getPrecoAluguel(), itemjogoRow, 2);
-            modelo.setValueAt(jtfQuantidade.getText(), itemjogoRow, 3);
-            modelo.setValueAt(j.getPlataforma(), itemjogoRow, 4);
+        if (Integer.parseInt(jtfQuantidade.getText()) <= j.getQuantidade()) {
+            if (itemjogoRow != -1) {
+                modelo.setValueAt(j, itemjogoRow, 1);
+                modelo.setValueAt(j.getPrecoAluguel(), itemjogoRow, 2);
+                modelo.setValueAt(jtfQuantidade.getText(), itemjogoRow, 3);
+                modelo.setValueAt(j.getPlataforma(), itemjogoRow, 4);
+            } else {
+                int maxRow = modelo.getRowCount() - 1;
+                int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) + 1: 1;
+                modelo.addRow(new Object[] {
+                    id,
+                    j,
+                    j.getPrecoAluguel(),
+                    jtfQuantidade.getText(),
+                    j.getPlataforma()
+                });
+            }
         } else {
-            int maxRow = modelo.getRowCount() - 1;
-            int id = maxRow > -1 ? Integer.parseInt(modelo.getValueAt(maxRow, 0).toString()) + 1: 1;
-            modelo.addRow(new Object[] {
-                id,
-                j,
-                j.getPrecoAluguel(),
-                jtfQuantidade.getText(),
-                j.getPlataforma()
-            });
+            JOptionPane.showMessageDialog(this, "Não há consoles o suficiente em estoque!\n"
+                    + "Quantidade em estoque: " + j.getQuantidade());
         }
         DecimalFormat df = (DecimalFormat)DecimalFormat.getNumberInstance(Locale.ENGLISH);
         jtfValorTotal.setText(df.format(calcularValorTotal()));

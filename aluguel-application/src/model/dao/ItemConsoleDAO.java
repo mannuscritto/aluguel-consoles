@@ -33,7 +33,7 @@ public class ItemConsoleDAO {
             
             stmt.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            //JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex);
             Logger.getLogger(AluguelDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -81,7 +81,7 @@ public class ItemConsoleDAO {
             
             stmt.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+            //JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex);
             Logger.getLogger(ItemConsoleDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -100,7 +100,7 @@ public class ItemConsoleDAO {
             
             stmt.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+            //JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
             Logger.getLogger(ItemConsoleDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -767,9 +767,17 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (jtbAluguel.getSelectedRow() != -1) {
             Aluguel a = (Aluguel)jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0);
+            JogoDAO jdao = new JogoDAO();
+            for(int row = 0; row < jtbItemJogo.getRowCount(); row++) {
+                ItemJogo ij = (ItemJogo)jtbItemJogo.getValueAt(row, 0);
+                ij.setAluguel(a);
+                ij.getJogo().setQuantidade(ij.getJogo().getQuantidade() + ij.getQuantidade());
+                jdao.update(ij.getJogo());
+            }
             AluguelDAO dao = new AluguelDAO();
             dao.disable(a);
             readJTable();
+            resetCampos();
         }
     }//GEN-LAST:event_jbFecharActionPerformed
 

@@ -38,7 +38,7 @@ public class ItemJogoDAO {
             
             jdao.update(ij.getJogo());
             
-            JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            //JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao salvar: " + ex);
             Logger.getLogger(ItemJogoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -88,7 +88,7 @@ public class ItemJogoDAO {
             
             stmt.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+            //JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex);
             Logger.getLogger(ItemJogoDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,7 +107,7 @@ public class ItemJogoDAO {
             
             stmt.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+            //JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
             Logger.getLogger(ItemJogoDAO.class.getName()).log(Level.SEVERE, null, ex);

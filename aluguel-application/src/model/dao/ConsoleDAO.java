@@ -156,9 +156,9 @@ public class ConsoleDAO {
         ResultSet rs = null;
         
         try {
-            stmt = con.prepareStatement("SELECT ic.* FROM itemconsole ic, aluguel a WHERE (ic.Aluguel = a.Aluguel_PK) AND (a.DataFechamento IS NULL) AND (ic.Console = ?) AND (a.DataAbertura > ?)");
+            stmt = con.prepareStatement("SELECT ic.* FROM itemconsole ic, aluguel a WHERE (ic.Aluguel = a.Aluguel_PK) AND (a.DataFechamento IS NULL) AND (ic.Console = ?) AND (a.DataInicio < ?)");
             stmt.setInt(1, ic.getConsole().getId());
-            stmt.setTimestamp(2, ic.getAluguel().getDataAbertura());
+            stmt.setDate(2, ic.getAluguel().getDataFinal());
             
             rs = stmt.executeQuery();
             

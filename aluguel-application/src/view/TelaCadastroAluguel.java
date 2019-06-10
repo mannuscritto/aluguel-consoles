@@ -149,7 +149,6 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jbtnPesquisar = new javax.swing.JButton();
         jbCadastrar = new javax.swing.JButton();
         jbAtualizar = new javax.swing.JButton();
-        jbExcluir = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jcbConsole = new javax.swing.JComboBox<>();
@@ -245,13 +244,6 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jbAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAtualizarActionPerformed(evt);
-            }
-        });
-
-        jbExcluir.setText("Excluir");
-        jbExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbExcluirActionPerformed(evt);
             }
         });
 
@@ -442,25 +434,13 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                     .addComponent(jTabbedPane1)
                     .addComponent(jScrollPane4)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtfNumeroControles, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtfValorTotal))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfNumeroControles, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jbFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbRenovar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfValorTotal)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -475,7 +455,16 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jftDataFinal)))
+                        .addComponent(jftDataFinal))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbFechar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbRenovar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(174, 174, 174)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -501,7 +490,6 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
                     .addComponent(jbAtualizar)
-                    .addComponent(jbExcluir)
                     .addComponent(jbFechar)
                     .addComponent(jbRenovar))
                 .addGap(18, 18, 18)
@@ -592,25 +580,6 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um registro para atualizar!");
         }
     }//GEN-LAST:event_jbAtualizarActionPerformed
-
-    private void jbExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExcluirActionPerformed
-        // TODO add your handling code here:
-        if (jtbAluguel.getSelectedRow() != -1) {
-            if (jtbItemConsole.getRowCount() + jtbItemJogo.getRowCount() > 0) {
-                JOptionPane.showMessageDialog(this, "Impossível excluir: aluguel contém consoles ou jogos!");
-            } else {
-                Aluguel a = new Aluguel();
-                AluguelDAO dao = new AluguelDAO();
-                a.setId(Integer.parseInt(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0).toString()));
-                dao.delete(a);
-                readJTable();
-
-                resetCampos();
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecione um registro para excluir!");
-        }
-    }//GEN-LAST:event_jbExcluirActionPerformed
 
     private void jtbAluguelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtbAluguelMouseClicked
         // TODO add your handling code here:
@@ -869,7 +838,6 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JButton jbAdJogo;
     private javax.swing.JButton jbAtualizar;
     private javax.swing.JButton jbCadastrar;
-    private javax.swing.JButton jbExcluir;
     private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbRenovar;
     private javax.swing.JButton jbRmConsole;

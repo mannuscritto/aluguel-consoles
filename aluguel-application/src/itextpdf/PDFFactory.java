@@ -9,38 +9,27 @@ import java.io.IOException;
 
 public class PDFFactory {
     
-    /*public static Document getDocument() throws DocumentException {
+    public static Document getDocument(String nome) throws DocumentException {
         
         Document doc = new Document();
         
         try {
-            PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\romer\\Documents"));
+            PdfWriter.getInstance(doc, new FileOutputStream("C:\\Users\\romer\\Documents" + nome));
             
             doc.open();
             
-            doc.add(new Paragraph("Gerando PDF - Java"));
+            return doc;
         } catch (DocumentException | IOException de) {
             System.out.println(de.getMessage());
         }
 
         return null;
-    }*/
-    
-    public static void main(String[] args) {
-           // criação do documento
-          Document document = new Document();
-          try {
-              
-              PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\romer\\Documents\\PDF_teste.pdf"));
-              document.open();
-              
-              // adicionando um parágrafo no documento
-              document.add(new Paragraph("Gerando PDF - Java"));
     }
-          catch(DocumentException | IOException de) {
-              System.err.println(de.getMessage());
-          }
-          document.close();
-      }
     
+    public static void closeDocument(Document doc) {
+        if (doc != null) {
+            doc.close();
+        }
+    }
+           
 }

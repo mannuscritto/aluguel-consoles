@@ -10,9 +10,10 @@ import java.util.Date;
 
 public class PDFFactory {
     
-    final public static String PDF_PATH = "C:\\Users\\romer\\Documents\\";
-    final public static String PDF_PREFIX = "Relatorio_";
-    final public static String PDF_EXTENSION = ".pdf";
+    final private static String PDF_PATH = "C:\\Users\\romer\\Documents\\";
+    final private static String PDF_PREFIX = "Relatorio_";
+    final private static String PDF_EXTENSION = ".pdf";
+    final private static String PDF_CREATOR = "Aluguel de Consoles Team";
     
     public static Document getDocument(String nome) throws DocumentException {
         
@@ -35,6 +36,16 @@ public class PDFFactory {
     
     public static void closeDocument(Document doc) {
         if (doc != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
+            
+            doc.setMargins(3, 3, 2, 2);
+            doc.addTitle("Relatório de Clientes no sistema AluguelConsoles em " + sdf.format(new Date()));
+            doc.addSubject("Dados de todos os clientes que estavam com cadastro ativo na data de criação deste documento.");
+            doc.addAuthor(PDF_CREATOR);
+            doc.addCreationDate();
+            doc.addCreator(PDF_CREATOR);
+            doc.addKeywords("Relatório, Clientes, Cadastro");
+            
             doc.close();
         }
     }

@@ -1,7 +1,6 @@
 package model.pdf;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import itextpdf.PDFFactory;
 import java.util.logging.Level;

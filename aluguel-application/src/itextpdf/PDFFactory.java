@@ -36,15 +36,12 @@ public class PDFFactory {
     
     public static void closeDocument(Document doc) {
         if (doc != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd 'de' MMMMM 'de' yyyy");
-            
+                        
             doc.setMargins(3, 3, 2, 2);
-            doc.addTitle("Relatório de Clientes no sistema AluguelConsoles em " + sdf.format(new Date()));
-            doc.addSubject("Dados de todos os clientes que estavam com cadastro ativo na data de criação deste documento.");
             doc.addAuthor(PDF_CREATOR);
             doc.addCreationDate();
             doc.addCreator(PDF_CREATOR);
-            doc.addKeywords("Relatório, Clientes, Cadastro");
+            doc.addKeywords("Relatório, Cadastro");
             
             doc.close();
         }

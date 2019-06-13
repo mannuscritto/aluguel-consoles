@@ -19,8 +19,8 @@ public class ClientePDF {
             
             for (Cliente c: dao.read()) {
                 Paragraph para = new Paragraph();
-                para.add(c.getPrimeiroNome());
-                para.add(c.getUltimoNome());
+                para.add("Nome: " + c.getPrimeiroNome());
+                para.add(" Sobrenome: " + c.getUltimoNome());
                 doc.add(para);
             }
         

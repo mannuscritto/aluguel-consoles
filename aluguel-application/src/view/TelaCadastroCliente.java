@@ -13,6 +13,7 @@ import model.bean.Telefone;
 import model.dao.ClienteDAO;
 import model.dao.EnderecoDAO;
 import model.dao.TelefoneDAO;
+import model.pdf.ClientePDF;
 
 /**
  *
@@ -105,6 +106,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         jbExcluir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtbCliente = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Clientes");
@@ -191,6 +193,13 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jtbCliente);
 
+        jButton1.setText("Imprimir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -251,17 +260,10 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                                 .addComponent(jlBairro)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jtBairro))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jbAlterar)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jbExcluir))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jlEmail)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jlEmail)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -270,7 +272,16 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                                 .addComponent(jcbUF, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jlComplemento))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtComplemento)))
+                        .addComponent(jtComplemento))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbAlterar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbExcluir)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -320,7 +331,8 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
                     .addComponent(jbAlterar)
-                    .addComponent(jbExcluir))
+                    .addComponent(jbExcluir)
+                    .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                 .addContainerGap())
@@ -419,6 +431,12 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtbClienteMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        ClientePDF cpdf = new ClientePDF();
+        cpdf.print();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -458,6 +476,7 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbAlterar;

@@ -24,9 +24,10 @@ public class ClientePDF {
                 para.add(c.getUltimoNome());
                 doc.add(para);
             }
-         
+        
             PDFFactory.closeDocument(doc);
         } catch (DocumentException ex) {
+            System.out.println("Erro ao gerar relatório de cliente: " + ex);
             Logger.getLogger(ClientePDF.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

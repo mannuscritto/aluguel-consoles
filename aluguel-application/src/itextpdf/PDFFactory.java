@@ -57,31 +57,29 @@ public class PDFFactory {
     
     public static PdfPTable getTable(String[] header_cols) {
         SimpleDateFormat sdf;
-        float[] width_cols = new float[header_cols.length];
-        
-        for (int i = 0; i < header_cols.length; i++) {
-            width_cols[i] = (float)header_cols[i].length();
-        }
         
         //criar tabela
-        PdfPTable ctb = new PdfPTable(width_cols);
+        PdfPTable ctb = new PdfPTable(header_cols.length);
         ctb.setWidthPercentage(100f);
+        ctb.getDefaultCell().setUseAscender(true);
+        ctb.getDefaultCell().setUseDescender(true);
 
         //adicionar cabecalho da tabela
-        sdf = new SimpleDateFormat("dd 'de' MMMMM");
+        sdf = new SimpleDateFormat("EEEEE, dd 'de' MMMMM 'de' yyyy");
         Font f = new Font();
         f.setColor(BaseColor.WHITE);
-        PdfPCell cab1 = new PdfPCell(new Phrase("Relatório para " + sdf.format(new Date())));
+        PdfPCell cab1 = new PdfPCell(new Phrase("Relatório para " + sdf.format(new Date()), f));
         cab1.setBackgroundColor(BaseColor.BLACK);
         cab1.setHorizontalAlignment(Element.ALIGN_CENTER);
         
         cab1.setColspan(header_cols.length);
         ctb.addCell(cab1);
-        
+        ctb.getDefaultCell().setBackgroundColor(BaseColor.LIGHT_GRAY);
         for (String header_col : header_cols) {
             ctb.addCell(header_col);
         }
-        ctb.setHeaderRows(1);
+        ctb.getDefaultCell().setBackgroundColor(null);
+        ctb.setHeaderRows(2);
         
         return ctb;
     }

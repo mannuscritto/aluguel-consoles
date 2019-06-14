@@ -13,7 +13,6 @@ import model.bean.Telefone;
 import model.dao.ClienteDAO;
 import model.dao.EnderecoDAO;
 import model.dao.TelefoneDAO;
-import model.pdf.ClientePDF;
 
 /**
  *
@@ -433,8 +432,8 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        ClientePDF cpdf = new ClientePDF();
-        cpdf.print();
+        ClienteDAO cdao = new ClienteDAO();
+        cdao.print();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

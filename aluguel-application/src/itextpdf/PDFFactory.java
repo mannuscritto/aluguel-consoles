@@ -2,6 +2,9 @@ package itextpdf;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -47,4 +50,25 @@ public class PDFFactory {
         }
     }
            
+    
+    public static PdfPTable getTable(String[] header_cols) {
+        SimpleDateFormat sdf;
+        
+        //criar tabela
+        PdfPTable ctb = new PdfPTable(header_cols.length);
+
+        //adicionar cabecalho da tabela
+        sdf = new SimpleDateFormat("dd 'de' MMMMM");
+        PdfPCell cab1 = new PdfPCell(new Phrase("Relatório para " + sdf.format(new Date())));
+        
+        cab1.setColspan(header_cols.length);
+        ctb.addCell(cab1);
+        
+        for (String header_col : header_cols) {
+            ctb.addCell(header_col);
+        }
+        ctb.setHeaderRows(1);
+        
+        return ctb;
+    }
 }

@@ -1,7 +1,10 @@
 package itextpdf;
 
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -9,6 +12,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class PDFFactory {
@@ -53,13 +57,23 @@ public class PDFFactory {
     
     public static PdfPTable getTable(String[] header_cols) {
         SimpleDateFormat sdf;
+        float[] width_cols = new float[header_cols.length];
+        
+        for (int i = 0; i < header_cols.length; i++) {
+            width_cols[i] = (float)header_cols[i].length();
+        }
         
         //criar tabela
-        PdfPTable ctb = new PdfPTable(header_cols.length);
+        PdfPTable ctb = new PdfPTable(width_cols);
+        ctb.setWidthPercentage(100f);
 
         //adicionar cabecalho da tabela
         sdf = new SimpleDateFormat("dd 'de' MMMMM");
+        Font f = new Font();
+        f.setColor(BaseColor.WHITE);
         PdfPCell cab1 = new PdfPCell(new Phrase("Relatório para " + sdf.format(new Date())));
+        cab1.setBackgroundColor(BaseColor.BLACK);
+        cab1.setHorizontalAlignment(Element.ALIGN_CENTER);
         
         cab1.setColspan(header_cols.length);
         ctb.addCell(cab1);

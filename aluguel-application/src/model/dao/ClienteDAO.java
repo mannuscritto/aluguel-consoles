@@ -163,9 +163,6 @@ public class ClienteDAO {
      
     public void print() {
         
-        
-        ClienteDAO dao = new ClienteDAO();  
-        
         PdfPTable ctb = PDFFactory.getTable(new String[] {
             "ID",
             "Nome",
@@ -175,7 +172,7 @@ public class ClienteDAO {
         try {
             Document doc = PDFFactory.getDocument("Cliente");
 
-            for (Cliente c: dao.read()) {
+            for (Cliente c: this.read()) {
                 ctb.addCell(String.valueOf(c.getId()));
                 ctb.addCell(c.getPrimeiroNome() + c.getUltimoNome());
                 ctb.addCell(String.valueOf(c.getDocumento()));

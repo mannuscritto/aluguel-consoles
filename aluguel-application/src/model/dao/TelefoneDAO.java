@@ -121,8 +121,32 @@ public class TelefoneDAO {
         }
     }
 
-    public void create() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+
+    public Telefone search(int pk) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Telefone tel = new Telefone();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM telefone WHERE Telefone_PK = ?");
+            stmt.setInt(1, pk);
+            rs = stmt.executeQuery();
+            
+            if (rs.last()) {                         
+                tel.setId(rs.getInt("Telefone_PK"));
+                tel.setCliente(rs.getInt("Cliente"));
+                tel.setCodArea(rs.getInt("Telefone_PK"));
+                tel.setNumero(rs.getInt("Telefone_PK"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TelefoneDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return tel;
     }
     
 }

@@ -75,6 +75,19 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             });
         }
     }
+    public void readJTableCliente(String cli) {
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jTabelPesquisa.getModel();
+        modelo.setNumRows(0);
+        AluguelDAO dao = new AluguelDAO();
+        
+        for (Aluguel a: dao.readCliente(cli)) {
+            modelo.addRow(new Object[] {
+               a,
+               a.getCliente()
+            });
+        }
+    }
     
     public Double calcularValorTotal() {
         double valorTotal = 0;
@@ -166,6 +179,9 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jbRmJogo = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jtfQuantidade = new javax.swing.JTextField();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTabelPesquisa = new javax.swing.JTable();
         jtfValorTotal = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jtfNumeroControles = new javax.swing.JTextField();
@@ -231,7 +247,18 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(jtbAluguel);
 
+        jtfCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfClienteActionPerformed(evt);
+            }
+        });
+
         jbtnPesquisar.setText("Pesquisar");
+        jbtnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnPesquisarActionPerformed(evt);
+            }
+        });
 
         jbCadastrar.setText("Cadastrar");
         jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -244,6 +271,12 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jbAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAtualizarActionPerformed(evt);
+            }
+        });
+
+        jcbConsole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbConsoleActionPerformed(evt);
             }
         });
 
@@ -403,6 +436,33 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Jogos", jPanel2);
 
+        jTabelPesquisa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID", "NomeCliente"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTabelPesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabelPesquisaMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(jTabelPesquisa);
+
+        jTabbedPane2.addTab("", jScrollPane6);
+
+        jTabbedPane1.addTab("Pesquisa", jTabbedPane2);
+
         jtfValorTotal.setEditable(false);
 
         jLabel2.setText("Valor total");
@@ -440,8 +500,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfValorTotal)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jtfValorTotal))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -778,6 +837,24 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbRenovarActionPerformed
 
+    private void jtfClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfClienteActionPerformed
+
+    private void jbtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPesquisarActionPerformed
+        // TODO add your handling code here:
+        readJTableCliente(jtfCliente.getText());
+        
+    }//GEN-LAST:event_jbtnPesquisarActionPerformed
+
+    private void jTabelPesquisaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabelPesquisaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabelPesquisaMouseClicked
+
+    private void jcbConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbConsoleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbConsoleActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -831,7 +908,10 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable jTabelPesquisa;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JButton jbAdConsole;

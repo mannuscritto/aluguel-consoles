@@ -96,10 +96,11 @@ public class ClienteDAO {
         List<Cliente> clientes = new ArrayList<>();
         
         try {
-            stmt = con.prepareStatement("SELECT * FROM Cliente WHERE ativo = 1 AND (PrimeiroNome LIKE ? OR UltimoNome LIKE ? OR Email LIKE ?)");
+            stmt = con.prepareStatement("SELECT * FROM Cliente WHERE ativo = 1 AND (PrimeiroNome LIKE ? OR UltimoNome LIKE ? OR Email LIKE ? OR Documento LIKE ?)");
             stmt.setString(1, "%" + desc + "%");
             stmt.setString(2, "%" + desc + "%");
             stmt.setString(3, "%" + desc + "%");
+            stmt.setString(4, "%" + desc + "%");
             rs = stmt.executeQuery();
             
             while (rs.next())

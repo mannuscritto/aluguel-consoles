@@ -5,6 +5,9 @@
  */
 package view;
 
+import itextpdf.PDFFactory;
+import model.dao.ClienteDAO;
+
 /**
  *
  * @author Lucas Santos
@@ -304,6 +307,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
+        ClienteDAO cdao = new ClienteDAO();
+        cdao.print();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**

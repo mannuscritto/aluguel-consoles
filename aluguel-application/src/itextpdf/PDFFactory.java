@@ -9,20 +9,25 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JFileChooser;
 
 public class PDFFactory {
     
-    final private static String PDF_PATH = "C:\\Users\\romer\\Documents\\";
+    private static String PDF_PATH = null;
     final private static String PDF_PREFIX = "Relatorio_";
     final private static String PDF_EXTENSION = ".pdf";
     final private static String PDF_CREATOR = "Aluguel de Consoles Team";
     
     public static Document getDocument(String nome) throws DocumentException {
+        
+        if (PDF_PATH == null) {
+            getPDFPath();
+        }
         
         Document doc = new Document();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
@@ -49,7 +54,7 @@ public class PDFFactory {
             doc.addCreationDate();
             doc.addCreator(PDF_CREATOR);
             doc.addKeywords("Relatório, Cadastro");
-            
+            System.out.println("Salvou!");
             doc.close();
         }
     }
@@ -82,5 +87,14 @@ public class PDFFactory {
         ctb.setHeaderRows(2);
         
         return ctb;
+    }
+
+    private static void getPDFPath() {
+        JFileChooser chooser = new JFileChooser();
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.showSaveDialog(null);
+        File file = chooser.getSelectedFile();
+        PDF_PATH = file.getAbsolutePath().replace("\\", "\\\\") + "\\\\";
+        System.out.println(PDF_PATH);
     }
 }

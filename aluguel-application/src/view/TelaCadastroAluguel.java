@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Aluguel;
+import model.bean.Cliente;
 import model.bean.Console;
 import model.bean.ItemConsole;
 import model.bean.ItemJogo;
@@ -72,6 +73,22 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                a.getValorTotal(),
                a.getNumeroControles(),
                a.getCliente()
+            });
+        }
+    }
+    
+    public void readJTableClientes(String desc) {
+        DefaultTableModel modelo;
+        modelo = (DefaultTableModel) jtbCliente.getModel();
+        modelo.setNumRows(0);
+        ClienteDAO dao = new ClienteDAO();
+        
+        for (Cliente c: dao.readForNome(desc)) {
+            modelo.addRow(new Object[] {
+                c.getId(),
+                c.getPrimeiroNome(),
+                c.getUltimoNome(),
+                c.getDocumento()
             });
         }
     }
@@ -138,6 +155,12 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jfClientes = new javax.swing.JFrame();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtbCliente = new javax.swing.JTable();
+        jtfDesc = new javax.swing.JTextField();
+        jbBuscar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jftDataInicio = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -200,6 +223,92 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTable2);
 
+        jfClientes.setTitle("Pesquisa de clientes");
+        jfClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jfClientes.setPreferredSize(new java.awt.Dimension(640, 480));
+        jfClientes.setResizable(false);
+        jfClientes.setSize(new java.awt.Dimension(640, 480));
+
+        jtbCliente.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "PrimeiroNome", "UltimoNome", "Documento"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane6.setViewportView(jtbCliente);
+
+        jtfDesc.setText("Nome, Sobrenome, Email ou Documento");
+        jtfDesc.setToolTipText("Pesquise um cliente pelo nome, sobrenome, e-mail ou documento.");
+        jtfDesc.setNextFocusableComponent(jbBuscar);
+        jtfDesc.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jtfDescFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtfDescFocusLost(evt);
+            }
+        });
+
+        jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("OK");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jfClientesLayout = new javax.swing.GroupLayout(jfClientes.getContentPane());
+        jfClientes.getContentPane().setLayout(jfClientesLayout);
+        jfClientesLayout.setHorizontalGroup(
+            jfClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jfClientesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jfClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                    .addGroup(jfClientesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jfClientesLayout.createSequentialGroup()
+                        .addComponent(jtfDesc)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jfClientesLayout.setVerticalGroup(
+            jfClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jfClientesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jfClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbBuscar))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+
+        jfClientes.getAccessibleContext().setAccessibleParent(jbtnPesquisar);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Aluguel");
 
@@ -231,6 +340,8 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             }
         });
         jScrollPane4.setViewportView(jtbAluguel);
+
+        jtfCliente.setEditable(false);
 
         jbtnPesquisar.setText("Pesquisar");
         jbtnPesquisar.addActionListener(new java.awt.event.ActionListener() {
@@ -495,7 +606,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                     .addComponent(jftDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbtnPesquisar))
                 .addGap(18, 18, 18)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -799,12 +910,44 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private void jbtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPesquisarActionPerformed
         // TODO add your handling code here:
         
+        jfClientes.setVisible(true);
+        
     }//GEN-LAST:event_jbtnPesquisarActionPerformed
 
     private void jtfNumeroControlesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtfNumeroControlesStateChanged
         // TODO add your handling code here:
         jlControles.setText(String.valueOf(jtfNumeroControles.getValue()));
     }//GEN-LAST:event_jtfNumeroControlesStateChanged
+
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // TODO add your handling code here:
+        if (!jtfDesc.getText().equals("")) {
+            readJTableClientes(jtfDesc.getText());
+        }
+                
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+        jfClientes.setVisible(false);
+        if (jtbCliente.getSelectedRow() != -1) {
+            jtfCliente.setText(jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 1).toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não selecionou nenhum cliente.");
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jtfDescFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtfDescFocusGained
+        // TODO add your handling code here:
+        jtfDesc.setText("");
+    }//GEN-LAST:event_jtfDescFocusGained
+
+    private void jtfDescFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtfDescFocusLost
+        // TODO add your handling code here:
+        jtfDesc.setText("Nome, Sobrenome, Email ou Documento");
+    }//GEN-LAST:event_jtfDescFocusLost
 
     /**
      * @param args the command line arguments
@@ -844,6 +987,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Agendar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -859,12 +1003,14 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JButton jbAdConsole;
     private javax.swing.JButton jbAdJogo;
     private javax.swing.JButton jbAtualizar;
+    private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbCadastrar;
     private javax.swing.JButton jbFechar;
     private javax.swing.JButton jbRenovar;
@@ -873,13 +1019,16 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JButton jbtnPesquisar;
     private javax.swing.JComboBox<Object> jcbConsole;
     private javax.swing.JComboBox<Object> jcbJogo;
+    private javax.swing.JFrame jfClientes;
     private javax.swing.JFormattedTextField jftDataFinal;
     private javax.swing.JFormattedTextField jftDataInicio;
     private javax.swing.JLabel jlControles;
     private javax.swing.JTable jtbAluguel;
+    private javax.swing.JTable jtbCliente;
     private javax.swing.JTable jtbItemConsole;
     private javax.swing.JTable jtbItemJogo;
     private javax.swing.JTextField jtfCliente;
+    private javax.swing.JTextField jtfDesc;
     private javax.swing.JSlider jtfNumeroControles;
     private javax.swing.JTextField jtfQuantidade;
     private javax.swing.JTextField jtfValorTotal;

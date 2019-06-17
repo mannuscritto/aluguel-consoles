@@ -119,7 +119,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jtfQuantidade.setText("1");
         modelo = (DefaultTableModel) jtbItemJogo.getModel();
         modelo.setNumRows(0);
-        jtfNumeroControles.setText("0");
+        jtfNumeroControles.setValue(0);
         jtfValorTotal.setText("0.00");
         jtfCliente.requestFocus();
     }
@@ -168,10 +168,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jtfQuantidade = new javax.swing.JTextField();
         jtfValorTotal = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jtfNumeroControles = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jbFechar = new javax.swing.JButton();
         jbRenovar = new javax.swing.JButton();
+        jtfNumeroControles = new javax.swing.JSlider();
+        jlControles = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -232,6 +233,11 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         jScrollPane4.setViewportView(jtbAluguel);
 
         jbtnPesquisar.setText("Pesquisar");
+        jbtnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnPesquisarActionPerformed(evt);
+            }
+        });
 
         jbCadastrar.setText("Cadastrar");
         jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -424,6 +430,14 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             }
         });
 
+        jtfNumeroControles.setMaximum(4);
+        jtfNumeroControles.setValue(0);
+        jtfNumeroControles.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jtfNumeroControlesStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -435,13 +449,14 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                     .addComponent(jScrollPane4)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfNumeroControles, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addComponent(jtfNumeroControles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jlControles, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jtfValorTotal)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jtfValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -457,6 +472,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jftDataFinal))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jbCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jbAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -481,11 +497,13 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jtfNumeroControles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jtfValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jLabel2)
+                        .addComponent(jtfValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jlControles, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfNumeroControles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbCadastrar)
@@ -509,7 +527,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         a.setDataInicio(jftDataInicio.getText());
         a.setDataFinal(jftDataFinal.getText());
         a.setValorTotal(Double.parseDouble(jtfValorTotal.getText()));
-        a.setNumeroControles(Integer.parseInt(jtfNumeroControles.getText()));
+        a.setNumeroControles(jtfNumeroControles.getValue());
         dao.create(a);
         
         ItemConsoleDAO icdao = new ItemConsoleDAO();
@@ -544,7 +562,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             a.setDataInicio(jftDataInicio.getText());
             a.setDataFinal(jftDataFinal.getText());
             a.setValorTotal(Double.parseDouble(jtfValorTotal.getText()));
-            a.setNumeroControles(Integer.parseInt(jtfNumeroControles.getText()));
+            a.setNumeroControles(jtfNumeroControles.getValue());
             dao.update(a);
             
             ItemConsoleDAO icdao = new ItemConsoleDAO();
@@ -593,7 +611,7 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
             jftDataInicio.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 1).toString());
             jftDataFinal.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 2).toString());
             jtfValorTotal.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 3).toString());
-            jtfNumeroControles.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 4).toString());
+            jtfNumeroControles.setValue(Integer.parseInt(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 4).toString()));
             jtfCliente.setText(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 5).toString());
             
             int aluguel = Integer.parseInt(jtbAluguel.getValueAt(jtbAluguel.getSelectedRow(), 0).toString());
@@ -778,6 +796,16 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jbRenovarActionPerformed
 
+    private void jbtnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPesquisarActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jbtnPesquisarActionPerformed
+
+    private void jtfNumeroControlesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jtfNumeroControlesStateChanged
+        // TODO add your handling code here:
+        jlControles.setText(String.valueOf(jtfNumeroControles.getValue()));
+    }//GEN-LAST:event_jtfNumeroControlesStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -847,11 +875,12 @@ public class TelaCadastroAluguel extends javax.swing.JFrame {
     private javax.swing.JComboBox<Object> jcbJogo;
     private javax.swing.JFormattedTextField jftDataFinal;
     private javax.swing.JFormattedTextField jftDataInicio;
+    private javax.swing.JLabel jlControles;
     private javax.swing.JTable jtbAluguel;
     private javax.swing.JTable jtbItemConsole;
     private javax.swing.JTable jtbItemJogo;
     private javax.swing.JTextField jtfCliente;
-    private javax.swing.JTextField jtfNumeroControles;
+    private javax.swing.JSlider jtfNumeroControles;
     private javax.swing.JTextField jtfQuantidade;
     private javax.swing.JTextField jtfValorTotal;
     // End of variables declaration//GEN-END:variables

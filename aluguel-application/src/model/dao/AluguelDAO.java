@@ -83,6 +83,38 @@ public class AluguelDAO {
         
         return alugueis;
     }
+    public List<Aluguel> readCliente(String cli) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Aluguel> alugueis = new ArrayList<>();
+        
+        try {
+            stmt = con.prepareStatement("SELECT Cliente_PK,PrimeiroNome FROM cliente WHERE PrimeiroNome LIKE ?"); 
+            stmt.setString(1, "%"+cli+"%");
+            rs = stmt.executeQuery();
+            
+            ClienteDAO cdao = new ClienteDAO();
+            while (rs.next()) {
+                Aluguel a = new Aluguel();
+                a.setId(rs.getInt("Aluguel_PK"));
+//                a.setDataAbertura(rs.getTimestamp("DataAbertura"));
+//                a.setDataInicio(rs.getDate("DataInicio"));
+//                a.setDataFinal(rs.getDate("DataFinal"));
+//                a.setDataFechamento(rs.getTimestamp("DataFechamento"));
+//                a.setValorTotal(rs.getDouble("ValorTotal"));
+//                a.setNumeroControles(rs.getInt("NumeroControles"));
+//                a.setCliente(cdao.search(rs.getInt("CodCliente")));
+                alugueis.add(a);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AluguelDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return alugueis;
+    }
     
     public void update(Aluguel a) {
         Connection con = ConnectionFactory.getConnection();

@@ -63,7 +63,7 @@ public class EnderecoDAO {
             while (rs.next())
             {
                 Endereco endereco = new Endereco();
-                endereco.setId(rs.getInt("id"));
+                endereco.setId(rs.getInt("Id"));
                 endereco.setRua(rs.getString("Rua"));
                 endereco.setNumero(rs.getInt("Numero"));
                 endereco.setComplemento(rs.getString("Complemento"));
@@ -71,7 +71,7 @@ public class EnderecoDAO {
                 endereco.setCidade(rs.getString("Cidade"));
                 endereco.setUf(rs.getString("Uf"));
                 endereco.setCep(rs.getString("Cep"));
-                endereco.setCliente(rs.getInt("cliente"));
+                endereco.setCliente(rs.getInt("Cliente"));
                 
               
                 enderecos.add(endereco);
@@ -135,4 +135,39 @@ public class EnderecoDAO {
             ConnectionFactory.closeConnection(con, stmt);
         }
     }
-}
+
+    public Endereco search(int pk) {
+        Connection con = ConnectionFactory.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        Endereco end = new Endereco();
+        
+        try {
+            stmt = con.prepareStatement("SELECT * FROM endereco WHERE Endereco_PK = ?");
+            stmt.setInt(1, pk);
+            rs = stmt.executeQuery();
+            
+            if (rs.last()) {
+                            
+                end.setId(rs.getInt("Endereco_PK"));
+                end.setBairro(rs.getString("Bairro"));
+                end.setCep(rs.getString("CEP"));
+                end.setCidade(rs.getString("Cidade"));
+                end.setCliente(rs.getInt("Cliente"));
+                end.setComplemento(rs.getString("Complemento"));
+                end.setNumero(rs.getInt("Numero"));
+                end.setRua(rs.getString("Rua"));
+                end.setUf(rs.getString("UF"));
+                
+             
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EnderecoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionFactory.closeConnection(con, stmt, rs);
+        }
+        
+        return end;
+    }
+    }
+

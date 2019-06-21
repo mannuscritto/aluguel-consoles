@@ -27,7 +27,8 @@ public class JogoDAO {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("INSERT INTO jogo (Titulo,Genero,FaixaEtaria,Plataforma,PrecoCompra,TipoMidia,Quantidade,PrecoAluguel,PrecoVenda) VALUES (?,?,?,?,?,?,?,?,?)");
+            stmt = con.prepareStatement("INSERT INTO jogo (Titulo,Genero,FaixaEtaria,Plataforma,PrecoCompra,"
+                    + "TipoMidia,Quantidade,PrecoAluguel,PrecoVenda) VALUES (?,?,?,?,?,?,?,?,?)");
             stmt.setString(1, j.getTitulo());
             stmt.setString(2, j.getGenero());
             stmt.setString(3, j.getFaixaEtaria());

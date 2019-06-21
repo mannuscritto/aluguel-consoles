@@ -164,10 +164,14 @@ public class TelaCadastroTipoConta extends javax.swing.JFrame {
         // TODO add your handling code here:
         TipoConta tc = new TipoConta();
         TipoContaDAO dao = new TipoContaDAO();
-        tc.setPrecoCompra(Double.parseDouble(jtfPrecoCompra.getText()));
-        tc.setTitulo(jtfTitulo.getText());
-        dao.create(tc);
-        readJTable();
+        if (jtfPrecoCompra.getText().isEmpty() || jtfTitulo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Preencha os campos de texto!");
+        } else {
+            tc.setPrecoCompra(Double.parseDouble(jtfPrecoCompra.getText()));
+            tc.setTitulo(jtfTitulo.getText());
+            dao.create(tc);
+            readJTable();   
+        }
         
         jtfTitulo.setText("");
         jtfPrecoCompra.setText("");

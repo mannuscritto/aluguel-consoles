@@ -87,46 +87,6 @@ public class ClienteDAO {
         
         return clientes;
     }
-    public List<Cliente> readForNome(String desc){
-        
-        Connection con = ConnectionFactory.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        
-        List<Cliente> clientes = new ArrayList<>();
-        
-        try {
-            stmt = con.prepareStatement("SELECT * FROM Cliente WHERE ativo = 1 AND (PrimeiroNome LIKE ? OR UltimoNome LIKE ? OR Email LIKE ? OR Documento LIKE ?)");
-            stmt.setString(1, "%" + desc + "%");
-            stmt.setString(2, "%" + desc + "%");
-            stmt.setString(3, "%" + desc + "%");
-            stmt.setString(4, "%" + desc + "%");
-            rs = stmt.executeQuery();
-            
-            while (rs.next())
-            {
-                Cliente cliente = new Cliente();
-                cliente.setId(rs.getInt("Cliente_PK"));
-                cliente.setPrimeiroNome(rs.getString("PrimeiroNome"));
-                cliente.setUltimoNome(rs.getString("UltimoNome"));
-                cliente.setEmail(rs.getString("Email"));
-                cliente.setDocumento(rs.getString("Documento"));
-                cliente.setTipocliente(rs.getInt("TipoCliente"));
-                clientes.add(cliente);
-                
-            }
-                    
-            } 
-        catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally
-        {
-            ConnectionFactory.closeConnection(con, stmt, rs);
-        }
-        
-        return clientes;
-    }
      public void update(Cliente c) {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt = null;

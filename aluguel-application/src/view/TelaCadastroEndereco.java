@@ -282,6 +282,7 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
        jtRua.setText("");
        jtUF.setText("");
        
+       dao.create(end);
        
        readJTable();
     }//GEN-LAST:event_jbCadastrarActionPerformed

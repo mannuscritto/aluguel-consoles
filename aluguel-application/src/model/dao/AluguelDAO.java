@@ -5,7 +5,11 @@
  */
 package model.dao;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
 import connection.ConnectionFactory;
+import itextpdf.PDFFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -164,4 +168,36 @@ public class AluguelDAO {
         
     }
     
+    public void print() {
+        
+        PdfPTable ctb = PDFFactory.getTable(new String[] {
+            "ID",
+            "Abertura",
+            "Término",
+            "Valor",
+            "Controles",
+            "Cliente"
+        });
+        
+        try {
+            Document doc = PDFFactory.getDocument("Aluguel");
+
+            for (Aluguel a: this.read()) {
+                ctb.addCell(String.valueOf(a.getId()));
+                ctb.addCell(a.getDataInicioAsString());
+                ctb.addCell(a.getDataFinalAsString());
+                ctb.addCell(String.valueOf(a.getValorTotal()));
+                ctb.addCell(String.valueOf(a.getNumeroControles()));
+                ctb.addCell(a.getCliente().getPrimeiroNome());
+            }
+            doc.add(ctb);
+            
+            doc.addTitle("Relatório de Aluguéis no sistema AluguelConsoles");
+            doc.addSubject("Dados de todos os Aluguéis que estavam com cadastro ativo na data de criação deste documento.");
+            
+            PDFFactory.closeDocument(doc);
+        } catch (DocumentException ex) {
+            System.out.println("Erro ao gerar relatório de Aluguel: " + ex);
+        }
+    }
 }

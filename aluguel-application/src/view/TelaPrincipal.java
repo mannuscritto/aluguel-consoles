@@ -6,6 +6,7 @@
 package view;
 
 import itextpdf.PDFFactory;
+import model.dao.AluguelDAO;
 import model.dao.ClienteDAO;
 
 /**
@@ -174,6 +175,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Aluguéis");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuBar1.add(jMenu1);
@@ -310,6 +316,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         ClienteDAO cdao = new ClienteDAO();
         cdao.print();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        AluguelDAO adao = new AluguelDAO();
+        adao.print();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments

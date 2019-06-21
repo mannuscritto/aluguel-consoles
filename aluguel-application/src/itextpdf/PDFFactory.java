@@ -54,7 +54,6 @@ public class PDFFactory {
             doc.addCreationDate();
             doc.addCreator(PDF_CREATOR);
             doc.addKeywords("Relatório, Cadastro");
-            System.out.println("Salvou!");
             doc.close();
         }
     }
@@ -95,6 +94,5 @@ public class PDFFactory {
         chooser.showSaveDialog(null);
         File file = chooser.getSelectedFile();
         PDF_PATH = file.getAbsolutePath().replace("\\", "\\\\") + "\\\\";
-        System.out.println(PDF_PATH);
     }
 }

@@ -5,7 +5,11 @@
  */
 package model.dao;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
 import connection.ConnectionFactory;
+import itextpdf.PDFFactory;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -172,5 +176,34 @@ public class JogoDAO {
         }
         
         return j;
+    }
+     
+     public void print() {
+        
+        PdfPTable ctb = PDFFactory.getTable(new String[] {
+            "ID",
+            "Título",
+            "Plataforma",
+            "Preço"
+        });
+        
+        try {
+            Document doc = PDFFactory.getDocument("Jogo");
+
+            for (Jogo j: this.read()) {
+                ctb.addCell(String.valueOf(j.getId()));
+                ctb.addCell(j.getTitulo());
+                ctb.addCell(j.getPlataforma().getModelo());
+                ctb.addCell(String.valueOf(j.getPrecoAluguel()));
+            }
+            doc.add(ctb);
+            
+            doc.addTitle("Relatório de Jogos no sistema AluguelConsoles");
+            doc.addSubject("Dados de todos os Jogos que estavam com cadastro ativo na data de criação deste documento.");
+            
+            PDFFactory.closeDocument(doc);
+        } catch (DocumentException ex) {
+            System.out.println("Erro ao gerar relatório de Jogo: " + ex);
+        }
     }
 }

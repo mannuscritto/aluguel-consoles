@@ -289,7 +289,7 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
         ClienteDAO cdao = new ClienteDAO();
         if (jtabelEndereco.getSelectedRow() != -1){
        
-          end.setId((int)jtabelEndereco.getValueAt(jtabelEndereco.getSelectedRow(), 0));
+          end.setId(Integer.parseInt(jtabelEndereco.getValueAt(jtabelEndereco.getSelectedRow(), 0).toString()));
           end.setBairro(jtBairro.getText());
           end.setCep(jtCEP.getText());
           end.setCidade(jtCidade.getText());
@@ -319,7 +319,7 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
         EnderecoDAO dao = new EnderecoDAO();
         
         if(jtabelEndereco.getSelectedRow() != -1){
-         end.setId((int)jtabelEndereco.getValueAt(jtabelEndereco.getSelectedRow(), 0));
+         end.setId(Integer.parseInt(jtabelEndereco.getValueAt(jtabelEndereco.getSelectedRow(), 0).toString()));
          dao.delete(end);
          
          readJTable();

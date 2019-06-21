@@ -8,6 +8,7 @@ package view;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Endereco;
+import model.dao.ClienteDAO;
 import model.dao.EnderecoDAO;
 
 /**
@@ -109,17 +110,17 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
 
         jtabelEndereco.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Rua", "Número", "Complemento", "Bairro", "Cidade", "UF", "CEP", "Cliente"
+                "ID", "Rua", "Número", "Bairro", "Cidade", "UF"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, true, false, false, false, false
+                true, false, false, true, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -239,14 +240,11 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
         for(Endereco end: dao.read())
         {
             modelo.addRow(new Object[]{
-                end.getId(),
-                end.getBairro(),
-                end.getCep(),
-                end.getCidade(),
-                end.getCliente(),
-                end.getComplemento(),
-                end.getNumero(),
+                end,
                 end.getRua(),
+                end.getNumero(),
+                end.getBairro(),
+                end.getCidade(),
                 end.getUf()
             });
         }
@@ -263,11 +261,11 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
         // TODO add your handling code here:
        Endereco end = new Endereco();
        EnderecoDAO dao = new EnderecoDAO();
-       
+        ClienteDAO cdao = new ClienteDAO();
        end.setBairro(jtBairro.getText());
        end.setCep(jtCEP.getText());
        end.setCidade(jtCidade.getText());
-       end.setCliente(Integer.parseInt((jtCliente.getText())));
+       end.setCliente(cdao.search(Integer.parseInt(jtCliente.getText())));
        end.setComplemento(jtComplemento.getText());
        end.setNumero(Integer.parseInt((jtNumero.getText())));
        end.setRua(jtRua.getText());
@@ -291,20 +289,20 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
         // TODO add your handling code here:
         Endereco end = new Endereco();
         EnderecoDAO dao = new EnderecoDAO();
-        
+        ClienteDAO cdao = new ClienteDAO();
         if (jtabelEndereco.getSelectedRow() != -1){
        
           end.setId((int)jtabelEndereco.getValueAt(jtabelEndereco.getSelectedRow(), 0));
           end.setBairro(jtBairro.getText());
           end.setCep(jtCEP.getText());
           end.setCidade(jtCidade.getText());
-          end.setCliente(Integer.parseInt((jtCliente.getText())));
+          end.setCliente(cdao.search(Integer.parseInt(jtCliente.getText())));
           end.setComplemento(jtComplemento.getText());
           end.setNumero(Integer.parseInt((jtNumero.getText())));
           end.setRua(jtRua.getText());
           end.setUf(jtUF.getText());
           dao.update(end);
-          
+          readJTable();
           jtBairro.setText("");
           jtCEP.setText("");
           jtCidade.setText("");
@@ -326,6 +324,8 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
         if(jtabelEndereco.getSelectedRow() != -1){
          end.setId((int)jtabelEndereco.getValueAt(jtabelEndereco.getSelectedRow(), 0));
          dao.delete(end);
+         
+         readJTable();
          
          jtBairro.setText("");
          jtCEP.setText("");
@@ -349,12 +349,12 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
             Endereco end = dao.search(Integer.parseInt(jtabelEndereco.getValueAt(row, 0).toString()));
             jtRua.setText(jtabelEndereco.getValueAt(row, 1).toString());
             jtNumero.setText(jtabelEndereco.getValueAt(row, 2).toString());
-            jtComplemento.setText(jtabelEndereco.getValueAt(row, 3).toString());
-            jtBairro.setText(jtabelEndereco.getValueAt(row, 4).toString());
-            jtCidade.setText(jtabelEndereco.getValueAt(row, 5).toString());
-            jtUF.setText(jtabelEndereco.getValueAt(row, 6).toString());
-            jtCEP.setText(jtabelEndereco.getValueAt(row, 7).toString());
-            jtCliente.setText(jtabelEndereco.getValueAt(row, 8).toString());
+            jtComplemento.setText(end.getComplemento());
+            jtBairro.setText(jtabelEndereco.getValueAt(row, 3).toString());
+            jtCidade.setText(jtabelEndereco.getValueAt(row, 4).toString());
+            jtUF.setText(jtabelEndereco.getValueAt(row, 5).toString());
+            jtCEP.setText(end.getCep());
+            jtCliente.setText(String.valueOf(end.getCliente().getId()));
         }
     }//GEN-LAST:event_jtabelEnderecoMouseClicked
 

@@ -9,7 +9,7 @@ public class Endereco {
     private String cidade;
     private String uf;
     private String cep;
-    private int cliente;
+    private Cliente cliente;
 
     public int getId() {
         return id;
@@ -75,12 +75,17 @@ public class Endereco {
         this.cep = cep;
     }
 
-    public int getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(int cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.getId()); //To change body of generated methods, choose Tools | Templates.
     }
     
     

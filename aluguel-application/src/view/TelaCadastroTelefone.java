@@ -8,6 +8,7 @@ package view;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Telefone;
+import model.dao.ClienteDAO;
 import model.dao.TelefoneDAO;
 
 /**
@@ -45,7 +46,6 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
         jtCliente = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTabelTelefone = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -84,12 +84,12 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
 
         jTabelTelefone.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "ID", "CodigoArea", "Número", "Cliente"
+                "ID", "CodigoArea", "Número"
             }
         ));
         jTabelTelefone.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -98,8 +98,6 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTabelTelefone);
-
-        jLabel4.setText("jLabel4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -113,26 +111,21 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel3))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                                            .addComponent(jtCodArea, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jtCliente)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jbCadastrar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jbAlterar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jbExcluir)))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel4)))))
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                                    .addComponent(jtCodArea, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jtCliente)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jbCadastrar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbAlterar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jbExcluir)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -157,8 +150,7 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
                     .addComponent(jbExcluir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
-                .addComponent(jLabel4))
+                .addGap(39, 39, 39))
         );
 
         pack();
@@ -171,10 +163,9 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
         
         for (Telefone tc: telefonedao.read()) {
             modelo.addRow(new Object[] {
-               tc.getId(),
+               tc,
                tc.getCodArea(),
-               tc.getNumero(),
-               tc.getCliente()
+               tc.getNumero()
             });
         }
     }
@@ -188,7 +179,8 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
         // TODO add your handling code here:
         Telefone tel = new Telefone();
         TelefoneDAO dao = new TelefoneDAO();
-        tel.setCliente(Integer.parseInt((jtCliente.getText())));
+        ClienteDAO cdao = new ClienteDAO();
+        tel.setCliente(cdao.search(Integer.parseInt(jtCliente.getText())));
         tel.setCodArea(Integer.parseInt(jtCodArea.getText()));
         tel.setNumero(Long.parseLong((jtNumero.getText())));
         dao.create(tel);
@@ -204,10 +196,11 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
         if(jTabelTelefone.getSelectedRow() != -1){
             Telefone tel = new Telefone();
             TelefoneDAO dao = new TelefoneDAO();
-            tel.setId((int)jTabelTelefone.getValueAt(jTabelTelefone.getSelectedRow(), 0));
+            ClienteDAO cdao = new ClienteDAO();
             tel.setCodArea(Integer.parseInt(jtCodArea.getText()));
             tel.setNumero(Integer.parseInt((jtNumero.getText())));
-            tel.setCliente(Integer.parseInt(jtCliente.getText()));
+            tel.setCliente(cdao.search(Integer.parseInt(jtCliente.getText())));
+            tel.setId(Integer.parseInt(jTabelTelefone.getValueAt(jTabelTelefone.getSelectedRow(), 0).toString()));
             dao.update(tel);
             
             jtCodArea.setText("");
@@ -227,7 +220,7 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
             Telefone tel = new Telefone();
             TelefoneDAO dao = new TelefoneDAO();
             
-            tel.setId((int)jTabelTelefone.getValueAt(jTabelTelefone.getSelectedRow(),0));
+            tel = dao.search(Integer.parseInt(jTabelTelefone.getValueAt(jTabelTelefone.getSelectedRow(), 0).toString()));
             dao.delete(tel);
             
             jtCodArea.setText("");
@@ -250,7 +243,7 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
             Telefone tel = dao.search(Integer.parseInt(jTabelTelefone.getValueAt(row, 0).toString()));
             jtCodArea.setText(jTabelTelefone.getValueAt(row, 1).toString());
             jtNumero.setText(jTabelTelefone.getValueAt(row, 2).toString());
-            jtCliente.setText(jTabelTelefone.getValueAt(row, 3).toString());
+            jtCliente.setText(String.valueOf(tel.getCliente().getId()));
             
         }
     }//GEN-LAST:event_jTabelTelefoneMouseClicked
@@ -294,7 +287,6 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTabelTelefone;
     private javax.swing.JButton jbAlterar;

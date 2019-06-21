@@ -4,7 +4,7 @@ public class Telefone {
     private int id;
     private int codArea;
     private long numero;
-    private int cliente;
+    private Cliente cliente;
 
     public int getId() {
         return id;
@@ -30,17 +30,19 @@ public class Telefone {
         this.numero = numero;
     }
 
-    public int getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(int cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    public void add(Telefone telefone) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Override
+    public String toString() {
+        return String.valueOf(this.getId()); //To change body of generated methods, choose Tools | Templates.
     }
+
     
     
 }

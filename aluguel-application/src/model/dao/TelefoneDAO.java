@@ -30,7 +30,7 @@ public class TelefoneDAO {
             stmt = con.prepareStatement("INSERT INTO telefone (CodArea, Numero, Cliente) VALUES (?, ?, ?)");
             stmt.setInt(1, tl.getCodArea());
             stmt.setLong(2, tl.getNumero());
-            stmt.setInt(3, tl.getCliente());
+            stmt.setInt(3, tl.getCliente().getId());
         
             
             
@@ -56,15 +56,15 @@ public class TelefoneDAO {
         try {
             stmt = con.prepareStatement("SELECT * FROM Telefone");
             rs = stmt.executeQuery();
-            
+            ClienteDAO cdao = new ClienteDAO();
             while (rs.next())
             {
                 Telefone telefone = new Telefone();
                 telefone.setId(rs.getInt("Telefone_PK"));
-                telefone.setCodArea(rs.getInt("CodAera"));
+                telefone.setCodArea(rs.getInt("CodArea"));
                 telefone.setNumero(rs.getLong("Numero"));
-                telefone.setCliente(rs.getInt("Cliente"));
-                telefone.add(telefone);
+                telefone.setCliente(cdao.search(rs.getInt("Cliente")));
+                telefones.add(telefone);
                 
             }
                     
@@ -84,11 +84,11 @@ public class TelefoneDAO {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("UPDATE Telefone SET codAera = ?,Numero = ?,Cliente = ?"
-                    + " WHERE Cliente_PK = ?");
+            stmt = con.prepareStatement("UPDATE Telefone SET CodArea = ?,Numero = ?,Cliente = ? WHERE Telefone_PK = ?");
             stmt.setInt(1, tl.getCodArea());
-            stmt.setInt(2, (int) tl.getNumero());
-            stmt.setInt(3, tl.getCliente());
+            stmt.setLong(2, tl.getNumero());
+            stmt.setInt(3, tl.getCliente().getId());
+            stmt.setInt(4, tl.getId());
             
             stmt.executeUpdate();
             
@@ -107,7 +107,7 @@ public class TelefoneDAO {
         PreparedStatement stmt = null;
         
         try {
-            stmt = con.prepareStatement("DELETE from jogo WHERE Telefone_PK = ?");
+            stmt = con.prepareStatement("DELETE FROM Telefone WHERE Telefone_PK = ?");
             stmt.setInt(1, tl.getId());
             
             stmt.executeUpdate();
@@ -133,10 +133,10 @@ public class TelefoneDAO {
             stmt = con.prepareStatement("SELECT * FROM telefone WHERE Telefone_PK = ?");
             stmt.setInt(1, pk);
             rs = stmt.executeQuery();
-            
+            ClienteDAO cdao = new ClienteDAO();
             if (rs.last()) {                         
                 tel.setId(rs.getInt("Telefone_PK"));
-                tel.setCliente(rs.getInt("Cliente"));
+                tel.setCliente(cdao.search(rs.getInt("Cliente")));
                 tel.setCodArea(rs.getInt("Telefone_PK"));
                 tel.setNumero(rs.getInt("Telefone_PK"));
             }

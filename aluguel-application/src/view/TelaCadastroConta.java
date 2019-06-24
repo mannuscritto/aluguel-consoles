@@ -214,6 +214,7 @@ public class TelaCadastroConta extends javax.swing.JFrame {
             if (jtbConta.getSelectedRow() != -1) {
             Conta c = new Conta();
             ContaDAO dao = new ContaDAO();
+            c.setId(((int) jtbConta.getValueAt(jtbConta.getSelectedRow(), 0)));
             c.setPrecoAluguel(Double.parseDouble(jtfPrecoAluguel.getText()));
             c.setNomeUsuario(jtfNomeUsuario.getText());
             c.setSenha(jtfSenha.getText());

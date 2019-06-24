@@ -22,6 +22,7 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
      */
     public TelaCadastroEndereco() {
         initComponents();
+        setExtendedState(MAXIMIZED_BOTH);
         readJTable();
     }
 
@@ -58,6 +59,7 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tela Cadastro Endereço");
 
         jLabel1.setText("Rua:");
 
@@ -226,6 +228,7 @@ public class TelaCadastroEndereco extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     public void readJTable()
     {

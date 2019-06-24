@@ -22,6 +22,7 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
      */
     public TelaCadastroTelefone() {
         initComponents();
+        setExtendedState(MAXIMIZED_BOTH);
         readJTable();
        
     }
@@ -48,12 +49,15 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
         jTabelTelefone = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro de Telefone");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtCodArea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jtCodAreaActionPerformed(evt);
             }
         });
+        getContentPane().add(jtCodArea, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 22, 71, -1));
 
         jbCadastrar.setText("Cadastrar");
         jbCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +65,7 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
                 jbCadastrarActionPerformed(evt);
             }
         });
+        getContentPane().add(jbCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
         jbAlterar.setText("Alterar");
         jbAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -68,6 +73,7 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
                 jbAlterarActionPerformed(evt);
             }
         });
+        getContentPane().add(jbAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(97, 100, -1, -1));
 
         jbExcluir.setText("Excluir");
         jbExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -75,12 +81,18 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
                 jbExcluirActionPerformed(evt);
             }
         });
+        getContentPane().add(jbExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 100, -1, -1));
 
         jLabel1.setText("CodArea");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 25, -1, -1));
 
         jLabel2.setText("Número");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 51, -1, -1));
+        getContentPane().add(jtNumero, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 48, 136, -1));
 
         jLabel3.setText("Cliente");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 77, -1, -1));
+        getContentPane().add(jtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 74, 136, -1));
 
         jTabelTelefone.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -99,61 +111,10 @@ public class TelaCadastroTelefone extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTabelTelefone);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
-                                    .addComponent(jtCodArea, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jtCliente)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jbCadastrar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbAlterar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbExcluir)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jtCodArea, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbCadastrar)
-                    .addComponent(jbAlterar)
-                    .addComponent(jbExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
-        );
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 510, 170));
 
-        pack();
+        setSize(new java.awt.Dimension(507, 338));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
     public void readJTable() {
         DefaultTableModel modelo;

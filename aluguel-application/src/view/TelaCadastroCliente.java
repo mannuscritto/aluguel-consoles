@@ -234,7 +234,6 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
         dao.create(cl);
 
         JOptionPane.showMessageDialog(this, "Código do cliente: " + cl.getId());
-        
         readJTable();
         resetCampos();
     }//GEN-LAST:event_jbCadastrarActionPerformed
@@ -253,7 +252,8 @@ public class TelaCadastroCliente extends javax.swing.JFrame {
             }
             cl.setId((int)jtbCliente.getValueAt(jtbCliente.getSelectedRow(), 0));
             dao.update(cl);
-
+            TelaCadastroEndereco telaend = new TelaCadastroEndereco();
+            telaend.setVisible(true);
             resetCampos();
             readJTable(); 
         }

@@ -27,6 +27,9 @@ public class PDFFactory {
         
         if (PDF_PATH == null) {
             getPDFPath();
+            if (PDF_PATH == null) {
+                return null;
+            }
         }
         
         Document doc = new Document();
